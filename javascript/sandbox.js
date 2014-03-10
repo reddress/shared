@@ -1,4 +1,4 @@
 var f = function() {
-    var d;
+  var d;
 }
 
