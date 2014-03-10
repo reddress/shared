@@ -1,0 +1,105 @@
+Solved? (* yes, ! have an idea, ? no clue)
+Have other solutions? (mark with S)
+
+  EXTRA
+  =====
+  http://www.checkio.org/mission/sentence-with-extra-spaces/solve/
+
+*  HOME [9]
+   ====
+*  Non-unique elements          filter elements whose count > 1
+*  Median
+*  House password               accept passwords fulfilling certain criteria
+*  The most wanted letter
+*  Feed pigeons                 more and more pigeons appear as time passes
+*  Speech module                spell out numbers in English
+*  Xs and Os referee            determine winner of tic-tac-toe board
+*  Roman numerals
+*S Open labyrinth               find path between two points
+
+*  ALICE IN WONDERLAND [6]
+   =================== 
+*  Humpty Dumpty form           stretched sphere's surface area and volume
+*S Saw the stick                separate into consecutive triangular nums
+*  The hidden word              find word across or down a letter grid
+*  Multiplication table         apply bitwise operators to two numbers
+?S Digits doublets              link two numbers by changing digit each turn
+*  Rows of cakes                find number of lines between dots on a grid
+
+   ICE BASE [11]
+   ========
+?  Auto Painting                machine that paints one side each time
+   Determinant
+*  Stair steps                  jump around stairs and maximize sum (2^n sol)
+   Counting tiles               how many tiles are inside a circle
+?  Convex Hull
+   Water Jars
+?  Number Guess                 use divisors and get back remainders
+   Cipher crossword
+   Colder-Warmer
+?  Reverse Engineer
+   Funny Addition
+
+   SCIENTIFIC EXPEDITION [11]
+   =====================
+*  Transposed Matrix            
+*  Weekend counter
+   The Angles of a triangle
+*  Loading cargo
+   Spaceship landing strip
+   The square chest
+*  Morse Clock
+   Ore in the desert            triangulation
+   Calculate Islands
+   Digging a canal
+   Triangular vertices
+
+   GITHUB [2]
+   ======
+?  8 Puzzle
+   Determine the order          "new" alphabetical order
+
+   DROPBOX [2]
+   =======
+   Pearls in the box            probability of pulling white pearl
+?  Express delivery             cost of movement or using teleport boxes
+
+   O'REILLY [6]
+   ========
+   Striped words                alternating vowels and consonants
+   Disposable teleports
+*  Simplification
+   Ghost's age
+   Bats bunker
+   Haunted House
+   
+   OLD LIBRARY [14]
+   ===========
+*  All in a row
+   Prime Palindromes
+   Fix the generator
+   The Hamming distance
+   Sum in a triangle
+*  Musical module               GCD
+   Simple equation
+   Repeating Decimal
+*  ATM
+*  Spaceship Purchase
+   Can you jump through?
+   The strange circuit
+!  Cipher Map                   define 90-degrees transformation for password
+   The hexagon circuit
+   
+   ELECTRONIC STATION [10]
+   ==================
+*  Numbers factory
+*  Brackets
+*  Restricted sum
+*  Find sequence
+?  Numbered triangles
+*  Three points circle
+?  Radiation search
+*  How much gold
+?  Minesweeper
+?  Bit Message
+

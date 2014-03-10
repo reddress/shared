@@ -1,0 +1,55 @@
+Learning Python 5th ed.
+
+2013 dec 15 6 pm - pdf saved
+2013 dec 26 12 pm - first commit to github
+2014 jan 5 10 pm - p. 395
+2014 jan 6 10 am - p. 401
+2014 jan 7 5 pm - p. 473 function basics
+2014 jan 9 5 pm - p. 533 defaults
+2014 jan 10 1 pm - p. 553 adv. function topics
+2014 jan 10 5 pm - p. 562 func. objs.
+2014 jan 12 10 pm - p. 581 comprehensions
+2014 jan 13 6 pm - p. 661 misc. fn gotchas
+2014 jan 14 5 pm - p. 673 standard library
+2014 jan 15 5 pm - p. 714 tale of three sys
+2014 jan 16 6 pm - p. 776 chapter summary
+2014 jan 16 10 pm - p. 783 OOP
+2014 jan 17 4 pm - p. 817 Class example
+2014 jan 20 3 pm - p. 847 shelve
+2014 jan 21 2 pm - p. 859 class coding
+2014 jan 22 4 pm - p. 880 namespace links
+2014 jan 22 6 pm - p. 887 operator overloading
+2014 jan 24 5 pm - p. 909 attr access
+2014 jan 24 11 pm - p. 912 privacy
+2014 jan 26 7 pm - p. 921 call expressions
+2014 jan 27 5 pm - p. 942 delegation
+2014 jan 28 5 pm - p. 950 unbound methods
+2014 jan 29 6 pm - p. 969 tree lister
+2014 jan 30 5 pm - p. 979 advanced class concepts
+2014 jan 31 6 pm - p. 994 type testing
+2014 feb 2 3 pm - p. 1001 scope of search
+2014 feb 3 4 pm - p. 1020 properties
+2014 feb 5 4 pm - p. 1030 counting with static
+2014 feb 6 5 pm - p. 1041 super built-in
+2014 feb 7 11 pm - p. 1075 exercise 8
+2014 feb 8 11 pm - p. 1081 exception basics
+2014 feb 13 4 pm - p. 1086 user defined exceptions
+2014 feb 13 10 pm - p. 1093 exception coding details
+2014 feb 16 7 pm - p. 1110 propagating exceptions
+2014 feb 17 2 pm - p. 1116 context management protocol
+2014 feb 18 8 pm - p. 1141 designing exceptions
+2014 feb 18 10 pm - p. 1165 unicode
+2014 feb 20 3 pm - p. 1192 mixing string types
+2014 feb 20 6 pm - p. 1197 text and binary modes
+2014 feb 21 3 pm - p. 1226 descriptors
+2014 feb 21 6 pm - p. 1228 read-only descriptors
+2014 feb 21 10 pm - p. 1231 computed attributes
+2014 feb 22 7 pm - p. 1241 example
+2014 feb 22 11 pm - p. 1266 ch summary
+2014 feb 23 10 pm - p. 1292 descriptors to decorate
+2014 feb 24 2 pm - p. 1303 tracing object interfaces
+2014 feb 25 6 pm - p. 1309 manager functions
+2014 feb 26 6 pm - p. 1364 metaclass model
+2014 feb 26 9 pm - p. 1370 dispatch
+2014 feb 27 6 pm - p. 1390 operator overloading
+2014 feb 28 10 pm - END

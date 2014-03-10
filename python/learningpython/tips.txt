@@ -1,0 +1,1 @@
+C-c C-c  send entire buffer
