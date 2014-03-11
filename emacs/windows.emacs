@@ -27,7 +27,7 @@
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
-(menu-bar-mode nil)
+(menu-bar-mode -1)
 
 ;; cursor
 (blink-cursor-mode -1)

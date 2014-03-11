@@ -90,9 +90,9 @@ ark-volume
     (save-image-as-epsf image (string-append working-folder filename ".eps"))))
 
 ;; ex. 1.8
-(eps (stack (stack rcross-bb corner-bb)
+;; (eps (stack (stack rcross-bb corner-bb)
             (stack (quarter-turn-right test-bb) test-bb)) "ex1-8")
-(eps (stack rcross-bb corner-bb) "stack")
+;; (eps (stack rcross-bb corner-bb) "stack")
 
 ;; ex. 1.9
 (define half-turn
@@ -106,7 +106,7 @@ ark-volume
     (quarter-turn-right (stack (quarter-turn-left right)
                                (quarter-turn-left left)))))
 
-(eps (side-by-side (half-turn corner-bb)
+;; (eps (side-by-side (half-turn corner-bb)
                    (quarter-turn-left test-bb)) "ex1-9")
 
 ;; ex. 1.10
@@ -116,12 +116,12 @@ ark-volume
                          (half-turn image))
            (side-by-side image
                          (quarter-turn-left image)))))
-(eps (pinwheel test-bb) "ex1-10")
+;; (eps (pinwheel test-bb) "ex1-10")
 
 ;; ex. 1.11
 (define my-corner
   (filled-triangle 0 1 1 1 1 0))
-(eps my-corner "mycorner")
+;; (eps my-corner "mycorner")
 
 (define my-rcross
   (overlay (filled-triangle -0.5 0.5 -0.5 -0.5 0.5 -0.5)
@@ -129,7 +129,7 @@ ark-volume
            (filled-triangle -0.5 0.5 1 1 0.5 0.5)
            (filled-triangle 0.5 0.5 1 1 0.5 -0.5)
            (filled-triangle 0.5 -0.5 1 1 1 -1)))
-(eps my-rcross "myrcross")
+;; (eps my-rcross "myrcross")
 
 ;; ex. 1.12
 (define f
@@ -264,7 +264,7 @@ ark-volume
           (display " ")
           (display (command counter))
           (newline)
-          (my-loop (- times 1) (+ 1 counter) command))))
+          (my-loop (- times 1) (+ counter 1) command))))
 
 (my-loop 12 1 subtract-the-first)
 
@@ -350,7 +350,7 @@ ark-volume
     (if (<= n 1)
         image
         (stack image (stack-copies-of (- n 1) image)))))
-(eps (stack-copies-of 5 rcross-bb) "stack5rcross")
+;; (eps (stack-copies-of 5 rcross-bb) "stack5rcross")
 
 ;; ex. 2.14
 ;; stack-copies-of height
@@ -363,8 +363,8 @@ ark-volume
      (stack-copies-of width
                       (quarter-turn-right
                        (stack-copies-of height image))))))
-(eps (quilt (pinwheel rcross-bb) 4 3) "rcrossquilt")
-(eps (quilt test-bb 4 3) "testbbquilt")
+;; (eps (quilt (pinwheel rcross-bb) 4 3) "rcrossquilt")
+;; (eps (quilt test-bb 4 3) "testbbquilt")
 
 ;; ex. 2.15
 (define stack-checkered-copies-of
@@ -381,10 +381,10 @@ ark-volume
      (stack-checkered-copies-of width
                                 (quarter-turn-right
                                  (stack-checkered-copies-of height image))))))
-(eps (stack-checkered-copies-of 5 bitw-bb) "bitwstack")
-(eps (checkerboard (pinwheel bitw-bb) 3 3) "bitwcheckered")
-(eps (checkerboard (pinwheel rcross-bb) 4 3) "rcrosscheckered")
-(eps (checkerboard test-bb 4 5) "testbb45")
+;; (eps (stack-checkered-copies-of 5 bitw-bb) "bitwstack")
+;; (eps (checkerboard (pinwheel bitw-bb) 3 3) "bitwcheckered")
+;; (eps (checkerboard (pinwheel rcross-bb) 4 3) "rcrosscheckered")
+;; (eps (checkerboard test-bb 4 5) "testbb45")
 
 ;; tag-iteration p. 50
 (define factorial-product
@@ -402,7 +402,7 @@ ark-volume
   (lambda (result i limit)
     (if (> i limit)
         result
-        (alt-factorial-product (* result i) (+ 1 i) limit))))
+        (alt-factorial-product (* result i) (+ i 1) limit))))
 (define alt-factorial-iter
   (lambda (n)
     (alt-factorial-product 1 1 n)))
@@ -427,7 +427,7 @@ ark-volume
   (lambda (exp n)  ; n = 2^exp * k
     (if (odd? n)
         exp
-        (iter-step-find-exp-of-2 (+ 1 exp) (/ n 2)))))
+        (iter-step-find-exp-of-2 (+ exp 1) (/ n 2)))))
 (define iter-find-exp-of-2
   (lambda (n)
     (iter-step-find-exp-of-2 0 n)))
@@ -443,7 +443,7 @@ ark-volume
 (define iter-stack-copies-of
   (lambda (n image)
     (iter-step-stack-copies-of image n image)))
-(eps (iter-stack-copies-of 3 rcross-bb) "rcross3stack")
+;; (eps (iter-stack-copies-of 3 rcross-bb) "rcross3stack")
 
 (define iter-step-quilt
   (lambda (image width height)
@@ -451,7 +451,7 @@ ark-volume
      (iter-stack-copies-of width
                            (quarter-turn-right
                             (iter-stack-copies-of height image))))))
-(eps (iter-step-quilt test-bb 2 3) "testbb23")
+;; (eps (iter-step-quilt test-bb 2 3) "testbb23")
 
 (define iter-step-stack-checkered-copies-of
   (lambda (result i limit image)
@@ -468,7 +468,7 @@ ark-volume
 (define iter-stack-checkered-copies-of
   (lambda (n image)
     (iter-step-stack-checkered-copies-of image 1 n image)))
-(eps (iter-stack-checkered-copies-of 5 test-bb) "teststack")
+;; (eps (iter-stack-checkered-copies-of 5 test-bb) "teststack")
 (define iter-checkerboard
   (lambda (image width height)
     (quarter-turn-left
@@ -476,7 +476,7 @@ ark-volume
                                      (quarter-turn-right
                                       (iter-stack-checkered-copies-of
                                        height image))))))
-(eps (iter-checkerboard (pinwheel rcross-bb) 6 5) "rcrosscheckered")
+;; (eps (iter-checkerboard (pinwheel rcross-bb) 6 5) "rcrosscheckered")
 
 (stack rcross-bb)
 
@@ -524,3 +524,172 @@ ark-volume
   (lambda (a b)
     (= (remainder b a) 0)))
 (perfect? 33550336)
+
+;; ex. 3.6 p. 60
+(define sum-of-divisors-sqrt
+  (lambda (n)
+    (define sum-from-plus
+      (lambda (low addend)
+        (if (> low (sqrt n))
+            addend
+            (sum-from-plus (+ low 1)
+                           (if (divides? low n)
+                               (+ addend (if (= (square low) n)
+                                             low
+                                             (+ low (/ n low))))
+                               addend)))))
+    (sum-from-plus 1 0)))
+(sum-of-divisors-sqrt 91)
+(sum-of-divisors 91)
+
+(define check-equals
+  (lambda (i limit fn1 fn2 diffs)
+    (if (> i limit)
+        diffs
+        (check-equals (+ i 1)
+                      limit
+                      fn1
+                      fn2
+                      (+ diffs
+                         (if (= (fn1 i) (fn2 i))
+                             0
+                             1))))))
+(check-equals 1 101 sum-of-divisors sum-of-divisors-sqrt 0)
+
+(define my-dotimes
+  (lambda (i limit fn)
+    (unless (> i limit)
+            (fn i)
+            (my-dotimes (+ i 1) limit fn))))
+(my-dotimes 1 10 (lambda (n) (display (square n)) (newline)))
+
+(define first-perfect-after
+  (lambda (n)
+    (if (perfect? (+ n 1))
+        (+ n 1)
+        (first-perfect-after (+ n 1)))))
+
+(define first-perfect-after
+  (lambda (n)
+    (let ((next (+ n 1)))
+      (if (perfect? next)
+          next
+          (first-perfect-after next)))))
+(first-perfect-after 29)
+
+;; p. 62
+(define find-approximation-from
+  (lambda (starting-point)
+    (if (good-enough? starting-point)
+        starting-point
+        (find-approximation-from (improve starting-point)))))
+
+;; ex. 3.7 p. 64
+(define improve-phi
+  (lambda (approx)
+    (+ 1 (/ 1 approx))))
+(improve-phi 1.5)
+
+;; http://bugs.call-cc.org/ticket/1016
+(define (denominator-fix x)
+  (if (integer? x)
+      (if (exact? x) 1 1.0)
+      (/ (- x (floor x)))))
+
+(define approximate-phi
+  (lambda (tolerance)
+    (define find-approximation-from
+      (lambda (starting-point)
+        (display starting-point)
+        (newline)
+        (let ((next-value (improve-phi starting-point)))
+          ;; (display "next value: ")
+          ;; (display next-value)
+          ;; (newline)
+          (if (good-enough? starting-point next-value)
+              next-value
+              (find-approximation-from next-value)))))
+    (define good-enough?
+      (lambda (approximation last-value)
+        ;; (< (/ 1 (square (denominator-fix approximation)))
+        (< (abs (- approximation last-value))
+           tolerance)))
+    (find-approximation-from 1)))
+(approximate-phi 0.0001)
+
+;; ex. 3.8 p. 64
+(approximate-phi 1e-79)
+
+;; ex. 3.9, 3.10, 3.11, 3.12 p. 67
+;; 1: n-2, 2: n-1
+
+(define renumber
+  (lambda (old n)
+    (cond ((= old 1) (- n 2))
+          ((= old 2) (- n 1))
+          (else (- old 3)))))
+(renumber 7 8)
+
+(define survives?
+  (lambda (position n)
+    (if (< n 3)
+        #t
+        (if (= position 3)
+            #f
+            (survives? (renumber position n) (- n 1))))))
+(survives? 5 8)
+
+(define find-surviving-position-after
+  (lambda (position n)
+    (let ((next (+ position 1)))
+      (if (survives? next n)
+          next
+          (find-surviving-position-after next n)))))
+(find-surviving-position-after 1 40)
+(find-surviving-position-after 13 40)
+(find-surviving-position-after 28 40)  ; bug?
+
+;; ex. 4.1 p. 81
+;; (n+1) * (n/2) = 1/2(n^2 + n)
+
+;; p. 90
+(define mod-expt
+  (lambda (base exponent modulus)
+    (define mod*
+      (lambda (x y)
+        (remainder (* x y) modulus)))
+    (if (= exponent 0)
+        1
+        (mod* (mod-expt base (- exponent 1) modulus)
+              base))))
+(mod-expt 25131 3 19)
+
+;; ex. 4.2 p. 92
+;; when e is a power of 2, the procedure will do 2e - 1 multiplications
+;; in the case of odd powers, like 1, at least e multiplications are done.
+
+;; ex. 4.3 p. 94
+(define mod-expt
+  (lambda (base exponent modulus times-mult)
+    (display times-mult)
+    (newline)
+    (define mod*
+      (lambda (x y)
+        (remainder (* x y) modulus)))
+    (if (= exponent 0)
+        1
+        (if (even? exponent)
+            (let ((x (mod-expt base (/ exponent 2) modulus (+ times-mult 1))))
+              (mod* x x))
+            (mod* (mod-expt base (- exponent 1) modulus (+ times-mult 1))
+                  base)))))
+(mod-expt 20931 939293981 12 0)
+
+(define count-number-of-mod*
+  (lambda (e)
+    (if (= e 0)
+        0
+        (if (even? e)
+            (+ 1 (count-number-of-mod* (/ e 2)))
+            (+ 1 (count-number-of-mod* (- e 1)))))))
+(count-number-of-mod* 939293981)
