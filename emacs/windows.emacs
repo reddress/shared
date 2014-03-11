@@ -1,6 +1,7 @@
 ;; Custom
 (custom-set-variables
  '(ansi-color-names-vector ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
+ '(js-indent-level 2)
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
