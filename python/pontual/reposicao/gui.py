@@ -27,6 +27,7 @@ class Application(tk.Frame):
         self.clearBtn = tk.Button(text="Clear", command=self.clear)
         self.codigoValue = tk.StringVar()
         self.vendasValue = tk.StringVar()
+        self.vendasNowValue = tk.StringVar()
         self.caixaValue = tk.StringVar()
 
         self.codigo = tk.Entry(width=8, textvariable=self.codigoValue)
@@ -34,30 +35,36 @@ class Application(tk.Frame):
         self.loadBtn = tk.Button(text="Load", command=self.load)
 
         self.vendas = tk.Entry(width=8, textvariable=self.vendasValue)
+        self.vendasNow = tk.Entry(width=8, textvariable=self.vendasNowValue)
         self.caixa = tk.Entry(width=8, textvariable=self.caixaValue)
         
         # self.saveBtn = tk.Button(text="Save", command=self.save)
         self.copyBtn = tk.Button(text="Copy", command=self.copy)
         
-        self.info = tk.Text(width=99, height=6)
+        self.info = tk.Text(width=45, height=6, font="ProggyTinyTTSZ")
 
         self.dummyLabel = tk.Label(text="PTL")
 
         self.clearBtn.grid(row=0, column=0)
         self.codigo.grid(row=0, column=1)
         self.loadBtn.grid(row=0, column=2)
-        self.vendas.grid(row=0, column=3)
-        self.caixa.grid(row=0, column=4)
+        self.dummyLabel.grid(row=0, column=3)
+        
+        self.vendas.grid(row=1, column=0)
+        self.vendasNow.grid(row=1, column=1)
+        self.caixa.grid(row=1, column=2)
         # self.saveBtn.grid(row=0, column=5)
-        self.copyBtn.grid(row=0, column=5)
-        self.dummyLabel.grid(row=0, column=6)
-
-        self.info.grid(row=1, column=0, columnspan=7)
+        self.copyBtn.grid(row=1, column=3)
+        
+        self.info.grid(row=2, column=0, columnspan=4)
 
         self.info.bind("<KeyRelease>", self.save)
-        
+
     def clear(self):
         self.codigoValue.set("")
+        self.vendasValue.set("")
+        self.vendasNowValue.set("")
+        self.caixaValue.set("")
         
     def load(self):
         codigo = self.codigoValue.get()
@@ -83,7 +90,7 @@ class Application(tk.Frame):
         self.clipboard_append(info)
 
 root = tk.Tk()
-root.geometry("640x120+720+575")
+root.geometry("272x114+1085+583")
 root.wm_attributes("-topmost", 1)
 app = Application(master=root)
 app.mainloop()
