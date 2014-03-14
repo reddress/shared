@@ -1,0 +1,69 @@
+import tkinter as tk
+from math import ceil
+from decimal import Decimal
+
+def roundup(x, factor):
+    return (ceil(Decimal(x) * Decimal(factor)))/Decimal('1000')
+
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.createWidgets()
+
+    def createWidgets(self):
+        self.label1 = tk.Label(text="orig").grid(row=0, column=0)
+        
+        self.entryx = tk.Entry(width=9)
+        self.entryx.grid(row=0, column=1)
+        self.entryx.bind('<Key-Return>', self.update_values)
+        self.entryx.bind('<Button-1>', self.clearall)
+        self.entryx.bind('<F3>', self.clearall)
+
+        self.label2 = tk.Label(text="20%").grid(row=1, column=0)
+        self.twenty = tk.Entry(width=9)
+        self.twenty.grid(row=1, column=1)
+
+        self.label3 = tk.Label(text="21%").grid(row=2, column=0)
+        self.twentyone = tk.Entry(width=9)
+        self.twentyone.grid(row=2, column=1)
+
+        self.label4 = tk.Label(text="22%").grid(row=3, column=0)
+        self.twentytwo = tk.Entry(width=9)
+        self.twentytwo.grid(row=3, column=1)
+
+        self.all = tk.Text(width=19, height=2, font="ProggyTinyTTSZ", wrap=tk.WORD)
+        self.all.grid(row=4, column=0, columnspan=2)
+
+    def clearall(self, event):
+        self.twenty.delete(0, len(self.twenty.get()))
+        self.twentyone.delete(0, len(self.twentyone.get()))
+        self.twentytwo.delete(0, len(self.twentytwo.get()))
+
+        self.all.delete("1.0", tk.END)
+        self.entryx.delete(0, len(self.entryx.get()))
+        
+    def update_values(self, event):
+        x = self.entryx.get()
+        x = x.replace(",", ".")
+
+        self.twenty.delete(0, len(self.twenty.get()))
+        self.twenty.insert(0, '{0:.2f}'.format(roundup(x, '2400')))
+
+        self.twentyone.delete(0, len(self.twentyone.get()))
+        self.twentyone.insert(0, '{0:.3f}'.format(roundup(x, '2370')))
+
+        self.twentytwo.delete(0, len(self.twentytwo.get()))
+        self.twentytwo.insert(0, '{0:.3f}'.format(roundup(x, '2340')))
+
+        fl = float(x)
+
+        self.all.delete("1.0", tk.END)
+        self.all.insert("1.0", '{:.2f}, {:.4f}, {:.4f}, {:.4f}'.format(fl, fl * 2.4, fl * 2.37, fl * 2.34))
+
+
+root = tk.Tk()
+root.wm_title("Calc")
+root.geometry("135x114+268+583")
+root.wm_attributes("-topmost", 1)
+app = Application(master=root)
+app.mainloop()

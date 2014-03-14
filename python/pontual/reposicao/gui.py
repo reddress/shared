@@ -41,7 +41,7 @@ class Application(tk.Frame):
         # self.saveBtn = tk.Button(text="Save", command=self.save)
         self.copyBtn = tk.Button(text="Copy", command=self.copy)
         
-        self.info = tk.Text(width=45, height=6, font="ProggyTinyTTSZ")
+        self.info = tk.Text(width=42, height=6, font="ProggyTinyTTSZ")
 
         self.dummyLabel = tk.Label(text="PTL")
 
@@ -87,9 +87,10 @@ class Application(tk.Frame):
     def copy(self):
         info = self.info.get("1.0", tk.END)[:-1]
         self.clipboard_clear()
-        self.clipboard_append(info)
+        self.clipboard_append(self.codigoValue.get() + "\n" + info)
 
 root = tk.Tk()
+root.wm_title("Reposicao")
 root.geometry("272x114+1085+583")
 root.wm_attributes("-topmost", 1)
 app = Application(master=root)

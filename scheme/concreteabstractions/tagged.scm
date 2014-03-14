@@ -683,7 +683,7 @@ ark-volume
               (mod* x x))
             (mod* (mod-expt base (- exponent 1) modulus (+ times-mult 1))
                   base)))))
-(mod-expt 20931 939293981 12 0)
+(mod-expt 20931 9992332 1228 0)
 
 (define count-number-of-mod*
   (lambda (e)
@@ -693,3 +693,25 @@ ark-volume
             (+ 1 (count-number-of-mod* (/ e 2)))
             (+ 1 (count-number-of-mod* (- e 1)))))))
 (count-number-of-mod* 939293981)
+
+;; ex. 4.4 p. 94
+(define mod-expt-iter
+  (lambda (base exponent modulus)
+    (define mod*
+      (lambda (x y)
+        (remainder (* x y) modulus)))
+    (define mod-expt-helper
+      (lambda (result base exponent modulus)
+        (if (= exponent 0)
+            result
+            (if (even? exponent)
+                (mod-expt-helper result (mod* base base) (/ exponent 2) modulus)
+                (mod-expt-helper (mod* result base) base (- exponent 1) modulus)))))
+    (mod-expt-helper 1 base exponent modulus)))
+(mod-expt-iter 2 7 999)
+(mod-expt 2 7 999 0)
+(mod-expt-iter 20931 332234 1228)
+(mod-expt 20931 332234 1228 0)
+
+;; test line procedure p. 97
+(eps (line 0 0 1 1) "line")
