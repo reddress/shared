@@ -19,3 +19,15 @@
         1
         (* low (product (+ low 1) high)))))
 (product 3 5)
+
+;; joelonsoftware,com test yourself (link from perils of java schools)
+(define (accumulate combiner null-value l)
+  (if (null? l)
+      null-value
+      (combiner (car l)
+                (accumulate combiner
+                            null-value
+                            (cdr l)))))
+(define (sum-of-squares lst)
+  (accumulate (lambda (x y) (+ (* x x) y)) 0 lst))
+(sum-of-squares '(1 2 3 4 5))
