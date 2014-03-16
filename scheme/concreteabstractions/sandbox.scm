@@ -1,4 +1,4 @@
-;; (define scheme-folder "/home/heitor/shared/scheme/concreteabstractions/")
+(define scheme-folder "/home/heitor/shared/scheme/concreteabstractions/")
 
 (define (my-load file)
   (load (string-append scheme-folder file)))
@@ -31,3 +31,17 @@
 (define (sum-of-squares lst)
   (accumulate (lambda (x y) (+ (* x x) y)) 0 lst))
 (sum-of-squares '(1 2 3 4 5))
+
+(let my-loop
+    ((numbers '(3 -2 1 -5 3 2))
+     (pos '())
+     (neg '()))
+  (cond ((null? numbers) (list pos neg))
+        ((>= (car numbers) 0)
+         (my-loop (cdr numbers)
+                  (cons (car numbers) pos)
+                  neg))
+        (else
+         (my-loop (cdr numbers)
+                  pos
+                  (cons (car numbers) neg)))))

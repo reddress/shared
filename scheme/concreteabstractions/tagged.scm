@@ -91,7 +91,7 @@ ark-volume
 
 ;; ex. 1.8
 ;; (eps (stack (stack rcross-bb corner-bb)
-            (stack (quarter-turn-right test-bb) test-bb)) "ex1-8")
+;;            (stack (quarter-turn-right test-bb) test-bb)) "ex1-8")
 ;; (eps (stack rcross-bb corner-bb) "stack")
 
 ;; ex. 1.9
@@ -107,7 +107,7 @@ ark-volume
                                (quarter-turn-left left)))))
 
 ;; (eps (side-by-side (half-turn corner-bb)
-                   (quarter-turn-left test-bb)) "ex1-9")
+;;                   (quarter-turn-left test-bb)) "ex1-9")
 
 ;; ex. 1.10
 (define pinwheel
@@ -266,7 +266,9 @@ ark-volume
           (newline)
           (my-loop (- times 1) (+ counter 1) command))))
 
-(my-loop 12 1 subtract-the-first)
+;;(my-loop 12 1 subtract-the-first)
+
+
 
 ;; ex. 2.7
 (define sum-integers-from-to
@@ -523,7 +525,7 @@ ark-volume
 (define divides?
   (lambda (a b)
     (= (remainder b a) 0)))
-(perfect? 33550336)
+;; (perfect? 33550336)
 
 ;; ex. 3.6 p. 60
 (define sum-of-divisors-sqrt
@@ -616,6 +618,7 @@ ark-volume
            tolerance)))
     (find-approximation-from 1)))
 (approximate-phi 0.0001)
+
 
 ;; ex. 3.8 p. 64
 (approximate-phi 1e-79)
@@ -715,3 +718,197 @@ ark-volume
 
 ;; test line procedure p. 97
 (eps (line 0 0 1 1) "line")
+
+(define together-copies-of
+  (lambda (combine quantity thing)
+    (if (= quantity 1)
+        thing
+        (combine (together-copies-of combine
+                                     (- quantity 1)
+                                     thing)
+                 thing))))
+(define power-together
+  (lambda (base exponent)
+    (together-copies-of * exponent base)))
+(power-together 2 3)
+
+;; ex. 5.1 p. 112
+(define together-copies-of-iter
+  (lambda (combine quantity thing)
+    (define build-from-thing
+      (lambda (result counter)
+        (if (= counter quantity)
+            result
+            (build-from-thing (combine result thing) (+ counter 1)))))
+    (build-from-thing thing 1)))
+
+(define power-together-iter
+  (lambda (base exponent)
+    (together-copies-of-iter * exponent base)))
+(power-together-iter 2 3)
+
+(define stack-copies-of-iter
+  (lambda (quantity image)
+    (together-copies-of-iter stack quantity image)))
+;;(eps (stack-copies-of-iter 6 test-bb) "testbb6")
+
+;; ex. 5.2 p. 112
+(define together-copies-of-log
+  (lambda (combine quantity thing)
+    (define split
+      (lambda (quantity)
+        (if (= quantity 1)
+            thing
+            (if (even? quantity)
+                (let ((half (split (/ quantity 2))))
+                  (combine half half))
+                (combine (split (- quantity 1)) thing)))))
+    (split quantity)))
+(define power-together-log
+  (lambda (base exponent)
+    (together-copies-of-log * exponent base)))
+;; (power-together-log 2 999999999)
+;; (power-together 2 999999999)
+
+;; ex. 5.3 p. 112
+(define mystery
+  (lambda (a b)
+    (together-copies-of-log + a b)))
+;; multiplies a and b
+(mystery 1234567 300)
+
+(define num-digits-in-satisfying
+  (lambda (n test?)
+    (cond ((< n 0)
+           (num-digits-in-satisfying (- n) test?))
+          ((< n 10)
+           (if (test? n) 1 0))
+          ((test? (remainder n 10))
+           (+ (num-digits-in-satisfying (quotient n 10) test?)
+              1))
+          (else
+           (num-digits-in-satisfying (quotient n 10) test?)))))
+
+(define num-odd-digits
+  (lambda (n)
+    (num-digits-in-satisfying n odd?)))
+(num-odd-digits 29301)
+
+(define num-7s
+  (lambda (n)
+    (num-digits-in-satisfying n (lambda (n) (= n 7)))))
+(num-7s 1077712)
+
+(num-odd-digits (num-7s 1077727729))
+
+;; p. 39
+(define orig-num-digits
+  (lambda (n)
+    (if (< n 10)
+        1
+        (+ 1 (orig-num-digits (quotient n 10))))))
+
+;; ex. 5.4 p. 113
+(define num-digits
+  (lambda (n)
+    (num-digits-in-satisfying n (lambda (d) (>= d 0)))))
+(num-digits 92000)
+
+;; ex. 5.5 p. 113
+(define num-digits-in-satisfying-iter
+  (lambda (n test?)
+    (define sum-satisfying
+      (lambda (n counter)
+        (if (= 0 (quotient n 10))
+            (+ counter (if (test? n) 1 0))
+            (sum-satisfying (quotient n 10) (+ (if (test? (remainder n 10))
+                                                   1
+                                                   0) counter)))))
+    (sum-satisfying n 0)))
+(define num-odd-digits-iter
+  (lambda (n)
+    (num-digits-in-satisfying-iter n odd?)))
+(num-odd-digits-iter 9201)
+(define num-zeros
+  (lambda (n)
+    (num-digits-in-satisfying-iter n (lambda (i) (= i 0)))))
+(num-zeros -2030)
+
+;; ex. 5.6 p. 113
+(define sum-through
+  (lambda (low high f)
+    (if (> low high)
+        0
+        (+ (f low) (sum-through (+ low 1) high f)))))
+(sum-through 5 10 (lambda (i) i))
+(+ 5 6 7 8 9 10)
+(sum-through 5 10 square)
+
+;; tag-return-procedure p. 118
+(define make-multiplier
+  (lambda (scaling-factor)
+    (lambda (x)
+      (* x scaling-factor))))
+(define double (make-multiplier 2))
+(double 9)
+
+;; ex. 5.7 p. 119
+(define make-exponentiator
+  (lambda (exponent)
+    (lambda (base)
+      (expt base exponent))))
+(define square-exptr (make-exponentiator 2))
+(square 9)
+(define cube-exptr (make-exponentiator 3))
+(cube-exptr 2)
+
+(define make-repeated-version-of
+  (lambda (f)
+    (define the-repeated-version
+      (lambda (b n)  ; apply f n times to b
+        (if (= n 0)
+            b
+            (the-repeated-version (f b) (- n 1)))))
+    the-repeated-version))
+(define repeatedly-square
+  (make-repeated-version-of square))
+(repeatedly-square 2 3)
+
+(define sum-of-first
+  (lambda (n)
+    (if (= n 1)
+        1
+        (+ (sum-of-first (- n 1))
+           n))))
+(sum-of-first 10)
+
+;; ex. 5.8, 5.9 p. 120
+(define generate-fac
+  (lambda (f g)
+    (define step
+      (lambda (n)
+        (if (= n 1)
+            (g 1)
+            (f (g n) (step (- n 1))))))
+    step))
+(define identity
+  (lambda (i) i))
+(define gen-factorial
+  (generate-fac * identity))
+(gen-factorial 6)
+
+(define gen-sum-first
+  (generate-fac + identity))
+(gen-sum-first 10)
+
+(define gen-sum-squares
+  (generate-fac + square))
+(gen-sum-squares 30)
+
+;; ex. 5.10 p.121
+(define divisible-by-17?
+  (lambda (n)
+    (= 0 (remainder n 17))))
+(divisible-by-17? 3)
+
+;; copy sidebars p. 144, p. 152
