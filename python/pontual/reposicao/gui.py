@@ -3,6 +3,7 @@
 import os
 import shelve
 import tkinter as tk
+from datetime import datetime
 
 from produto import Produto
 
@@ -29,6 +30,7 @@ class Application(tk.Frame):
         self.vendasValue = tk.StringVar()
         self.vendasNowValue = tk.StringVar()
         self.caixaValue = tk.StringVar()
+        self.lastmodValue = tk.StringVar()
 
         self.codigo = tk.Entry(width=8, textvariable=self.codigoValue)
         
@@ -37,18 +39,20 @@ class Application(tk.Frame):
         self.vendas = tk.Entry(width=8, textvariable=self.vendasValue)
         self.vendasNow = tk.Entry(width=8, textvariable=self.vendasNowValue)
         self.caixa = tk.Entry(width=8, textvariable=self.caixaValue)
+        self.lastmod = tk.Entry(width=8, textvariable=self.lastmodValue)
         
         # self.saveBtn = tk.Button(text="Save", command=self.save)
         self.copyBtn = tk.Button(text="Copy", command=self.copy)
         
         self.info = tk.Text(width=42, height=6, font="ProggyTinyTTSZ")
 
-        self.dummyLabel = tk.Label(text="PTL")
+        # self.dummyLabel = tk.Label(text="PTL")
 
         self.clearBtn.grid(row=0, column=0)
         self.codigo.grid(row=0, column=1)
         self.loadBtn.grid(row=0, column=2)
-        self.dummyLabel.grid(row=0, column=3)
+        self.lastmod.grid(row=0, column=3)
+        # self.dummyLabel.grid(row=0, column=3)
         
         self.vendas.grid(row=1, column=0)
         self.vendasNow.grid(row=1, column=1)
@@ -73,6 +77,10 @@ class Application(tk.Frame):
             set(self.vendas, produto.vendas)
             set(self.caixa, produto.caixa)
             set(self.info, produto.info)
+            try:
+                set(self.lastmod, produto.lastmod.strftime("%d/%m/%y"))
+            except AttributeError:
+                set(self.lastmod, "? 14/03")
         except KeyError:
             set(self.info, "\nÚltimo container - saldo anterior")
         
@@ -82,12 +90,16 @@ class Application(tk.Frame):
             vendas = self.vendasValue.get()
             caixa = self.caixaValue.get()
             info = self.info.get("1.0", tk.END)[:-1]
-            pdb[codigo] = Produto(codigo, caixa, info, vendas)
+            pdb[codigo] = Produto(codigo, caixa, info, vendas, datetime.now())
 
     def copy(self):
         info = self.info.get("1.0", tk.END)[:-1]
         self.clipboard_clear()
-        self.clipboard_append(self.codigoValue.get() + "\n" + info)
+        codigoLine = (self.codigoValue.get() + ";;;;" +
+                      ";".join([self.vendasValue.get(),
+                                self.vendasNowValue.get(),
+                                self.caixaValue.get()]))
+        self.clipboard_append(codigoLine + "\n" + info)
 
 root = tk.Tk()
 root.wm_title("Reposicao")
