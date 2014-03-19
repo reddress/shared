@@ -1091,3 +1091,260 @@ ark-volume
                                                    2))))))
 
 (start-nim (make-game-state 3 5) pwn-strategy)
+
+;; ex. 7.1 p. 170
+;; you get (#<procedure> 2 3), because + is evaluated (like typing + then
+;; Enter in the interactive prompt
+(list '+ 2 3)
+
+(cdr (list + 2 3))
+
+'()  ;; empty list
+;; cannot just type ()
+
+(cons 3 '())  ;; (3)
+(cons 2 (cons 3 '()))  ;; (2 3)
+(cons 'HEAD '(TAIL))
+
+(define integers-from-to
+  (lambda (low high)
+    (if (> low high)
+        '()d
+        (cons low (integers-from-to (+ 1 low) high)))))
+;; outer value stays to the left
+(integers-from-to 3 8)
+
+(define simple-reverse
+  (lambda (lst)
+    (define rec
+      (lambda (lst acc)
+        (if (null? lst)
+            acc
+            (rec (cdr lst) (cons (car lst) acc)))))
+    (rec lst '())))
+
+(simple-reverse '(1 2 3))
+
+(define simple-copy
+  (lambda (lst)
+    (if (null? lst)
+        '()
+        (cons (car lst) (simple-copy (cdr lst))))))
+(simple-copy '(1 2 3))
+
+;; ex. 7.2 p. 172
+;; k must be >= low and <= high
+;; integers-from-to-including
+
+;; ex. 7.3 p. 172
+(define from-to-even
+  (lambda (a b)
+    (if (> a b)
+        '()
+        ;;        (if (even? a)
+        ;;            (cons a (from-to-even (+ 1 a) b))
+        ;;            (from-to-even (+ 1 a) b)))))
+        ((if (even? a)
+             (lambda (tail) (cons a tail))
+             (lambda (x) x))
+         (from-to-even (+ 1 a) b)))))
+(from-to-even 2 4)
+
+;; ex. 7.4 p. 172
+(define integers-from-to-faulty
+  (lambda (low high)
+    (define iter
+      (lambda (low lst)
+        (if (> low high)
+            lst
+            (iter (+ 1 low) (cons low lst)))))
+    (iter low '())))
+(integers-from-to-faulty 3 9)
+
+(define integers-from-to-good
+  (lambda (low high)
+    (define iter
+      (lambda (high lst)
+        (if (< high low)
+            lst
+            (iter (- high 1) (cons high lst)))))
+    (iter high '())))
+(integers-from-to-good 3 9)
+
+;; when iterating (the result lst as a function parameter),
+;; the first consed value ends up on the right side. Conses are applied before
+;; next iteration
+
+;; when using recursion (cons elt (function (cdr lst))),
+;; the first consed value ends up on the left side. Conses are delayed.
+
+;; Iteration:
+;; (define lst '())
+;; (cons 1 lst) -> (1)
+;; (cons 2 lst) -> (2 1)
+;; (cons 3 lst) -> (3 2 1)
+
+;; Recursion:
+;; (define lst '(1 2 3))
+;; (cons (car lst) (func (cdr lst)))
+;; (cons 1 (func (cdr lst))) -> (1 ...)
+;; (cons 1 (cons 2 (func (cdr lst)))) -> (1 2 ...)
+;; (cons 1 (cons 2 (cons 3 '()))) -> (1 2 3)
+
+(define iteration-cdr-down
+  (lambda (source result)
+    (if (null? source)
+        result
+        (iteration-cdr-down (cdr source) (cons (car source) result)))))
+(iteration-cdr-down '(1 2 3) '())
+
+(define recursion-cdr-down
+  (lambda (lst)
+    (if (null? lst)
+        '()
+        (cons (car lst) (recursion-cdr-down (cdr lst))))))
+(recursion-cdr-down '(1 2 3))
+
+;; ex. 7.5 p. 173
+(define cdr-down-base
+  (lambda (lst combiner)
+    (if (null? (cdr lst))
+        (car lst)
+        (combiner (car lst) (cdr-down-base (cdr lst) combiner)))))
+(cdr-down-base '(1 2 3) +)
+(cdr-down-base '(2 3 7) *)
+
+(cdr-down-base '(10 20 30 40 42 50) (lambda (x y) (+ 1 y)))
+;; no good for length, takes last element at face value, not 1
+
+(define cdr-down-init
+  (lambda (lst combiner initial)
+    (if (null? lst)
+        initial
+        (combiner (car lst) (cdr-down-init (cdr lst) combiner initial)))))
+(cdr-down-init '(1 2 3) + 0)
+(cdr-down-init '(2 3 7) * 1)
+(cdr-down-init '(10 20 30 40 50 99) (lambda (x y) (+ 1 y)) 0)  ;; yes
+
+;; ex. 7.6 p. 173
+(define count-occurrences
+  (lambda (lst elt)
+    (if (null? lst)
+        0
+        (+ (if (= (car lst) elt)
+               1
+               0)
+           (count-occurrences (cdr lst) elt)))))
+(count-occurrences '(1 2 3 1 3 4 1 1) 1)
+
+(define count-times-satisfies-predicate
+  (lambda (lst predicate)
+    (if (null? lst)
+        0
+        (+ (if (predicate (car lst))
+               1
+               0)
+           (count-times-satisfies-predicate (cdr lst) predicate)))))
+(count-times-satisfies-predicate '(1 2 3 4 6) even?)
+(count-times-satisfies-predicate '(1 2 3 3 3 2 1) (lambda (x) (= x 3)))
+
+;; ex. 7.7 p. 174
+(define my-list-ref
+  (lambda (lst n)
+    (if (= n 0)
+        (car lst)
+        (my-list-ref (cdr lst) (- n 1)))))
+(my-list-ref '(0 10 20 30 40 50) 5)
+
+;; ex. 7.8 p. 174
+;; a.
+(define list-contains?
+  (lambda (lst elt)
+    (if (null? lst)
+        #f
+        (if (= (car lst) elt)
+            #t
+            (list-contains? (cdr lst) elt)))))
+(list-contains? '(1 2 3) 2)
+(list-contains? '(1 2 3) 9)
+
+;; b.
+(define list-element-satisfies?
+  (lambda (lst predicate)
+    (if (null? lst)
+        #f
+        (if (predicate (car lst))
+            #t
+            (list-element-satisfies? (cdr lst) predicate)))))
+(list-element-satisfies? '(1 2 3) even?)
+(list-element-satisfies? '(1 3 5) even?)
+
+;; c.
+(define get-first
+  (lambda (lst predicate)
+    (if (null? lst)
+        'special-symbol--no-match
+        (if (predicate (car lst))
+            (car lst)
+            (get-first (cdr lst) predicate)))))
+(get-first '(1 2 3 4 5) even?)
+(get-first '(1 1 3 3) even?)
+
+;; d.
+(define all-satisfy?
+  (lambda (lst predicate)
+    (if (null? (cdr lst))
+        (predicate (car lst))
+        (if (predicate (car lst))
+            (all-satisfy? (cdr lst) predicate)
+            #f))))
+(all-satisfy? '(1 3 5) odd?)
+(all-satisfy? '(1 2 3) odd?)
+(all-satisfy? '(1 2 4 6 7 8) even?)
+
+;; e.
+;; position of first occurrence is returned
+(define find-position-of
+  (lambda (elt lst)
+    (define count-position
+      (lambda (count lst)
+        (if (= (car lst) elt)
+            count
+            (count-position (+ 1 count) (cdr lst)))))
+    (count-position 0 lst)))
+(find-position-of 50 '(10 20 30 40 50 6 3 2 50 1))
+
+;; returns reversed list of all occurrences
+(define find-position-of-multi
+  (lambda (elt lst)
+    (define count-position
+      (lambda (occurrences count lst)
+        (if (null? lst)
+            occurrences
+            (if (= (car lst) elt)
+                (count-position (cons count occurrences) (+ 1 count) (cdr lst))
+                (count-position occurrences (+ 1 count) (cdr lst))))))
+    (count-position '() 0 lst)))
+(find-position-of-multi 50 '(10 20 30 40 50 6 3 2 50 1 50))
+(find-position-of-multi 10 '(0 5 10))
+
+;; f.
+(define find-largest
+  (lambda (lst)
+    (define compare
+      (lambda (largest-so-far lst)
+        (if (null? lst)
+            largest-so-far
+            (if (> (car lst) largest-so-far)
+                (compare (car lst) (cdr lst))
+                (compare largest-so-far (cdr lst))))))
+    (compare (car lst) lst)))
+(find-largest '(-2 -3 -10 -3 -1 -4))
+(find-largest (integers-from-to 2 9))
+
+;; g.
+(define find-position-of-largest
+  (lambda (lst)
+    (find-position-of-multi (find-largest lst) lst)))
+(find-position-of-largest '(1 2 3 9 1 2 9 4))
+

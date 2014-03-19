@@ -45,3 +45,26 @@
          (my-loop (cdr numbers)
                   pos
                   (cons (car numbers) neg)))))
+
+(define my-dupl
+  (lambda (orig-lst)
+    (define rec
+      (lambda (lst acc)
+        (if (null? lst)
+            acc
+            (rec (cdr lst) (cons (car lst) (cons (car lst) acc))))))
+    (rec orig-lst '())))
+(my-dupl '(1 2 3))
+
+(cons 1 (cons 2 (cons 3 '())))  ;; (1 2 3)
+
+;; p. 175
+(define my-filter
+  (lambda (ok? lst)
+    (cond ((null? lst)
+           '())
+          ((ok? (car lst))
+           (cons (car lst) (my-filter ok? (cdr lst))))
+          (else
+           (my-filter ok? (cdr lst))))))
+(my-filter odd? (integers-from-to 1 9))
