@@ -106,3 +106,7 @@ Got another Sony MP3, this time with a discount [190]
 Slept in, arrived at Pontual around 9:30
 Wanted sushi, decided to have Kalili and Ofner instead [42]
 Start logging sleeping times
+Couldn't fall asleep easily, had idea of putting Pontual data on github pages
+
+2014-03-20 Thu
+Set alarm for 6 or 6:30, kept snoozing at 30-minute intervals until 9:15
