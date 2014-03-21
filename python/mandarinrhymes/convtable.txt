@@ -23,6 +23,7 @@ wai,uai
 wei,ui
 wan,uan
 wen,un
+wang,uang
 weng,ueng
 miu,miou
 diu,diou
@@ -35,4 +36,13 @@ yu,u:
 ju,ju:
 qu,qu:
 xu,xu:
+yue,iue
+yuan,iuan
+juan,jiuan
+quan,qiuan
+xuan,xiuan
+yun,iun
+jun,jiun
+qun,qiun
+xun,xiun
 yong,iong
