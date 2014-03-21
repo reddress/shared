@@ -18,4 +18,7 @@ for a len-3 word, suggest 3-deep, 2-deep and 1-deep rhymes:
 -an3 -ang4 -ui4
 -ang4 -ui4
 -ui4
+
+make endings uniform
+http://en.wikipedia.org/wiki/Pinyin_table
 """
