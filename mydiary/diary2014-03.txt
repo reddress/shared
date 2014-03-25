@@ -128,3 +128,9 @@ Tested washer several times, looks like rinse and spin happens together
 Feeling only a bit better
 Lunch at Sujinho with Tio David, got the bisteca, calabresa and mandioca
 Reading about double-entry accounting
+
+2014-03-24 Mon
+Slept in until 10 am
+Tested washing machine again, conclusion is that econ mode should be off for
+typical operation
+Started Django app for double-entry accounting
