@@ -13,6 +13,14 @@
         <td width="10%">Credit</td>
         <td width="10%">Balance</td>
       </thead>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>Last balance</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>{{ last_balance }}</td>
+      </tr>
       <tbody>
       {% autoescape off %}
       {% for transaction in transactions %}

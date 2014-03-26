@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from itertools import chain
 from datetime import datetime, timedelta
 
@@ -67,15 +69,18 @@ def show_account(request, short_name):
     income_accounts = Account.objects.filter(type__name="Income").order_by('short_name')
     
     account = get_object_or_404(Account, short_name=short_name)
+    last_balance = get_balance_not_shown(account)
+    
     debit_transactions = Transaction.objects.filter(debit=account,
-                                date__gt=(datetime.today()-timedelta(days=31)))
+                            date__gte=(datetime.today()-timedelta(days=31)))
     credit_transactions = Transaction.objects.filter(credit=account,
-                                date__gt=(datetime.today()-timedelta(days=31)))
+                            date__gte=(datetime.today()-timedelta(days=31)))
     raw_transactions = sorted(chain(debit_transactions,
                                     credit_transactions),
                               key=lambda tr: tr.date)
     all_transactions = []
-    balance = 0
+    balance = get_balance_not_shown(account)
+    print(balance)
     for transaction in raw_transactions:
         row_data = get_transaction_html(transaction, account, balance)
         all_transactions.append(row_data[0])
@@ -89,14 +94,13 @@ def show_account(request, short_name):
                    'expense_accounts': expense_accounts,
                    'liability_accounts': liability_accounts,
                    'equity_accounts': equity_accounts,
-                   'income_accounts': income_accounts})
+                   'income_accounts': income_accounts,
+                   'last_balance': "%.2f" % last_balance,})
 
-def get_balance(account):
+def get_balance_html(account):
     balance = 0
-    debit_transactions = Transaction.objects.filter(debit=account,
-                                date__gt=(datetime.today()-timedelta(days=31)))
-    credit_transactions = Transaction.objects.filter(credit=account,
-                                date__gt=(datetime.today()-timedelta(days=31)))
+    debit_transactions = Transaction.objects.filter(debit=account)
+    credit_transactions = Transaction.objects.filter(credit=account)
     raw_transactions = sorted(chain(debit_transactions,
                                     credit_transactions),
                               key=lambda tr: tr.date)
@@ -105,7 +109,37 @@ def get_balance(account):
         if str(transaction.credit) == str(account.short_name):
             sign *= -1
         balance += sign * transaction.value
-    return '<tr><td><a href="/alesheets/account/%s/">%s</a></td><td>%.2f</td></tr>' % (account.short_name, account.short_name, balance)
+    return '<tr><td><a href="/alesheets/account/%s/">%s</a></td><td align="right">%.2f</td></tr>' % (account.short_name, account.short_name, balance)
+
+def get_balance_value(account):
+    balance = 0
+    debit_transactions = Transaction.objects.filter(debit=account)
+    credit_transactions = Transaction.objects.filter(credit=account)
+    raw_transactions = sorted(chain(debit_transactions,
+                                    credit_transactions),
+                              key=lambda tr: tr.date)
+    for transaction in raw_transactions:
+        sign = account.type.sign_modifier
+        if str(transaction.credit) == str(account.short_name):
+            sign *= -1
+        balance += sign * transaction.value
+    return balance
+
+def get_balance_not_shown(account):
+    balance = 0
+    debit_transactions = Transaction.objects.filter(debit=account,
+                            date__lt=(datetime.today()-timedelta(days=31)))
+    credit_transactions = Transaction.objects.filter(credit=account,
+                            date__lt=(datetime.today()-timedelta(days=31)))               
+    raw_transactions = sorted(chain(debit_transactions,
+                                    credit_transactions),
+                              key=lambda tr: tr.date)
+    for transaction in raw_transactions:
+        sign = account.type.sign_modifier
+        if str(transaction.credit) == str(account.short_name):
+            sign *= -1
+        balance += sign * transaction.value
+    return balance
 
 @login_required
 def show_balances(request):
@@ -118,13 +152,16 @@ def show_balances(request):
     account_types = [asset_accounts, expense_accounts, liability_accounts,
                      equity_accounts, income_accounts]
     type_balances = []
+    type_totals = []
     for type in account_types:
-        type_balances.append(map(get_balance, type))
+        # map get_balance for all accounts in asset_accounts,
+        # expense_accounts, etc. then place it in type_balances
+        type_balances.append(map(get_balance_html, type))
+        type_totals.append("%.2f" % sum(map(get_balance_value, type)))
         
-    #accounts = Account.objects.all()
-    #balances = map(get_balance, accounts)
     return render(request, 'alesheets/showbalances.html',
                   {'type_balances': type_balances,
+                   'type_totals': type_totals,
                    'asset_accounts': asset_accounts,
                    'expense_accounts': expense_accounts,
                    'liability_accounts': liability_accounts,
