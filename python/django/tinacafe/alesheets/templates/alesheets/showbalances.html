@@ -1,0 +1,22 @@
+<html>
+  <body>
+    {% include "alesheets/allaccts.html" %}
+
+    <table>
+      <tr>
+        {% for type in type_balances %}
+        <td valign="top">
+          <table border="1">
+            {% autoescape off %}
+            {% for balance in type %}
+            {{ balance }}
+            {% endfor %}
+            {% endautoescape %}
+          </table>
+        </td>
+        {% endfor %}
+      </tr>
+    </table>
+  </body>
+</html>
+
