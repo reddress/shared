@@ -1,3 +1,6 @@
 Add common header template with radio buttons for Account types, which fills
 an area with all accounts (short names) under that Account type
 
+page with balances for all accounts
+
+(check gnucash image) Create Opening balances under Equity
