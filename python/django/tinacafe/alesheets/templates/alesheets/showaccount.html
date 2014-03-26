@@ -1,6 +1,8 @@
 <html>
   <body>
-    {{ accountname }}
+    {% include "alesheets/allaccts.html" %}
+    {{ account_name }} ({{ account_short_name }})
+    <a href="/admin/alesheets/transaction/add/" target="alesheets_admin">Add Transaction</a>
 
     <table border="1">
       <thead>

@@ -1,11 +1,27 @@
 from itertools import chain
+from datetime import datetime, timedelta
 
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .models import Owner, AccountType, Account, Transaction
 
+@login_required
 def index(request):
-    return render(request, 'alesheets/index.html')
+    asset_accounts = Account.objects.filter(type__name="Asset")
+    expense_accounts = Account.objects.filter(type__name="Expense")
+    liability_accounts = Account.objects.filter(type__name="Liability")
+    equity_accounts = Account.objects.filter(type__name="Equity")
+    income_accounts = Account.objects.filter(type__name="Income")
+
+    return render(request, 'alesheets/index.html',
+                  { 'asset_accounts': asset_accounts,
+                    'expense_accounts': expense_accounts,
+                    'liability_accounts': liability_accounts,
+                    'equity_accounts': equity_accounts,
+                    'income_accounts': income_accounts })
 
 def get_transaction_html(transaction, account, balance):
     sign = account.type.sign_modifier
@@ -42,11 +58,19 @@ def get_transaction_html(transaction, account, balance):
     
     return (table_row, new_balance)
         
-
+@login_required
 def show_account(request, short_name):
+    asset_accounts = Account.objects.filter(type__name="Asset")
+    expense_accounts = Account.objects.filter(type__name="Expense")
+    liability_accounts = Account.objects.filter(type__name="Liability")
+    equity_accounts = Account.objects.filter(type__name="Equity")
+    income_accounts = Account.objects.filter(type__name="Income")
+    
     account = get_object_or_404(Account, short_name=short_name)
-    debit_transactions = Transaction.objects.filter(debit=account)
-    credit_transactions = Transaction.objects.filter(credit=account)
+    debit_transactions = Transaction.objects.filter(debit=account,
+                                date__gt=(datetime.today()-timedelta(days=31)))
+    credit_transactions = Transaction.objects.filter(credit=account,
+                                date__gt=(datetime.today()-timedelta(days=31)))
     raw_transactions = sorted(chain(debit_transactions,
                                     credit_transactions),
                               key=lambda tr: tr.date)
@@ -57,12 +81,29 @@ def show_account(request, short_name):
         all_transactions.append(row_data[0])
         balance = row_data[1]
         
-    #all_transactions = map(lambda tr: get_transaction_html(tr, account),
-    #                       all_transactions)
+    return render(request, 'alesheets/showaccount.html',
+                  { 'account_name': account.name,
+                    'account_short_name': account.short_name,
+                    'transactions': all_transactions,
+                    'asset_accounts': asset_accounts,
+                    'expense_accounts': expense_accounts,
+                    'liability_accounts': liability_accounts,
+                    'equity_accounts': equity_accounts,
+                    'income_accounts': income_accounts })
+                    
 
-    # compute balance
-    # something like
-    # for transaction in all_transactions[::-1]:
-    # 
-    return render(request, 'alesheets/showaccount.html', { 'accountname': account.name, 'transactions': all_transactions })
 
+def user_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponseRedirect('/alesheets/')
+    else:
+        return HttpResponse('User not found or password incorrect. <a href="/alesheets/login/">try again</a>')
+
+def user_logout(request):
+    logout(request)
+    return render(request, 'registration/logout.html')
