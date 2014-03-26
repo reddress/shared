@@ -139,3 +139,4 @@ Using python2.7 on ASUS because py3 does not seem to have sqlite3 support
 2014-03-25 Tue
 Feeling better, but still not waking up early
 Noticed sucralose on yogurt, must pay more attention to labels before buying
+Double entry app seems mostly finished

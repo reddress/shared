@@ -38,6 +38,6 @@ class Transaction(models.Model):
     def __unicode__(self):
         return "%s/%s/%s %s %s" % (self.date.day, self.date.month,
                                    self.date.year,
-                                   self.description[:17], self.value)
+                                   self.description[:80], self.value)
     def __str__(self):
         return self.__unicode__()
