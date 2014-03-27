@@ -29,5 +29,11 @@
                             null-value
                             (cdr l)))))
 (define (sum-of-squares lst)
-  (accumulate (lambda (x y) (+ (* x x) y)) 0 lst))
+  (accumulate (lambda (x y) (
+                             + (* x x) y)) 0 lst))
 (sum-of-squares '(1 2 3 4 5))
+
+(define (recursive-log n)
+  (if (= n 1)
+      0
+      (+ 1 (recursive-log (/ n 2)))))
