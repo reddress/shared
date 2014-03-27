@@ -1015,9 +1015,9 @@ ark-volume
     ;;(play-with-turns game-state 'human strategy)))
     (play-with-turns game-state 'noob strategy)))
 
-(define noob-vs-cpu
-  (lambda (game-state strategy)
-    (
+;; (define noob-vs-cpu
+;;  (lambda (game-state strategy)
+;;    (
 
 ;; ex. 6.13 p. 156
 (define make-move-instruction
@@ -1090,7 +1090,7 @@ ark-volume
                                                    1
                                                    2))))))
 
-(start-nim (make-game-state 3 5) pwn-strategy)
+;; (start-nim (make-game-state 3 5) pwn-strategy)
 
 ;; ex. 7.1 p. 170
 ;; you get (#<procedure> 2 3), because + is evaluated (like typing + then
@@ -1109,7 +1109,7 @@ ark-volume
 (define integers-from-to
   (lambda (low high)
     (if (> low high)
-        '()d
+        '()
         (cons low (integers-from-to (+ 1 low) high)))))
 ;; outer value stays to the left
 (integers-from-to 3 8)
@@ -1171,6 +1171,8 @@ ark-volume
     (iter high '())))
 (integers-from-to-good 3 9)
 
+;; tag-iteration tag-recursion tag-build-list
+;;
 ;; when iterating (the result lst as a function parameter),
 ;; the first consed value ends up on the right side. Conses are applied before
 ;; next iteration
@@ -1348,3 +1350,36 @@ ark-volume
     (find-position-of-multi (find-largest lst) lst)))
 (find-position-of-largest '(1 2 3 9 1 2 9 4))
 
+;; ex. 7.9 p. 174
+;; a.
+(define first-less-than-second
+  (lambda (lst1 lst2)
+    (if (or (null? lst1) (null? lst2))
+        #t
+        (if (>= (car lst1) (car lst2))
+            #f
+            (first-less-than-second (cdr lst1) (cdr lst2))))))
+(first-less-than-second '(1 2 3 4 6) '(2 3 4 5))
+
+;; b.
+(define lists-compare?
+  (lambda (predicate lst1 lst2)
+    (if (or (null? lst1) (null? lst2))
+        #t
+        (if (not (predicate (car lst1) (car lst2)))
+            #f
+            (lists-compare? predicate (cdr lst1) (cdr lst2))))))
+(define list-<
+  (lambda (lst1 lst2)
+    (lists-compare? < lst1 lst2)))
+(list-< '(1 2 3 4) '(2 3 2 5))
+
+(define filter
+  (lambda (ok? lst)
+    (cond ((null? lst)
+           '())
+          ((ok? (car lst))
+           (cons (car lst) (filter ok? (cdr lst))))
+          (else
+           (filter ok? (cdr lst))))))
+(filter odd? (integers-from-to 1 14))
