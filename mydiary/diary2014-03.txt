@@ -140,3 +140,9 @@ Using python2.7 on ASUS because py3 does not seem to have sqlite3 support
 Feeling better, but still not waking up early
 Noticed sucralose on yogurt, must pay more attention to labels before buying
 Double entry app seems mostly finished
+
+2014-03-26 Wed
+Woke up at 7, then decided to sleep until 9
+Added several features to double entry app, now called ALEsheets, use at home
+Excited about ALEsheets, then somewhat let down because little data is entered
+each day. Feeling empty inside.
