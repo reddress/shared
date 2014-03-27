@@ -64,7 +64,7 @@ Kalili lamb and sides [20]
 Played some Chrono Trigger
 
 2014-03-12 Wed
-Woke up around 9:20, for orthodontist, wire feels loose
+Woke up around 9:20, for orthodontist, wire feels loose [380]
 Xepa da Armenia on Pedro Vicente, good deal, two drinks and some feijoada [17]
 Looked for Brazilian DVDs at Saraiva, for Ethan, liked Tieta and Um so coracao
 
@@ -79,3 +79,70 @@ Woke up at 7:20
 Developed spreadsheet for counting prices and started button GUI for codigos
 Looked for MP3 player at Frei Caneca, bought Romero Britto heart card instead
 Bacon and alho poro pizza, did not like alho poro very much [34]
+
+2014-03-15 Sat
+Went to Santa Ifigenia to buy MP3 player [30]
+Got pirated Enya, Laura Pausini, and Nirvana discs, Laura is quality
+
+2014-03-16 Sun
+Woke up around 10:30
+Magazine Luiza Lavadora Brastemp [1100]
+Checked out Viaduto Sta. Ifigenia to replace MP3 player during the week
+
+2014-03-17 Mon
+Woke up around 8:30
+Went to Sta. Ifigenia to replace YJ MP3, also found Sony Walkman MP3 [199]
+Registered 4-digit code at Ponte Pequena
+Realized that YJ MP3's 4GB claim is like the movies' million dollar suitcase
+that has few thousands covering worthless shredded paper
+
+2014-03-18 Tue
+Woke up around 7, went to gym and did lower body, second floor still closed
+Sent Viscotears by Prioritario [25]
+Dr. Alexandre, weighed 75,6 kg, figured to keep meds same because blood is ok
+Got another Sony MP3, this time with a discount [190]
+
+2014-03-19 Wed
+Slept in, arrived at Pontual around 9:30
+Wanted sushi, decided to have Kalili and Ofner instead [42]
+Start logging sleeping times
+Couldn't fall asleep easily, had idea of putting Pontual data on github pages
+
+2014-03-20 Thu
+Set alarm for 6 or 6:30, kept snoozing at 30-minute intervals until 9:15
+Went to sushi house and mall, to test what happens when Itau saldo is used up
+Talked to Jennie again over Facebook
+
+2014-03-21 Fri
+Woke up at 9, snoozed again
+Red jazz for about a week already
+Worked on Mandarin rhyming dictionary
+
+2014-03-22 Sat
+Feeling a bit down, better after going for a walk, which was after the washer
+was delivered, around 4 pm
+Sushi white fish [120]
+Tested washer several times, looks like rinse and spin happens together
+
+2014-03-23 Sun
+Feeling only a bit better
+Lunch at Sujinho with Tio David, got the bisteca, calabresa and mandioca
+Reading about double-entry accounting
+
+2014-03-24 Mon
+Slept in until 10 am
+Tested washing machine again, conclusion is that econ mode should be off for
+typical operation
+Started Django app for double-entry accounting
+Using python2.7 on ASUS because py3 does not seem to have sqlite3 support
+
+2014-03-25 Tue
+Feeling better, but still not waking up early
+Noticed sucralose on yogurt, must pay more attention to labels before buying
+Double entry app seems mostly finished
+
+2014-03-26 Wed
+Woke up at 7, then decided to sleep until 9
+Added several features to double entry app, now called ALEsheets, use at home
+Excited about ALEsheets, then somewhat let down because little data is entered
+each day. Feeling empty inside.

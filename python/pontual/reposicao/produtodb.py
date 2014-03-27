@@ -4,6 +4,7 @@ os.chdir("c:/Users/Heitor/Desktop/emacs-24.3/bin/shared/python/pontual/reposicao
 import shelve
 
 from produto import Produto
+from datetime import datetime
 
 SHELF_FILE = "c:/Users/Heitor/Desktop/emacs-24.3/bin/shared/python/pontual/reposicao/produtodb"
 

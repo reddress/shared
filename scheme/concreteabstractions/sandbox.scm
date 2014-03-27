@@ -1,4 +1,4 @@
-;; (define scheme-folder "/home/heitor/shared/scheme/concreteabstractions/")
+(define scheme-folder "/home/heitor/shared/scheme/concreteabstractions/")
 
 (define (my-load file)
   (load (string-append scheme-folder file)))
@@ -37,3 +37,40 @@
   (if (= n 1)
       0
       (+ 1 (recursive-log (/ n 2)))))
+
+(let my-loop
+    ((numbers '(3 -2 1 -5 3 2))
+     (pos '())
+     (neg '()))
+  (cond ((null? numbers) (list pos neg))
+        ((>= (car numbers) 0)
+         (my-loop (cdr numbers)
+                  (cons (car numbers) pos)
+                  neg))
+        (else
+         (my-loop (cdr numbers)
+                  pos
+                  (cons (car numbers) neg)))))
+
+(define my-dupl
+  (lambda (orig-lst)
+    (define rec
+      (lambda (lst acc)
+        (if (null? lst)
+            acc
+            (rec (cdr lst) (cons (car lst) (cons (car lst) acc))))))
+    (rec orig-lst '())))
+(my-dupl '(1 2 3))
+
+(cons 1 (cons 2 (cons 3 '())))  ;; (1 2 3)
+
+;; p. 175
+(define my-filter
+  (lambda (ok? lst)
+    (cond ((null? lst)
+           '())
+          ((ok? (car lst))
+           (cons (car lst) (my-filter ok? (cdr lst))))
+          (else
+           (my-filter ok? (cdr lst))))))
+(my-filter odd? (integers-from-to 1 9))
