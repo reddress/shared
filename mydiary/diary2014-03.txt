@@ -146,3 +146,13 @@ Woke up at 7, then decided to sleep until 9
 Added several features to double entry app, now called ALEsheets, use at home
 Excited about ALEsheets, then somewhat let down because little data is entered
 each day. Feeling empty inside.
+
+2014-03-27 Thu
+Tried to install Trisquel and GNewSense on ASUS, neither worked at all
+Retiring ASUS Taiwan laptop
+Added balance and 31-day window features to ALEsheets
+
+2014-03-28 Fri
+Showed up too late to Rodolfo Miranda, everything was already packed
+Walked to Antonio de Andrade, will look at alternate route
+Sushi white fish
