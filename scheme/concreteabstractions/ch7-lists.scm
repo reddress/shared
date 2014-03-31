@@ -259,4 +259,30 @@
                    (lambda (movie)
                      (member 'fellini (movie-director movie)))
                    (lambda (movie) (cons (movie-title movie) (movie-director movie))))
-                     
+
+;; ex. 7.48 p. 207
+(define sub1-each
+  (lambda (nums)
+    (define help
+      (lambda (nums results)
+        (if (null? nums)
+            (reverse results)
+            (help (cdr nums)
+                  (cons (- (car nums) 1) results)))))
+    (help nums '())))
+(sub1-each '(3 6 9))
+
+;; ex. 7.49 p. 208
+(define all-are
+  (lambda (predicate)
+    (define tester
+      (lambda (lst)
+        (cond ((null? lst) #f)  ;; empty list
+              ((null? (cdr lst))
+               (predicate (car lst)))  ;; one element
+              ((predicate (car lst))
+               (tester (cdr lst)))
+              (else #f))))
+    tester))
+((all-are even?) '(2 50 92 2))
+

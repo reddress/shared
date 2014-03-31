@@ -94,3 +94,33 @@
                 (cons (root tree)
                       (inorder (right-subtree tree)))))))
 (inorder (partial-binary-tree))
+
+(partial-binary-tree)
+
+(define offset
+  (lambda (amount)
+    (if (= amount 0)
+        (flush-output)
+        (begin
+          (display " ")
+          (offset (- amount 1))))))
+
+(define display-binary-tree
+  (lambda (tree level)
+    (if (empty-tree? tree)
+        (flush-output)
+        (begin
+          (display level)
+          (display "Root: ")
+          (display (root tree))
+          (newline)
+          (display level)
+          (display "LEFT: ")
+          (display-binary-tree (left-subtree tree) (+ 1 level))
+          (newline)
+          (display level)
+          (offset
+           40)
+          (display "RIGHT: ")
+          (display-binary-tree (right-subtree tree) (+ 1 level))))))
+(display-binary-tree (sample-binary-tree) 0)
