@@ -39,18 +39,44 @@
                          (cdr question))
                #f))
           ((equal? (car pattern) '...) #t)
+          ((equal? (car pattern) '_)
+           (matches? (cdr pattern) (cdr question)))
           ((equal? (car pattern) (car question))
            (matches? (cdr pattern)
                      (cdr question)))
           (else #f))))
+(matches? '(who is the _ _ of _) '(who is the lead actor of casablanca))
 
 (define substitutions-in-to-match
-  "You need to write this procedure (Exercises 7.26, 7.30).")
+  (lambda (pattern question)
+    (define build-substitution-list
+      (lambda (pattern question result)
+        (if (null? pattern)
+            result
+            (cond ((equal? (car pattern) '...)
+                   (append result (list question)))
+                  ((equal? (car pattern) '_)
+                   (build-substitution-list (cdr pattern) (cdr question) (append result (list (car question)))))
+                  (else
+                   (build-substitution-list (cdr pattern) (cdr question) result))))))
+    (build-substitution-list pattern question '())))
+(substitutions-in-to-match '(foo _ ...) '(foo bar baz bat))
 
 ;; Review Problems
 
 (define all-are
-  "You need to write this procedure (Exercise 7.49).")
+  (lambda (predicate)
+    (define tester
+      (lambda (lst)
+        (if (or (null? lst) (not (predicate (car lst))))
+            #f
+            (if (null? (cdr lst))
+                (predicate (car lst))
+                (tester (cdr lst))))))
+    tester))
+((all-are positive?) '(1 2 -3 4 2))
+((all-are even?) '(2 4 3 6))
+
 
 ;; Chapter 8: Trees
 
@@ -68,11 +94,55 @@
 
 ;; 10.2  Syntax
 
+
 (define keyword?
-  "You need to write this procedure (Exercise 10.1).")
+  (lambda (sym)
+    (member sym '(lambda quote if))))
 
 (define name?
-  "You need to write this procedure (Exercise 10.1).")
+  (lambda (sym)
+    (and (symbol? sym) (not (keyword? sym)))))
+(name? 'iff)
+
+
+(define syntax-ok?
+  (lambda (pmse)
+    (define loop
+      (lambda (p/a-list)
+        (cond ((null? p/a-list) #f)
+              ((matches? (pattern (car p/a-list)) pmse)
+               (apply (action (car p/a-list))
+                      (substitutions-in-to-match (pattern (car p/a-list))
+                                                 pmse)))
+              (else (loop (cdr p/a-list))))))
+    (cond ((or (number? pmse)
+               (string? pmse)
+               (boolean? pmse))
+           #t)
+          ((name? pmse) #t)
+          ((list? pmse)
+           (loop micro-scheme-syntax-ok?-p/a-list))
+          (else #f))))
+
+(define micro-scheme-syntax-ok?-p/a-list
+  (list
+   (make-pattern/action '(if _ _ _)
+                        (lambda (test if-true if-false)
+                          (and (syntax-ok? test)
+                               (syntax-ok? if-true)
+                               (syntax-ok? if-false))))
+   (make-pattern/action '(lambda _ _)
+                        (lambda (parameters body)
+                          (and (list? parameters)
+                               ((all-are name?) parameters)
+                               (syntax-ok? body))))
+   (make-pattern/action '(quote _)
+                        (lambda (datum) #t))
+   (make-pattern/action '(...)  ;; must come last
+                        (lambda (pmses)
+                          ((all-are syntax-ok?) pmses)))))
+
+(syntax-ok? '())
 
 ;; 10.3  Micro-Scheme
 
@@ -80,11 +150,13 @@
   (lambda ()
     (display ";Enter Micro-Scheme expression:")
     (newline)
+    (flush-output)
     (let ((expression (read)))
       (let ((value (evaluate (parse expression))))
         (display ";Micro-Scheme value: ")
         (write value)
-        (newline)))
+        (newline)
+        (flush-output)))
     (read-eval-print-loop)))
 
 (define parse
@@ -92,7 +164,7 @@
     (define loop
       (lambda (p/a-list)
         (cond ((null? p/a-list)
-               (error "invalid expression" expression))
+               (error "invalid expression in p/a list" expression))
               ((matches? (pattern (car p/a-list)) expression)
                (apply (action (car p/a-list))
                       (substitutions-in-to-match
@@ -107,7 +179,7 @@
            (make-constant-ast expression))
           ((list? expression)
            (loop micro-scheme-parsing-p/a-list))
-          (else (error "invalid expression" expression)))))
+          (else (error "invalid expression in main parse" expression)))))
 	   
 (define micro-scheme-parsing-p/a-list
   (list
@@ -236,3 +308,5 @@
                                           (car parameters)
                                           body-ast))))))
       (loop parameters arguments body-ast))))
+
+(read-eval-print-loop)

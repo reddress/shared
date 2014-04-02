@@ -11,3 +11,4 @@
 30 mar 2014 - 7 pm - p. 216 binary tree
 31 mar 2014 - 6 pm - p. 231 tries
 1 apr 2014 - 6 pm - p. 280 micro scheme expression
+2 apr 2014 - 6 pm - p. 349 iteration in assembly
