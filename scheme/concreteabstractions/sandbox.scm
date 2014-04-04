@@ -74,3 +74,13 @@
           (else
            (my-filter ok? (cdr lst))))))
 (my-filter odd? (integers-from-to 1 9))
+
+(define check-num
+  (lambda (n)
+    (cond ((< n 0)
+           'negative)
+          ((= n 0)
+           'zero)
+          ((> n 0)
+           'positive))))
+(check-num 2)
