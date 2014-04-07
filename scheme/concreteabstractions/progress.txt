@@ -14,3 +14,4 @@
 2 apr 2014 - 6 pm - p. 349 iteration in assembly
 3 apr 2014 - 6 pm - p. 441 ra stack
 4 apr 2014 - 6 pm - p. 497 ex. 14.2
+7 apr 2014 - stop

@@ -82,5 +82,6 @@
           ((= n 0)
            'zero)
           ((> n 0)
+           
            'positive))))
 (check-num 2)

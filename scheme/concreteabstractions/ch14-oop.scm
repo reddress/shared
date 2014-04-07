@@ -50,3 +50,21 @@
 ;; when num-items equals vector length, the procedure enters an infinite loop
 
 ;; ex. 14.2 p. 497
+(define vector-copy!
+  (lambda (source dest)
+    (let ((len (vector-length source)))
+      (define iter
+        (lambda (i)
+          (display i)
+          (newline)
+          (if (= i len)
+              'done
+              (begin
+                (vector-set! dest i (vector-ref source i))
+                (iter (+ 1 i))))))
+      (iter 0))))
+(define v1 (make-vector 3 2))
+(define v2 (make-vector 5 9))
+(vector-copy! v1 v2)
+
+;; ex. 14.3 p. 497

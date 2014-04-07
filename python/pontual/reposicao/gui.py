@@ -82,7 +82,7 @@ class Application(tk.Frame):
             except AttributeError:
                 set(self.lastmod, "? 14/03")
         except KeyError:
-            set(self.info, "\nÚltimo container - saldo anterior")
+            set(self.info, "\nÚltimo container - ")
         
     def save(self, event):
         codigo = self.codigoValue.get()
