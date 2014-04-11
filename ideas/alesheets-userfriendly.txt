@@ -24,3 +24,6 @@ recurring transactions
 
 "every 30 days" or "every nth day of the month" or "every n months/days"
 
+---------
+
+assign budget for an account

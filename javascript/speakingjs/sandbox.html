@@ -1,0 +1,74 @@
+<html>
+  <body>
+    <script>
+
+function print() {
+  console.log.apply(console, arguments);
+}
+
+function applier(f, n) {
+  return f(n);
+}
+
+console.log(applier(function (x) { return x * x; }, 9));
+
+function f(x) {
+  return x * x;
+}
+
+function makeIncrementor(start) {
+  return function () {
+    start++;
+    return start;
+  }
+}
+
+var inc = makeIncrementor(5);
+
+print(f());
+
+function accumulate(combiner, nullValue, l) {
+  if (l.length == 0) {
+    return nullValue;
+  }
+  var first = l.shift();
+  return combiner(first, accumulate(combiner, nullValue, l));
+}
+
+function sumOfSquares(lst) {
+  // return accumulate(function(), 1, lst.slice(1));  // phail
+  return accumulate(function(first, rest) { return first * first + rest}, 0, lst);
+}
+
+var pushedInt = [];
+var pushedFnResult = [];
+for (var i = 0; i < 5; i++) {
+  pushedInt.push(i);
+  pushedFnResult.push(function () { return i });
+}
+print(pushedInt);
+print(pushedFnResult[2]());
+
+var resultIIFE = [];
+for (var i = 0; i < 5; i++) {
+  (function () {
+    var i2 = i;
+    resultIIFE.push(function () { return i2; });
+  }());
+}
+
+var resultIIFE2 = [];
+for (var i = 0; i < 5; i++) {
+  (function (i) {
+    resultIIFE2.push(function () { return i*i; });
+  }(i));
+}
+print(resultIIFE2[4]());
+
+"some comment"
+
+print("after comment")
+
+    </script>
+  </body>
+</html>

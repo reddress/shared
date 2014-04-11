@@ -31,7 +31,8 @@ class Application(tk.Frame):
         self.twentytwo = tk.Entry(width=9)
         self.twentytwo.grid(row=3, column=1)
 
-        self.all = tk.Text(width=19, height=2, font="ProggyTinyTTSZ", wrap=tk.WORD)
+        # self.all = tk.Text(width=19, height=2, font="ProggyTinyTTSZ", wrap=tk.WORD)
+        self.all = tk.Entry(width=8)
         self.all.grid(row=4, column=0, columnspan=2)
 
     def clearall(self, event):
@@ -39,7 +40,9 @@ class Application(tk.Frame):
         self.twentyone.delete(0, len(self.twentyone.get()))
         self.twentytwo.delete(0, len(self.twentytwo.get()))
 
-        self.all.delete("1.0", tk.END)
+
+        # self.all.delete("1.0", tk.END)
+        self.all.delete(0, len(self.all.get()))
         self.entryx.delete(0, len(self.entryx.get()))
         
     def update_values(self, event):
@@ -57,13 +60,15 @@ class Application(tk.Frame):
 
         fl = float(x)
 
-        self.all.delete("1.0", tk.END)
-        self.all.insert("1.0", '{:.2f}, {:.4f}, {:.4f}, {:.4f}'.format(fl, fl * 2.4, fl * 2.37, fl * 2.34))
+        # self.all.delete("1.0", tk.END)
+        # self.all.insert("1.0", '{:.2f}, {:.4f}, {:.4f}, {:.4f}'.format(fl * 2.4, fl * 2.37, fl * 2.34, fl * 3))
+        self.all.delete(0, len(self.all.get()))
+        self.all.insert(0, '{:.2f}'.format(fl * 3.0))
 
 
 root = tk.Tk()
 root.wm_title("Calc")
-root.geometry("135x114+268+583")
+root.geometry("115x94+268+603")
 root.wm_attributes("-topmost", 1)
 app = Application(master=root)
 app.mainloop()
