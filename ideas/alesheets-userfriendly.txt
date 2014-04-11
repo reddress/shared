@@ -1,0 +1,26 @@
+Base = Account named after Django User
+
+each account must have foreign key to actual django user object
+
+Accounts have a single parent
+
+Asset, Liab, Equity all have User as a Parent
+
+each account keeps track of its own transactions, any account can be a
+"superfolder" and system will sum transaction values of all sub accounts
+
+---------
+
+"auto-correct" missing transactions
+
+example: wallet had 90 in the morning, then 20 at night. Provide possible
+expense sources and assign the difference to each one, for example:
+
+20 - food, 5 - transportation, 50 - clothing (auto-fill last box)
+
+---------
+
+recurring transactions
+
+"every 30 days" or "every nth day of the month" or "every n months/days"
+
