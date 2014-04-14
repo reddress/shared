@@ -3,7 +3,7 @@ from math import ceil
 from decimal import Decimal
 
 def roundup(x, factor):
-    return (ceil(Decimal(x) * Decimal(factor)))/Decimal('1000')
+    return (ceil(Decimal(x) * Decimal(factor)))/Decimal('10000')
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -50,13 +50,13 @@ class Application(tk.Frame):
         x = x.replace(",", ".")
 
         self.twenty.delete(0, len(self.twenty.get()))
-        self.twenty.insert(0, '{0:.2f}'.format(roundup(x, '2400')))
+        self.twenty.insert(0, '{0:.3f}'.format(roundup(x, '24000')))
 
         self.twentyone.delete(0, len(self.twentyone.get()))
-        self.twentyone.insert(0, '{0:.3f}'.format(roundup(x, '2370')))
+        self.twentyone.insert(0, '{0:.4f}'.format(roundup(x, '23700')))
 
         self.twentytwo.delete(0, len(self.twentytwo.get()))
-        self.twentytwo.insert(0, '{0:.3f}'.format(roundup(x, '2340')))
+        self.twentytwo.insert(0, '{0:.4f}'.format(roundup(x, '23400')))
 
         fl = float(x)
 

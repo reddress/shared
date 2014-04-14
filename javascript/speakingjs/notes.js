@@ -58,7 +58,8 @@ x instanceof C returns true if the object x has been created by the
 constructor C
   - [] instanceof Array  // true
 
-NaN is an error value (not a number), while Infinity exceeds normal numbers
+NaN is an error value, while Infinity exceeds normal numbers
+
 Infinity can be used as default values in looking for a minimum or maximum
 
 get a string substring with slice()
@@ -315,4 +316,121 @@ to check if a variable exists, use:
 typeof undeclaredVariable === 'undefined'
 
 ch10.html
+
+check boolean value with Boolean() (the function, not constructor new Boolean)
+
+all objects convert to boolean 'true', including new Boolean(false)
+
+default value pattern: theValue || defaultValue (but will return defaultValue
+                                                 if theValue is falsy)
+
+ch11.html
+
+NaN is of type 'number', and is the only value unequal to itself, that is,
+NaN !== NaN is true
+
+checking NaN with isNaN() may not be enough, because its argument is converted
+first, and may incorrectly return true: isNaN('xyz')  // true
+
+checking for Infinity can be done with === or with isFinite()
+
+there are a positive and negative zero, which may be checked by division by
+zero: the resulting infinity will be positive or negative
+
+checking whether two floating numbers are about equal can be done by taking
+an upper bound for rounding errors (machine epsilon)
+
+var EPSILON = Math.pow(2, -53);
+function epsEq(x, y) {
+  return Math.abs(x - y) < EPSILON;
+}
+
+The remainder operator, %, is not modulo. In JavaScript, the result of % has
+the sign of the first operand, while for modulo, it has the sign of the second
+operand. This behavior might give unexpected results when the first operand is
+negative
+
+to input and output binary (or other numeric base) numbers, use:
+
+parseInt(str, base) and num..toString(base)
+
+control the string representation of a number using
+
+num..toFixed(), the number of decimal digits after the dot,
+num..toPrecision(), which limits the number of digits of the mantissa,
+independent of the decimal dot
+num..toExponential() forces exponential notation
+
+isFinite() checks if argument is an actual number (not Infinity nor NaN)
+
+ch12.html
+
+to spread a string over multiple lines, use a backslash \ or concatenate (+)
+
+character escapes \x-- (ASCII) and \u---- (Unicode)
+
+'abc'.charAt(2) and 'abc'[2] get the nth character
+
+for displaying data, JSON.stringify(value, replacer?, space?) is often better
+than String()
+
+conversions do not necessarily convert back
+
+String.fromCharCode(97, 98, 99) produces a string from the UTF-16 code units
+
+an array of numbers can be converted as follows
+String.fromCharCode.apply(null, [97, 98, 99])
+
+the inverse is "abc".charCodeAt(0)
+
+to create an array of character codes,
+'abc'.split('').map(function (x) { return x.charCodeAt(0); })
+
+a string`s length is a property: 'abc'.length
+
+'abc'.charAt(n) or 'abc'[n] returns a string with the character at position n
+
+'abc'.slice(start, end) returns a substring from start up to, but excluding end
+its parameters may be negative, and then the length is added to them
+
+'abc'.substring() should be avoided in favor of slice()
+
+to get an array of substrings, use 'a,b,c'.split(',', limit?) where limit is
+the upper limit of array elements
+
+if a regular expression group is used, the matches are returned as elements
+'a,  b  ,  '.split(/(,)/)  // ['a', ',', '  b  ', ',', '  ']
+
+the empty string separates all characters 'abc'.split('')  // ['a', 'b', 'c']
+
+string transformation functions include
+str.trim(), str.concat(s1, s2, s3, ...), toLower/UpperCase(),
+toLocaleLower/UpperCase()
+
+str.indexOf(searchString, position?) looks for searchString starting from
+position, and returns the position where it is found, or -1 if it is not found
+
+str.lastIndexOf() looks backwards
+
+str.localeCompare(other) returns a number, where 0 means the two are equivalent
+not all JavaScript engines implement this method correctly
+
+str.search(re) returns the first index where the regular expression matches
+
+str.match(re) returns a match object for the first match if /g is not set
+otherwise, all complete matches (group 0) are returned in an array
+
+str.replace(search, replacement) will only replace the first occurrence unless
+a regular expression with /g flag is used for 'search' parameter
+
+a $ sign in a replacement string allows you to refer to the complete match or
+a captured group
+
+'iixxxixx'.replace(/i+/g, '($&)') or '($1)'
+
+the replacement may also be a function
+function replacement(all) { return '(' + all.toUpperCase() + ')'; }
+'axabbyyxaazz'.replace(/a+|b+/g, replacement)
+
+ch13.html
 
