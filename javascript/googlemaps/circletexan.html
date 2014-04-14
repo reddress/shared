@@ -1,0 +1,161 @@
+  <html>
+
+
+  <!-- http://stackoverflow.com/questions/23034706/toggling-circle-on-marker-click -->
+  
+<head>
+<title>tina's google maps playground for chrome'</title>
+<style type="text/css">
+html, body { margin: 0; padding: 0; height: 100%; width: 100% }
+#map { width: 800px; height: 100%; }
+</style>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="../jquery-1.11.0.min.js"></script>
+
+<script type="text/javascript">
+var map;
+
+var newLatLng = function(lat, lng) {
+  return new google.maps.LatLng(lat, lng);
+}
+
+var SPOptions = { center: newLatLng(-23.55, -46.63), zoom: 14,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP };
+
+function initialize() {
+//map = new google.maps.Map(document.getElementById("mymap"), SPOptions);
+   var locations = [
+      ['Siren 1', 32.832, -96.629, 1],
+      ['Siren 2', 32.827, -96.644, 2],
+      ['Siren 3', 32.824, -96.612, 3],
+      ['Siren 4', 32.809, -96.658, 4],
+      ['Siren 5', 32.805, -96.634, 5],
+      ['Siren 6', 32.809, -96.614, 6],
+      ['Siren 7', 0, -0, 7],
+      ['Siren 8', 0, -0, 8],
+      ['Siren 9',  32.794, -96.613, 9],
+      ['Siren 10', 32.776, -96.61, 10],
+      ['Siren 11', 32.761, -96.633, 11],
+      ['Siren 12', 32.764, -96.598, 12],
+      ['Siren 13', 32.773, -96.581, 13],
+      ['Siren 14', 32.748, -96.614, 14],
+      ['Siren 15', 0, -0, 15],
+      ['Siren 16', 32.751, -96.576, 16],
+      ['Siren 17', 32.75,  -96.55, 17],
+      ['Siren 18', 0, -0, 18],
+      ['Siren 19', 32.728, -96.583, 19],
+      ['Siren 20', 32.741, -96.566, 20],
+      ['Siren 21', 32.738, -96.545, 21],
+      ['Siren 22', 32.722, -96.537, 22],
+      ['Siren 23', 32.708, -96.558, 23],
+      ['Siren 24', 32.696, -96.499, 24],
+      ['Siren 25', 32.694, -96.564, 25]
+    ];
+
+    var mapOptions = {
+          center: new google.maps.LatLng(32.782878, -96.609862),
+
+          panControl: false,
+          zoom: 11,
+          mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+    },
+    zoomControl: true,
+    zoomControlOptions: {
+      style: google.maps.ZoomControlStyle.SMALL,
+      position: google.maps.ControlPosition.RIGHT_TOP
+    },
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"),
+    mapOptions);
+
+    function MyLogoControl(controlDiv) {
+    controlDiv.style.padding = '5px';
+    var logo = document.createElement('IMG');
+    logo.src = 'http://placekitten.com/50/50';
+    logo.style.cursor = 'pointer';
+    controlDiv.appendChild(logo);
+
+    google.maps.event.addDomListener(logo, 'click', function() {
+        window.location = 'http://www.mesquiteweather.net';
+    });
+  }
+
+   var logoControlDiv = document.createElement('DIV');
+   var logoControl = new MyLogoControl(logoControlDiv);
+   logoControlDiv.index = 0; // used for ordering
+   map.controls[google.maps.ControlPosition.TOP_LEFT].push(logoControlDiv);
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    var image = 'http://maps.google.com/intl/en_us/mapfiles/ms/micons/green.png';
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+        icon: image
+      });
+
+      var openCircle;
+      
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+
+          if (openCircle !== undefined) {
+            openCircle.setMap(null);
+          }
+          
+          openCircle = new google.maps.Circle({
+            map: map,
+            radius: 4828,    // metres
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+          });
+          
+          openCircle.bindTo('center', marker, 'position');
+
+          google.maps.event.addListener(infowindow,'closeclick',function(){
+            openCircle.setMap(null);
+          }); 
+        }
+      })(marker, i));
+      
+// Add circle overlay and bind to marker
+
+      /*
+      var circle = new google.maps.Circle({
+        map: map,
+        radius: 4828,    // metres
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+      });
+      
+         circle.bindTo('center', marker, 'position');
+         */
+
+    }
+                    
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+</head>
+<body>
+  <div id="map"></div>
+</body>
+</html>

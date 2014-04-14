@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>tina's google maps playground for chrome'</title>
+<style type="text/css">
+html, body { margin: 0; padding: 0; height: 100%; width: 100% }
+#map { width: 800px; height: 100%; }
+</style>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+
+
+<script src="../jquery-1.11.0.min.js"></script>
+
+<script type="text/javascript">
+
+function initialize() {
+  lat = 40.7;
+  lng = -74.0;
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: new google.maps.LatLng(lat, lng),
+    zoom: 15
+  });
+  
+  var failureCallback  = function() { alert("no match"); };
+  var successCallback = function(results) {
+    map.setCenter( results[0].geometry.location );
+  };
+  
+  var search = function (map, lat, lng, successCallback, failureCallback) {
+    successCallback = successCallback || function(x){};//dummy callback
+    failureCallback = failureCallback || function(){};//dummy callback
+    var here = new google.maps.LatLng(lat,lng);
+    var service = new google.maps.places.PlacesService(map);
+    var request = {
+      location: here,
+      //        name:"Bla",
+      //        rankBy: google.maps.places.RankBy.DISTANCE,
+      //        types:["liquor_store"],
+      types: ['store'],
+      radius: '500'
+      //        openNow:"true"
+    };
+    var innerCallback = function(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        createMarker(results[0]);
+        successCallback( results );
+      } else {
+        failureCallback();
+      }
+    };
+
+    var createMarker =  function(place) {
+      var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        //      icon: 'img/SAQ-marker-50px.png'
+      });
+      
+      console.log("place", place); 
+    }
+    service.nearbySearch(request, innerCallback);
+  }
+  
+  search( map, 40.7, -74.0, successCallback, failureCallback );
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+</head>
+<body>
+  <div id="map"></div>
+</body>
+</html>

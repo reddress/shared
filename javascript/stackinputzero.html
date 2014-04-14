@@ -1,0 +1,31 @@
+
+<head>
+  <script>
+function removeZeroImputs(form) {
+        var inputs = form.getElementsByTagName("input");
+        var inputsZero = []
+        for (var i = 0; i<inputs.length; i++) {
+                if (inputs[i].value === '0') {
+                        inputsZero.push(inputs[i]);
+                }
+        }
+        for (var i in inputsZero) {
+                inputsZero[i].parentNode.removeChild(inputsZero[i]);
+        }
+}
+  </script>
+</head>
+
+
+<form method="get" action="#" id="form" onsubmit="removeZeroInputs"> 
+
+<input type='text' name="One"  id="one" value='0'>
+<input type='text' name="Two"  id="two" value='0'>
+<input type='text' name="Three"  id="three" value='0'>
+<input type='text' name="Four"  id="four" value='0'>
+<input type='text' name="Five"  id="five" value='0'>
+<input type='text' name="Six"  id="six" value='0'>
+<input type='text' name="Seven"  id="seven" value='0'>
+<input type='text' name="Eight"  id="eight" value='0'>
+<input type="submit">
+</form>

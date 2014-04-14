@@ -267,3 +267,52 @@ regular expressions are delimited by slashes
 '<a> <bbb>'.replace(/<(.*?)>/g, '[$1]')  // /g flag replaces all
 // , otherwise only the first occurrence is replaced
 
+ch07.html
+
+{ foo: 123 }, an object literal, and function foo() { } are ambiguous. You
+cannot use these as statements. To evaluate the object literal and return an
+object, and to execute IIFEs, these expressions must be inside parentheses
+
+({ foo: 123 })
+
+(function () { return 'abc' }())
+
+do-while must have a semicolon at the end: do { ... } while ();
+
+invoking methods on number literals may be done as:
+
+3..toString()  // two dots
+3 .toString()  // space before dot
+(3).toString()
+3.0.toString()
+
+ch08.html
+
+wrapping primitives, such as new Boolean(true), result in objects. They cannot
+be compared (== or ===) unless unwrapped (with .valueOf()). However, you can
+attach properties to wrapped primitives.
+
+converting any object (including new Booleans) with Boolean() results in true
+
+can customize valueOf() and toString() to influence behavior of Number() and
+String():
+
+var n = { valueOf: function () { return 123; } };
+Number(n)  // 123
+
+var s = { toString: function () { return '8'; } };
+String(s)  // '8'
+
+ch09.html
+
+void is useful to discard the result of an expression, for example:
+javascript:void window.open("http://example.com/")
+
+typeof returns a string: one of 'undefined', 'object', 'boolean', 'number',
+'string', 'function', or 'object'. May also be engine-dependent
+
+to check if a variable exists, use:
+typeof undeclaredVariable === 'undefined'
+
+ch10.html
+

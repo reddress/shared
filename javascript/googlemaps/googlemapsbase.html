@@ -3,7 +3,7 @@
 <title>tina's google maps playground for chrome'</title>
 <style type="text/css">
 html, body { margin: 0; padding: 0; height: 100%; width: 100% }
-#mymap { width: 800px; height: 100%; }
+#map { width: 800px; height: 100%; }
 </style>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="../jquery-1.11.0.min.js"></script>
@@ -19,7 +19,7 @@ var SPOptions = { center: newLatLng(-23.55, -46.63), zoom: 14,
                   mapTypeId: google.maps.MapTypeId.ROADMAP };
 
 function initialize() {
-  map = new google.maps.Map(document.getElementById("mymap"), SPOptions);
+  map = new google.maps.Map(document.getElementById("map"), SPOptions);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -27,6 +27,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 </head>
 <body>
-  <div id="mymap"></div>
+  <div id="map"></div>
 </body>
 </html>

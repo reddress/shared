@@ -1,0 +1,30 @@
+<!-- http://stackoverflow.com/questions/23047312/change-value-of-gage-dynamically/ -->
+<script src="http://cdn.jsdelivr.net/raphael/2.1.2/raphael-min.js"></script>
+<script src="http://cdn.jsdelivr.net/justgage/1.0.1/justgage.min.js"></script>
+<body>
+    <input type="text" id="weight" />
+    <input type="text" id="height" />
+    <input type="button" id="calculate" onClick="funky()" value="calculate" />
+    <div id="bmi"></div>
+    <div id="gauge" class="200x160px"></div>
+    <script>
+        function funky() {
+            var weight = document.getElementById("weight");
+            var height = document.getElementById("height");
+            var heightDouble = height.value * height.value;
+            var bmi = weight.value / heightDouble;
+            document.getElementById("bmi").innerHTML = bmi;
+            //cc();
+            var weightPlusHeight = parseInt(weight.value) + parseInt(height.value);
+            g.refresh(weightPlusHeight);
+        }
+
+        var g = new JustGage({
+            id: "gauge",
+            value: 0,
+            min: 0,
+            max: 200,
+            title: "BMI"
+        });
+    </script>
+</body>
