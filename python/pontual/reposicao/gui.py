@@ -80,9 +80,10 @@ class Application(tk.Frame):
             try:
                 set(self.lastmod, produto.lastmod.strftime("%d/%m/%y"))
             except AttributeError:
-                set(self.lastmod, "? 14/03")
+                set(self.lastmod, "")
         except KeyError:
             set(self.info, "\nÚltimo container - ")
+            set(self.lastmod, "")
         
     def save(self, event):
         codigo = self.codigoValue.get()
