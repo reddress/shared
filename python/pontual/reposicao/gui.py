@@ -100,6 +100,7 @@ class Application(tk.Frame):
                                 self.vendasNowValue.get(),
                                 self.caixaValue.get()]))
         self.clipboard_append(codigoLine + "\n" + info)
+        self.save(None)
 
 root = tk.Tk()
 root.wm_title("Reposicao")
