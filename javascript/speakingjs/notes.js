@@ -434,3 +434,78 @@ function replacement(all) { return '(' + all.toUpperCase() + ')'; }
 
 ch13.html
 
+variable declarations may be combined in a single var statement
+
+var x, y=123, z;
+
+a label is an identifier followed by a colon; it allows breaking or continuing
+even from a loop nested in it. A label in front of a block allows breaking out
+of that block. In both cases, the label name becomes an argument of break or
+continue: break myLabel;
+
+for do-while loops, the do statement is executed at least once
+
+for loops execute the init statement once before the loop, and it continues
+as long the condition is true. post_iteration is executed after each iteration
+of the loop.
+  
+when incrementing an index, the iterating variable ends up holding the value
+that does not satisfy the condition:
+
+var x = 0;
+for (; x < 3; x++) {
+  console.log(x);  // 0 1 2
+}
+x  // 3
+
+avoid using for-in, because it iterates over indices and property keys, not
+values. Also, it includes inherited properties and methods, which may not be
+what you want
+
+do not use for each-in (it exists only in Firefox)
+
+if (condition) {
+  // something
+} else if (other condition) {
+  // other
+} else {
+  // return 0;
+}
+
+better to use braces to avoid ambiguous interpretation
+
+execution in a switch clause continues to the next clause if there is no
+terminating statement such as break. return and throw also exit the switch
+
+there may be multiple case labels in a row:
+
+switch (color) {
+case 'red':
+case 'yellow':
+case 'blue':
+  // primary color
+  break;
+case 'purple':
+case 'green':
+  // secondary color
+default:
+  throw 'not a color';
+}
+
+the value after case may be arbitrary, such as x < y, x === y, 2 + 3
+
+with (object) { /* statements */ } turns the properties of object into local
+variables for statements. Its use is discouraged. Instead, assign a temporary
+variable for the desired object:
+
+var b = foo.baz.quux;
+console.log(b.firstName + ' ' + b.lastName);
+
+or use an IIFE:
+
+(function (b) {
+  console.log(b.firstName + ' ' + b.lastName);
+}(foo.baz.quux));
+
+if the debugger is active, the statement "debugger;" functions as a breakpoint
+

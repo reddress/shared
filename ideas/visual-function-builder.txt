@@ -1,0 +1,9 @@
+2D grid holding functions and primitives, done with JavaScript
+
+implement SICP constraint system, to enable auto calculations and ability to
+solve simple equations (what about division by zero?)
+
+use case: teach algebra, quadratic function
+
+wish list: add graphs, parametric and simple variations of x
+

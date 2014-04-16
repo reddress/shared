@@ -63,11 +63,23 @@ for (var i = 0; i < 5; i++) {
     resultIIFE2.push(function () { return i*i; });
   }(i));
 }
-print(resultIIFE2[4]());
+// print(resultIIFE2[4]());
 
 "some comment"
 
-print("after comment")
+// print("after comment")
+
+var x = 10;
+if (x > 5) { 
+  switch (x) {
+  case 5 + 5:
+    print("switch ok");
+    break;
+  default:
+    print("no go");
+  }
+}
+
 
     </script>
   </body>
