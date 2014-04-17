@@ -80,6 +80,31 @@ if (x > 5) {
   }
 }
 
+var globalId = 0
+
+function idLog(x) {
+  var result = 0;
+  try {
+    console.log(x);
+    print(globalId);
+    return result;
+  } finally {
+    result += 1;
+    globalId += 1;
+    console.log("FINALLY" + globalId);
+  }
+}
+
+var setValue = function () {
+  var prevValue;
+  return function (value) {
+    if (value !== prevValue) {
+      console.log('Changed: ' + value);
+      prevValue = value;
+    }
+  };
+}();
+
 
     </script>
   </body>

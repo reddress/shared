@@ -509,3 +509,193 @@ or use an IIFE:
 
 if the debugger is active, the statement "debugger;" functions as a breakpoint
 
+ch14.html
+
+if there is a problem that can`t be handled meaningfully, throw an exception
+catch exceptions where errors can be handled
+
+throw can throw any JavaScript values, but preferably, exception objects
+should be used (or subclasses)
+
+if (somethingBad) {
+  throw new Error('Error: something bad happened');
+}
+
+a try must be followed by at least one of catch and finally.
+
+to switch between different kinds of errors, you can use
+
+try {
+  // ...
+} catch (e) {
+  switch (e.constructor) {
+  case SyntaxError:
+    break;
+  case CustomError:
+    break;
+  }
+}
+
+but this approach only matches direct instances of the constructor
+
+finally is executed after a return statement in try.
+
+Error is a generic constructor for errors
+
+Other errors include RangeError, ReferenceError, SyntaxError, TypeError and
+URIError
+
+the error properties are: message, name and stack: non-standard but generally
+available
+
+ch15.html
+
+invoking a function with new makes it a constructor (an object factory). By
+convention, constructor names start with uppercase letters
+
+when a function is an object`s property, it is a method, invoked as
+obj.method(). By convention, method names start with lowercase letters
+
+parameters are used when defining functions; arguments are used to invoke a
+function
+
+all functions are objects (instances of Function), and get their methods from
+Function.prototype
+
+function (x, y) { return x + y; } is a (anonymous) function expression; it may
+be assigned to a variable:
+
+var add = function (x, y) { return x + y; };
+
+named function expressions allow self-recursion; its name is only accessible
+inside the function expression
+
+function f(x) { return x; } is a function declaration
+
+the Function() constructor accepts strings, similar to eval() and is slow
+
+var add = new Function('x', 'y', 'return x + y');
+
+hoisting is moving to the beginning of a scope; function declarations are
+hoisted completely
+
+only variable declarations are hoisted, assignments are not
+
+f.name is a nonstandard property for function objects; it is '' for anonymous
+function expressions
+
+function declarations are preferred over function expressions because of
+hoisting
+
+func.apply(thisValue, argArray) takes the elements of argArray as arguments to
+func. In a non-object-oriented setting, thisValue can be null
+
+for example:
+Math.max.apply(null, [12, 33, 2])
+
+func.bind(thisValue, arg1, arg2, ..., argN) creates a new function with first
+arguments arg1 up to argN. It has the effect of partial function application
+
+a function`s parameters are stored in the array-like variable arguments, from
+which extra parameters may be accessed
+
+if a function call is missing parameters, they will be undefined
+
+arguments is an object, and the length property. Individual parameters may be
+read and written by index, but there are no array methods like slice, forEach
+
+arguments.callee (a reference to the current function) does not work in strict
+mode. Instead, use named function expressions
+
+to check for mandatory parameters, you can check param === undefined, or
+arguments.length < 1.
+
+to assign a default value, you can write:
+
+if (optional === undefined) { optional = "default value"; }
+
+if (!optional) { optional = "default value"; }
+
+optional = optional || "default value";  // careful with falsy values
+
+if (arguments.length < 3) { optional = "default value"; }
+
+to simulate pass-by-reference, you must wrap the variable`s value in an array
+
+function incRef(numberRef) {
+  numberRef[0]++;
+}
+var n = [7];
+incRef(n);
+console.log(n[0]);
+
+combining map with a function like parseInt(), where signatures do not match,
+can lead to unexpected results.
+
+explicitly assigning signatures with a callback avoids unexpected results:
+['1', '2', '3'].map(function (x) { return parseInt(x, 10); })
+
+named parameters can be placed in an "option object", usually after
+positional parameters:
+
+selectEntries({ start: 3, end: 20, step: 2});
+
+function selectEntries(options) {
+  options = options || {};
+  var start = options.start || 0;
+  // ...
+}
+
+ch16.html
+
+variables are lexically scoped. Variables are accessible in nested scopes
+
+if an inner scope variable has the same name as one surrounding it, it will
+shadow (block) the outer variable.
+
+variables in JavaScript are function-scoped
+
+with non-strict (sloppy) mode, undeclared variables become global
+
+new scopes are introduced with Immediately Invoked Function Expressions, IIFEs
+which must be surrounded by parentheses, otherwise they are interpreted as
+function declarations.
+
+if (cond) {
+  (function () { // open IIFE
+    var tmp = 0;
+    // ...
+  }());  // close IIFE, remember to put trailing semicolon
+}
+
+IIFEs can also start with ! or void instead of using surrounding parentheses
+
+if already in expression context, the surrounding parentheses are not needed:
+
+var File = function () {
+  var UNTITLED = "Untitled";
+  function File(name) {
+    this.name = name || UNTITLED;
+  }
+  return File;
+}();
+
+parameters can be used to define variables inside the IIFE:
+
+var x = 15;
+(function (twice) {
+  console.log(twice);
+}(x * 2));
+
+an IIFE enables private data, to avoid polluting the global namespace
+
+var setValue = function () {
+  var prevValue;  // accessible only by setValue
+  return function (value) {
+    if (value !== prevValue) {
+      console.log('Changed: ' + value);
+      prevValue = value;
+    }
+  };
+}();
+
