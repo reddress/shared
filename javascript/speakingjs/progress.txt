@@ -1,4 +1,5 @@
-13 apr 2014: ch10.html
-14 apr 2014: ch13.html
-16 apr 2014: ch14.html
-17 apr 2014: ch16.html Global variables
+13 apr 2014: ch10
+14 apr 2014: ch13
+16 apr 2014: ch14
+17 apr 2014: ch16 Global variables
+18 apr 2014: ch17 apply() for constructors

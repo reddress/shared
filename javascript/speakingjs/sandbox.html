@@ -105,7 +105,61 @@ var setValue = function () {
   };
 }();
 
+function myFunction(myParam) {
+  var myVar = 123;
+  return myFloat;
+}
+var myFloat = 1.255;
+print(myFunction('abc'));
 
-    </script>
-  </body>
-</html>
+var base = 1000;
+function createInc(startValue) {
+  return function(step) {
+    startValue += step;
+    return startValue + base;
+  };
+}
+var inc = createInc(5);
+print(inc(2));
+
+function f() {
+  var result = [];
+  for (var i = 0; i < 3; i++) {
+    (function (i) {
+      //var pos = i;
+      var func = function () {
+        return i + 10;
+      };
+      result.push(func);
+    }(i));
+  }
+  return result;
+}
+console.log(f()[2]());  // 2
+
+var name = "the global name";
+var jane = {
+  name: 'Jane',
+  sayHelloTo: function (otherName) {
+    'use strict';
+    name: 'the sayHelloFunction',
+    console.log(this.name + ' says hello to ' + otherName);
+  },
+  sayGoodbye: function (obj) {
+    console.log(obj.name + " says bye");
+  }
+};
+
+function returnThis() { return this; }
+
+var obj = { method: returnThis };
+
+jane.sayHelloTo.call(this, 'Tarzan');
+jane.sayGoodbye(this);
+
+function func() {
+  console.log('this: '+this);
+  console.log('arguments: '+Array.prototype.slice.call(arguments));
+}
+var bound = func.bind('abcde', 1, 2);
+    </script></body></html>

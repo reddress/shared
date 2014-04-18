@@ -45,6 +45,9 @@ objects are mutable, you can freely add, remove, and change properties
 explicitly check for undefined and null values
   - if (x === undefined || x === null) { }
 
+but, to check if a variable exists, use:
+typeof undeclaredVariable === 'undefined'
+
 falsy values include undefined, null, 0, NaN, and ''
 
 empty objects and arrays are considered true, can check with Boolean()
@@ -698,4 +701,226 @@ var setValue = function () {
     }
   };
 }();
+
+avoid global variables because of unwanted side effects and name clashes
+
+IIFEs make local scopes:
+
+<script>
+  (function () {
+    var tmp = something();
+    processData(tmp);
+  }());
+</script>
+
+the global object, accessible as this in global scope, can be used to create,
+read, and change global variables
+
+for cross-platform (Node.js or browser) access to the global object:
+
+(function (g) {
+  // g points to the global object
+}(typeof window !== 'undefined' ? window : global));
+
+to indicate a variable is global, you can add a prefix such as g_
+
+use window.someVar to add variables to the global scope, even from a nested
+scope
+
+closure: if a function leaves the scope where it was created, it still stays
+connected to the variables of that scope and its surrounding scopes
+
+function createInc(startValue) {
+  return function (step) {
+    startValue += step;
+    return startValue;
+  };
+}
+
+var inc = createInc(5);
+inc(1)  // 6
+inc(2)  // 8
+
+a closure is a function plus the connection to the scope in which it was
+created. A variable is free if it was not declared within the function
+
+a closure is an example of an environment surviving after execution has
+left its scope.
+
+due to functions being closures, they work with the current value of the
+variable. For example, in for loops:
+
+function f() {
+  var result = [];
+  for (var i = 0; i < 3; i++) {
+    var func = function () {
+      return i;
+    };
+    result.push(func);
+  }
+  return result;
+}
+console.log(f()[1]());  // 3, because when the inner function is called,
+                        // the loop has finished and i is 3
+
+we must create new environments for each iteration of i, with IIFEs:
+
+function f() {
+  var result = [];
+  for (var i = 0; i < 3; i++) {
+    (function () {
+      var pos = i;
+      var func = function () {
+        return pos;
+      };
+      result.push(func);
+    }());
+  }
+  return result;
+}
+console.log(f()[1]());  // 1
+
+or:
+
+for (var i = 0; i < 3; i++) {
+  (function (i) {
+    var func = function () {
+      return i;
+    };
+    result.push(func);
+  }(i));
+}
+
+ch17.html
+
+roughly, all objects are maps (dictionaries) from strings to values
+
+a (key, value) entry is called a property. Keys are always strings. When a
+value is a function, such a property is called a method.
+
+there are three kinds of properties:
+
+properties (or named data properties) are mappings from strings to values,
+including methods. The most common type of property.
+
+accessors (or named accessor properties) are methods whose invocations look
+like getting or setting a property. They allow you to compute the values of
+properties. They are virtual properties and not storage space.
+
+internal properties exist only in the language specification. They are shown
+inside brackets. For example, [[Prototype]] is readable via
+Object.getPrototypeOf()
+
+object literals are direct instances of Object
+
+var jane = {
+  name: 'Jane',
+  describe: function () {
+    return 'Person named ' + this.name;
+  }
+};
+
+describe is a method; this refers to the current object, also called the
+receiver of a method invocation
+
+when property keys are identifiers, the dot operator is the most compact way
+of accessing properties. For arbitrary names or computed keys, brackets []
+are needed
+
+jane.describe()
+
+obj['some' + 'Property']
+
+the bracket operator coerces its contents to a string:
+
+obj[3+3]  // obj['6']
+
+obj['myMethod']()
+
+delete obj.property completely removes the direct property. Prototypes are
+unaffected. However, delete may prevent engine optimizations, so should be
+used sparingly
+
+delete will return false only if the property is an own property, but cannot
+be deleted. Otherwise it returns true. Inherited properties cannot be deleted
+
+Object() will convert any value to an object:
+
+empty parameter, undefined and null result in {}
+
+called on an object, nothing is done
+
+otherwise, it is like calling new Boolean(bool), new Number(num), and
+new String(str)
+
+to check if a value is an object:
+
+function isObject(value) {
+  return value === Object(value);
+}
+
+or new Object(obj) === obj
+
+this is an implicit parameter of functions and methods
+
+when in sloppy mode, normal functions` this refers to the global object,
+window, in browsers
+
+when in strict mode, this is undefined for normal functions
+
+for methods, this refers to the object on which the method was invoked. The
+value of this is called the receiver of the method call
+
+since functions are objects, they have their own methods. We consider call(),
+apply(), and bind() for the following object, jane:
+
+var jane = {
+  name: 'Jane',
+  sayHelloTo: function (otherName) {
+    'use strict';
+    console.log(this.name + ' says hello to ' + otherName);
+  }
+};
+
+Function.prototype.call(thisValue, arg1?, arg2?, ...). The following are
+equivalent
+
+jane.sayHelloTo('Tarzan');
+jane.sayHelloTo.call(jane, 'Tarzan');
+var func = jane.sayHelloTo;
+func.call(jane, 'Tarzan');
+
+for the second case, jane is repeated because call() does not know where the
+function came from. Using this instead will refer to the global object.
+
+jane.sayHelloTo.call(this, 'Tarzan');
+is the same as
+jane.sayHelloTo.call(window, 'Tarzan');
+
+Function.prototype.apply(thisValue, argArray). The following are equivalent:
+
+jane.sayHelloTo('Tarzan');
+jane.sayHelloTo.apply(jane, ['Tarzan']);
+var func = jane.sayHelloTo;
+func.apply(jane, ['Tarzan']);
+
+Function.prototype.bind(thisValue, arg1?, ... argN?) is for partial function
+application. A new function calls the receiver of bind with arguments arg1 to
+argN, followed by arguments of the new function.
+
+function func() {
+  console.log('this: '+this);
+  console.log('arguments: '+Array.prototype.slice.call(arguments));
+}
+var bound = func.bind('abcde', 1, 2);
+
+the following are equivalent:
+
+jane.sayHelloTo('Tarzan');
+
+var func1 = jane.sayHelloTo.bind(jane);
+func1('Tarzan');
+
+var func2 = jane.sayHelloTo.bind(jane, 'Tarzan');
+func2();
 
