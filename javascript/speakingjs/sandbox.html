@@ -1,8 +1,12 @@
 <html>
   <body>
-    <script>
+  <script>
 
-function print() {
+// hoisting will overwrite what was previously defined
+
+  'use strict';
+
+function myprint() {
   console.log.apply(console, arguments);
 }
 
@@ -11,6 +15,8 @@ function applier(f, n) {
 }
 
 console.log(applier(function (x) { return x * x; }, 9));
+
+print(applier(function (x) { return x * x; }, 9));
 
 function f(x) {
   return x * x;
@@ -24,8 +30,10 @@ function makeIncrementor(start) {
 }
 
 var inc = makeIncrementor(5);
-
-print(f());
+print(inc(9));
+print(inc(6));
+inc();
+print(f(8));
 
 function accumulate(combiner, nullValue, l) {
   if (l.length == 0) {
@@ -162,4 +170,93 @@ function func() {
   console.log('arguments: '+Array.prototype.slice.call(arguments));
 }
 var bound = func.bind('abcde', 1, 2);
-    </script></body></html>
+
+var proto = Object.defineProperties({}, {
+  protoEnumTrue: { value: 1, enumerable: true },
+  protoEnumFalse: { value: 2, enumerable: false }
+});
+var obj = Object.create(proto, {
+  objEnumTrue: { value: 10, enumerable: true },
+  objEnumFalse: { value: 20, enumerable: false }
+});
+
+for (var x in obj) { console.log(x); }
+
+print(Object.getOwnPropertyNames(obj))  // ['objEnumTrue', 'objEnumFalse']
+
+var objGetter = {
+  x: 1,
+  get foo() {
+    print("getting foo");
+    return this.x;
+  },
+  set foo(value) {
+    print("setting foo");
+    this.x = value;
+  }
+};
+
+print(objGetter.foo)
+
+
+function copyObject(orig) {
+  var copy = Object.create(Object.getPrototypeOf(orig));
+  copyOwnPropertiesFrom(copy, orig);
+  return copy;
+}
+
+function copyOwnPropertiesFrom(target, source) {
+  Object.getOwnPropertyNames(source).forEach(function (propKey) {
+    var desc = Object.getOwnPropertyDescriptor(source, propKey);
+    Object.defineProperty(target, propKey, desc);
+  });
+  return target;
+};
+
+var objA = { 'a': 123 }
+
+var objB = copyObject(objA);
+
+function Person(name) {
+  this.name = name;
+}
+Person.prototype.describe = function () {
+  return 'Person named ' + this.name;
+};
+var jane = new Person("Jane");
+print(jane.describe());
+
+function PersonAge(name, age) {
+  var privateAge = age;
+  var that = this;
+  this.publicName = name;
+  this.privilegedIsSenior = function () {
+    privateDoubleAge();
+    if (privateAge >= 65) {
+      print(this.publicName + ' is a senior citizen.');
+    } else {
+      print(this.publicName + ' is too young.');
+    }
+  };
+
+  function privateDoubleAge() {
+    print('double age of ' + that.publicName + ' is ' + (age * 2));
+  }
+}
+
+var k = new PersonAge('Kate', 28);
+var p = new PersonAge('Paul', 67);
+
+k.privilegedIsSenior();
+p.privilegedIsSenior();
+
+var arr1 = ['a','b'];
+[].push.apply(arr1, ['c','d'])
+
+[].join.call('abc', '-');
+
+function f() { return arguments; }
+args = f('a','b','c')
+[].slice.call(args)
+
+</script></body></html>

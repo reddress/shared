@@ -1,0 +1,50 @@
+<html><body><script>
+  // ch02 program structure
+
+function print() {
+  //console.log("print()");
+  console.log.apply(console, arguments);
+}
+
+function loopTriangle(rows) {
+  for (var i = 0; i < rows; i++) {
+    var row = "";
+    do {
+      row += "#";
+    } while (row.length <= i)
+    print(row);
+  }
+}
+
+function fizzBuzz() {
+  for (var n = 0; n < 32; n++) {
+    if (n % 5 === 0 && n % 3 === 0) {
+      print("FizzBuzz");
+    } else if (n % 5 === 0) {
+      print("Buzz");
+    } else if (n % 3 === 0) {
+      print("Fizz");
+    } else {
+      print(n);
+    }
+  }
+}
+
+function chessBoard(n) {
+  var output = "";
+  for (var row = 0; row < n; row++) {
+    if (row % 2 === 1) {
+      output += " ";
+    }
+    for (var col = 0; col < n; col++) {
+      if (col % 2 === 0) {
+        output += " ";
+      } else {
+        output += "#";
+      }
+    }
+    output += "\n";
+  }
+  return output;
+}
+</script></body></html>

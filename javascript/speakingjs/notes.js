@@ -924,3 +924,821 @@ func1('Tarzan');
 var func2 = jane.sayHelloTo.bind(jane, 'Tarzan');
 func2();
 
+while apply may be used to call functions with array elements for parameters,
+this approach does not work for constructors.
+
+apply() can be simulated for constructors by first passing arguments to Date
+
+new (Date.bind(null, 2011, 11, 24))
+
+then, use apply() to hand an array to bind().
+
+new (Function.prototype.bind.apply(Date, [null, 2011, 11, 24]))
+
+var arr = [2011, 11, 24];
+new (Function.prototype.bind.apply(Date, [null].concat(arr)))
+
+when extracting a method, 'this' will be lost. In strict mode, you will get a
+warning
+
+bind() will ensure the connection to the original object is preserved
+
+var counter = {
+  count: 0,
+  inc: function () {
+    this.count++;
+  }
+}
+
+var func = counter.inc.bind(counter);
+
+with callbacks, bind() must be used too
+
+function callIt(callback) {
+  callback();
+}
+
+callIt(counter.inc.bind(counter));
+
+when functions are nested, 'this' is shadowed. There are three ways around it
+
+var that = this
+
+bind()
+
+this.friends.forEach(function (friend) {
+  console.log(this.name);
+}.bind(this));
+
+when using forEach, provide 'this' as the second parameter
+
+the prototype chain behaves as if it were a single object, therefore the value
+of 'this' is the object where the property search began, not where it was
+found
+
+creating a new object with a given prototype:
+
+Object.create(proto, propDescriptorObj?)
+
+descriptors are verbose, so normally we create Object.create(Proto) then add
+properties manually
+
+Object.getPrototypeOf(obj) returns the prototype of obj
+
+check prototype Object.prototype.isPrototypeOf(obj)
+
+some JavaScript engines have __proto__, allowing direct access to get and set
+the prototype
+
+check for __proto__: Object.getPrototypeOf({ __proto__: null }) === null
+
+setting and deleting ignores inheritance
+
+get first object that has own property:
+
+function getDefiningObject(obj, propKey) {
+  obj = Object(obj)
+  while (obj && !{}.hasOwnProperty.call(obj, propKey)) {
+    obj = Object.getPrototypeOf(obj);
+  }
+  return obj;
+}
+ 
+iterating over and detecting properties are influenced by inheritance and
+enumerability (an attribute)
+
+Object.getOwnPropertyNames(obj) returns the keys of all own properties of obj
+
+Object.keys(obj) returns the keys of all enumerable own properties of obj
+
+to list all properties (own and inherited), there are two ways:
+
+for (var v in object) {
+  // statement
+}
+
+or implement your own function:
+
+function getAllPropertyNames(obj) {
+  var result = [];
+  while (obj) {
+    Array.prototype.push.apply(result, Object.getOwnPropertyNames(obj));
+    obj = Object.getPrototypeOf(obj);
+  }
+  return result;
+}
+
+to check if a property exists (including inherited):
+
+propKey in obj
+
+for own properties (not inherited):
+
+Object.prototype.hasOwnProperty(propKey)
+
+or: {}.hasOwnProperty.call(obj, 'foo')
+uses call because hasOwnProperty is called generically
+
+directly calling obj.hasOwnProperty() is unsafe because hasOwnProperty may be
+overridden
+
+consider these objects:
+
+var proto = Object.defineProperties({}, {
+  protoEnumTrue: { value: 1, enumerable: true },
+  protoEnumFalse: { value: 2, enumerable: false }
+});
+var obj = Object.create(proto, {
+  objEnumTrue: { value: 10, enumerable: true },
+  objEnumFalse: { value: 20, enumerable: false }
+});
+
+for (var x in obj) { console.log(x); }  // prints objEnumTrue and protoEnumTrue
+
+Object.keys(obj)  // ['objEnumTrue']
+
+Object.getOwnPropertyNames(obj)  // ['objEnumTrue', 'objEnumFalse']
+
+only for-in and 'prop' in obj consider inheritance
+
+the number of own properties of an object is Object.keys(obj).length
+
+to iterate over own properties:
+
+for (var key in obj) {
+  if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    console.log(key);
+  }
+}
+
+or
+
+Object.keys(obj).forEach(function (key) {
+  console.log(key);
+});
+
+you must use each key to obtain its value
+
+accessors in an object literal:
+
+var obj = {
+  get foo() {
+    return 'getter';
+  },
+  set foo(value) {
+    console.log('setter: ' + value);
+  }
+};
+
+obj.foo = 'bla';
+obj.foo
+
+property descriptors are an alternate way to achieve the above:
+
+var obj = Object.create(
+  Object.prototype, {
+    foo: {
+      get: function () {
+        return 'getter';
+      },
+      set: function (value) {
+        console.log('setter: ' + value);
+      }
+    }
+  }
+);
+
+getters and setters are inherited from prototypes
+
+property attributes are the atomic building blocks of properties
+
+property descriptors are data structures for working programmatically with
+attributes
+
+attributes store property data and metadata
+
+all properties have these attributes:
+
+[[Enumerable]] (boolean) affects detection of the property
+
+[[Configurable]] (boolean) if it is false, it cannot be deleted, and its
+metadata cannot be altered. The exception is that you are allowed to change an
+unconfigurable property from writable to read-only
+
+arrays` property length has been writable and unconfigurable, to allow freezes
+
+normal properties have:
+
+[[Value]]
+
+[[Writable]] (boolean) can this property be changed?
+
+accessor specific attributes:
+
+[[Get]] and [[Set]] are functions that are called on property gets and sets
+
+a descriptor is a data structure:
+
+{
+  value: 123,
+  writable: false,
+  enumerable: true,
+  configurable: false
+}
+
+such immutability can be achieved with an accessor:
+
+{
+  get: function () { return 123; },
+  enumerable: true,
+  configurable: false
+}
+
+when getting a property, all its attributes are returned as a descriptor
+
+defining a nonexistent property with a descriptor creates a new property
+with defaults dictated by what the attribute names mean. They are the opposite
+of the values used when a property is created via assignment. To be clear,
+all attributes should be explicitly stated
+
+if a property already exists, update its attributes as specified by the
+descriptor.
+
+to get property attributes (returns undefined if propKey does not exist):
+
+Object.getOwnPropertyDescriptor(obj, propKey)
+
+to set property attributes (returns the modified object):
+
+Object.defineProperty(obj, propKey, propDesc)
+
+var obj = Object.defineProperty({}, 'foo', {
+  value: 123,
+  enumerable: true,
+  writable: false,
+  configurable: false
+});
+
+define multiple properties with an object holding property descriptors:
+
+Object.defineProperties(obj, propDescObj)
+
+var obj = Object.defineProperties({}, {
+  foo: { value: 123, enumerable: true },
+  bar: { value: 'abc', enumerable: true }
+});
+
+create an object with prototype proto and optional property descriptors:
+
+Object.create(proto, propDescObj?)
+
+to copy an object, the copy must have the same prototype and the same
+properties with the same attributes as the original
+
+function copyObject(orig) {
+  var copy = Object.create(Object.getPrototypeOf(orig));
+  copyOwnPropertiesFrom(copy, orig);
+  return copy;
+}
+
+function copyOwnPropertiesFrom(target, source) {
+  Object.getOwnPropertyNames(source).forEach(function (propKey) {
+    var desc = Object.getOwnPropertyDescriptor(source, propKey);
+    Object.defineProperty(target, propKey, desc);
+  });
+  return target;
+};
+
+defining a property via defineProperty() or defineProperties() ignores the
+prototype chain
+
+assigning to a property prop with = changes an existing property. If prop is
+a setter, call that setter. If prop is read-only, throw an exception in
+strict mode or do nothing in sloppy mode. If prop is own and writable, change
+that value. Otherwise, there is no prop or it is inherited and writable. Then,
+define an own property prop that is writable, configurable, and enumerable.
+
+if obj inherits a property, prop, and it is not writable, then you cannot
+assign to obj.prop. However, defining an own property circumvents this
+protection. Object.defineProperty(obj, 'prop', { value: 'a' });
+
+generally, properties created by the system are nonenumerable, while user
+properties are. Object.keys() will return enumerable properties, and
+Object.getOwnPropertyNames() returns keys of all own properties.
+
+enumerability affects the for-in loop, Object.keys(), and JSON.stringify()
+
+there are three levels to protect objects: preventing extensions, sealing, and
+freezing.
+
+Object.preventExtensions(obj);  // check with Object.isExtensible(obj)
+
+Object.seal(obj); will prevent extensions and make all properties
+unconfigurable. Check with Object.isSealed(obj)
+
+Object.freeze(obj); makes all properties nonwritable and seals obj. Check:
+Object.isFrozen(obj);
+
+when in sloppy mode, failures are silent
+
+protection is shallow, a mutable value of a property (such as an array) can be
+changed. Also, an object obj has the prototype Object.prototype, which is
+also mutable.
+
+JavaScript constructors are like classes in other languages
+
+objects created by a constructor are called instances
+
+data (such as a person`s name) is instance-specific and stored in each
+instance`s own properties
+
+behavior is shared by all instances, through methods of the common prototype
+
+a constructor is a function invoked by the new operator. By convention,
+constructor names start with uppercase letters
+
+function Person(name) {
+  this.name = name;
+}
+Person.prototype.describe = function () {
+  return 'Person named ' + this.name;
+};
+var jane = new Person("Jane");
+jane.describe();
+
+jane instanceof Person checks if an object is the instance of a constructor
+
+the new operator does roughly:
+function newOperator(Constr, args) {
+  var thisValue = Object.create(Constr.prototype);
+  var result = Constr.apply(thisValue, args);
+  if (typeof result === 'object' && result !== null) {
+    return result;
+  }
+  return thisValue;
+}
+
+prototype has two meanings in JavaScript:
+
+an object can be the prototype of another object
+
+var proto = {};
+var obj = Object.create(proto);
+Object.getPrototypeOf(obj) === proto  // true
+
+prototype can be the value of the property 'prototype'
+
+function C() {}
+Object.getPrototypeOf(new C()) === C.prototype  // true
+
+function Foo() {}
+Object.getPrototypeOf(Foo) === Function.prototype  // true
+
+by default, each function C contains an instance prototype object
+C.prototype whose property constructor points back to C
+
+function C() {}
+C.prototype.constructor === C  // true
+
+the constructor property is inherited by each instance
+
+switch over direct instances of a given constructor:
+
+switch (e.constructor) {
+case SyntaxError:
+  //
+  break;
+case CustomError:
+  //
+}
+
+getting constructor`s name: f.constructor.name (not supported everywhere)
+
+creating new objects with the same constructor of an existing object:
+
+var y = new x,constructor();
+
+SuperConstr.prototype.createCopy = function () {
+  return new this.constructor(...);
+};
+
+avoid replacing C.prototype and only add properties to it:
+
+C.prototype.method = function () { ... }
+
+if it is replaced, manually assign the correct value to constructor:
+
+C.prototype = {
+  constructor: C,
+  method1: function () { }
+};
+
+value instanceof Constr is the same as
+Constr.prototype.isPrototypeOf(value)
+
+primitives are never instanceof any object
+
+prototypes of Object.create(null) and Object.prototype are not Object, but
+null. However, typeof classifies them as objects
+
+crossing realms (frames or windows) will prevent instanceof from working
+
+there are functions like Array.isArray() that will work instead
+
+also, use postMessage() or check the name of the constructor; but may not
+work in all engines
+
+use a prototype property to mark instances belonging to a type T:
+
+value.isT(); but superconstructors return false
+
+'T' in value; tag instances with a property whose key is 'T'
+
+value.TYPE_NAME === 'T'
+
+use strict mode to protect against forgetting new
+
+a constructor can return whatever object
+
+avoid prototype properties with initial values for instance properties
+
+create an instance property on demand:
+
+function Names(data) {
+  if (data) this.data = data;
+}
+Names.prototype = {
+  constructor: Names,
+  get data() {
+    Object.defineProperty(this, 'data', {
+      value: [],
+      enumerable: true,
+      configurable: false,
+      writable: false
+    });
+    return this.data;
+  }
+};
+
+prototype properties that are not polymorphic should be replaced by variables
+
+polymorphic prototype properties with immutable data can be used to tell them
+apart.
+
+there are three ways of storing private data:
+  - in the environment of a constructor
+  - in properties, with marked keys
+  - in properties, with reified keys
+
+also, global data can be kept private with IIFEs
+
+the constructor`s environment is data storage that is independent of the
+instance, though it is created at the same time as the instance
+
+an instance can have three kinds of values associated with it:
+  - public properties
+  - private values (data and functions stored in the environment)
+  - privileged methods (public methods in the instance, that have access to
+                        private values)
+
+prototype properties are usually methods
+
+Constr.prototype.publicMethod = function () { };
+
+instance properties usually hold data
+
+function Constr(...) {
+  this.publicData = ...;
+}
+
+private values are accessible only from inside the constructor
+the constructor`s environment consists of the parameters and local variables
+
+privileged methods are created in the constructor and added as instance
+methods
+
+function Constr() {
+  var that = this;  // make accessible to private functions
+  var privateData = ...;
+  function privateFunction(...) {
+    privateData = ...;
+    that.publicData = ...;
+  }
+
+  this.privilegedMethod = function (...) {
+    privateData = ...;
+    this.publicData = ...;
+  };
+}
+
+  in the privileged method, its this refers to object on which it was invoked,
+that is, the outer this. So, we can access this`s properties without 'that'
+
+one convention for marking property keys as private is using an underscore,
+for example, _buffer
+
+reifying a key is storing it in a variable:
+var StringBuilder = function () {
+  var KEY_BUFFER = '_StringBuilder_buffer';
+
+  function StringBuilder() {
+    this[KEY_BUFFER] = [];
+  }
+  return StringBuilder;
+}();
+
+an IIFE is wrapped around StringBuilder so that KEY_BUFFER stays local
+
+private global data can be attached to a singleton object:
+
+var obj = function () {  // open IIFE
+  // public
+  var self = {
+    publicMethod: function () {
+      privateData = ...;
+    },
+    publicData: ...
+  };
+
+  // private
+  var privateData = ...;
+  function privateFunction() {
+    privateData = ...;
+  }
+  
+  return self;
+}();  // close IIFE
+
+global data relevant only for a constructor and prototype methods can be
+wrapped by an IIFE
+
+var StringBuilder = function () {
+  var KEY_BUFFER = ...;
+  function StringBuilder() {
+    this[KEY_BUFFER] = [];
+  }
+  StringBuilder.prototype = {
+    // methods accessing this[KEY_BUFFER]
+  };
+  return StringBuilder;
+}();
+
+if global data is needed for a single method, it can stay private inside the
+environment of an IIFE wrapped around the method
+
+var obj = {
+  method: function () {  // open IIFE
+    var invocCount = 0;  // method-private
+    return function () {
+      invocCount++;
+      return 'result';
+    }
+  }()  // close IIFE
+};
+
+to inherit instance properties:
+
+function Sub(prop1, prop2) {
+  Super.call(this, prop1);
+  this.prop2 = prop2;
+}
+
+to inherit prototype properties, give Sub.prototype the prototype
+Super.prototype
+
+Sub.prototype = Object.create(Super.prototype);
+Sub.prototype.constructor = Sub;  // needed because the original instance
+                                  // prototype was replaced
+Sub.prototype.methodB = ...;
+
+subInstance instanceof Sub is the same as
+Sub.prototype.isPrototypeOf(subInstance)
+
+the home object of a method is the object that owns the method
+
+to supercall a method, start the search in the prototype of the home object
+and invoke it with the current 'this', because it must be able to access the
+same instance properties
+
+Sub.prototype.methodB = function (x, y) {
+  var superResult = Super.prototype.methodB.call(this, x, y);
+  return this.prop3 + ' ' + superResult;
+}
+
+to avoid hardcoding the superconstructor`s name, assign it to a property of
+Sub: Sub._super = Super.prototype;
+
+an utility function can connect the subprototype to the superprototype:
+
+function subclasses(SubC, SuperC) {  // subclasses used here as a verb
+  var subProto = Object.create(SuperC.prototype);
+  copyOwnPropertiesFrom(subProto, SubC.prototype);
+  SubC.prototype = subProto;
+  SubC._super = SuperC.prototype;
+};
+
+example: Employee as a subconstructor of Person:
+
+function Employee(name, title) {
+  Person.call(this, name);
+  this.title = title;
+}
+Employee.prototype = Object.create(Person.prototype);
+Employee.prototype.constructor = Employee;
+Employee.prototype.describe = function () {
+  return Person.prototype.describe.call(this) + ' (' + this.title + ')';
+};
+
+using subclasses:
+
+function Employee(name, title) {
+  Employee._super.constructor.call(this, name);
+  this.title = title;
+}
+Employee.prototype.describe = function() { ... };
+subclasses(Employee, Person);
+
+Object.prototype.toString() returns a string representation
+
+Object.prototype.valueOf() is the preferred way of converting an object to a
+number
+
+Object.prototype.toLocaleString() returns a locale-specific string
+
+Object.prototype.isPrototypeOf(obj) is true if the receiver is part of the
+prototype chain of obj
+
+Object.prototype.hasOwnProperty.call(obj, 'key'); checks for properties in
+the object itself and not in its prototypes
+
+Object.prototype.propertyIsEnumerable(propKey) looks only at own properties
+
+instance prototype methods may be used generically:
+
+function Wine(age) { this.age = age; }
+Wine.prototype.incAge = function (years) { this.age += years; }
+
+var chablis = new Wine(3);
+chablis.incAge(1);  // chablis is the receiver of the method call, passed
+                    // via this
+is equivalent to Wine.prototype.incAge.call(chablis, 1);
+
+so we can call Wine.prototype.incAge.call(john, 3)
+
+Object.prototype and Array.prototype can be replaced by {} and [] when used
+to generically call methods:
+
+{}.hasOwnProperty.call(obj, 'propKey');
+[].join.call(str, '-');
+
+examples:
+
+var arr1 = ['a','b'];
+[].push.apply(arr1, ['c','d']);
+
+[].join.call('abc', '-');
+
+[].map.call('abc', function (x) { return x.toUpperCase(); });
+
+you can also apply string methods to nonstrings (they are converted), or
+array methods on fake arrays (objects with length and numbered indices)
+
+array-like objects have indices and a length property, but none of the array
+methods. Generic array methods can be used as a workaround
+
+array-like objects include:
+  - arguments
+  - browser DOM node lists like document.getElementsBy*()
+  - strings
+
+to convert an array-like object to an array:
+
+[].slice.call(obj);
+
+to iterate over an array-like object, use a for loop
+
+or [].forEach.call(obj, function (elem, i) {
+  // print(i + ": " + elem);
+});
+
+generic array methods: concat, every, filter, forEach, indexOf, join,
+lastIndexOf, map, pop, push, reduce, reduceRight, reverse, shift, slice,
+some, sort, splice, toLocaleString, toString, unshift
+
+generic: Date.prototype.toJSON
+
+all Object.prototype methods are generic
+
+generic string.methods: charAt, charCodeAt, concat, indexOf, lastIndexOf,
+localeCompare, match, replace, search, slice, split, substring,
+toLocaleLowerCase, toLocaleUpperCase, toLowerCase, toUpperCase, trim
+
+when using objects as maps from strings to values, we must consider:
+  - inheritance when reading properties: in will return inherited properties,
+while hasOwnProperty looks only at the object itself
+for-in will return inherited properties. To list enumerable own properties,
+use obj.keys(). For all properties, use Object.getOwnPropertyNames()
+
+  - overriding hasOwnProperty
+  - overriding the special property __proto__
+
+the dict pattern creates an object without a prototype:
+
+var dict = Object.create(null);
+
+ch18.html
+
+array literal (trailing commas are ignored) and access:
+
+var arr = ['a', 'b', 'c', ];
+arr[0]
+arr.length  // can be reduced to remove last elements
+arr.push('d')  // append element
+
+arrays are maps, not tuples (they can have holes)
+
+arrays can have properties, becauee they are objects
+
+avoid using Array() or new Array(), because calling it with one argument
+produces an empty array with n holes, while using multiple arguments produces
+the array with the given elements
+
+multi-dimensional arrays must be nested: row[0][2] = "0";
+
+indices are limited to 2^32 - 1, outside this range, the index is a string
+property
+
+the 'in' operator can be used to determine if an index exists in an array
+
+delete will delete elements
+
+length gives the highest index. To count actual elements, a function is needed
+
+function countElements(arr) {
+  var elemCount = 0;
+  arr.forEach(function () {
+    elemCount++;
+  });
+  return elemCount;
+}
+
+clearing an array by setting length to 0 affects all references, while
+  assigning to an empty literal does not.
+
+to create a hole, delete that element in the desired index
+
+having undefined is different than having a hole. forEach() skips holes,
+and while an existing undefined element will be used by forEach()
+
+every() and some() skip holes
+
+map()`s function skips holes, but the result will have holes
+
+filter() eliminates holes
+
+join() converts holes, undefined, and null to empty strings
+
+sort() preserves holes
+
+for-in correctly lists property keys (a superset of the indices)
+
+Function.prototype.apply() turns holes into an argument whose value is
+undefined.
+
+Array.apply(null, Array(3))  // array with 3 undefineds
+
+check if obj is an array: Array.isArray(obj), works for objects that cross
+realms (windows or frames)
+
+Array.prototype methods:
+
+arr.shift() removes arr[0] and returns it
+
+unshift(elem1, elem2, ...) prepends the given elements and returns new length
+
+pop() removes the last element and returns it
+
+push(elem1, elem2, ...) adds the given elements and returns new length
+
+[].push.apply(arr1, arr2) appends arr2 to arr1
+
+splice(start, deleteCount?, elem1?, elem2?...) deletes deleteCount elements
+starting at start and inserts the given elements, returning the elements
+removed. If start is negative, length is added to determine the start index.
+  If deleteCount is omitted, all elements after start are deleted
+
+reverse() is in place, and returns a reference to the original (modified)
+array
+
+sort(compareFunction?) converts values to strings then sorts them. To compare
+numbers, compareFunction(a, b) must be given. It should return -1 if a < b,
+0 if a === b, and 1 if a > b
+
+function compareNumbers(a, b) {
+  return a < b ? -1 : (a > b ? 1 : 0);
+}
+
+for comparing strings, use a.localeCompare(b);
+
+or compare by object properties: a.name.localeCompare(b.name);
+
