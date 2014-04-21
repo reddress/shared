@@ -5,3 +5,4 @@
 18 apr 2014: ch17 iteration, detection of properties
 19 apr 2014: ch17 Keeping data private
 20 apr 2014: ch18 Concatenating
+21 apr 2014: ch19 regular expressions

@@ -1742,3 +1742,127 @@ for comparing strings, use a.localeCompare(b);
 
 or compare by object properties: a.name.localeCompare(b.name);
 
+concatenate is nondestructive:
+
+var arr = ['a', 'b'];
+arr.concat('c', ['d', 'e']);  // ['a', 'b', 'c', 'd', 'e']
+
+arr is unchanged
+
+slice(begin?, end?) (nondestructive), copies from begin up to but not
+including end
+
+to copy up to the end, omit parameter 'end?', for negative indices, length
+is added
+
+slice() copies the entire array
+
+Array.prototype.join(separator?) creates a string, separator defaults to ','
+
+holes, undefineds, and nulls become empty strings
+
+Array.prototype.indexOf(searchValue, startIndex?) returns the index of the
+first occurrence, or -1 if nothing is found. === is used
+
+[0,1,2,3,4,5].indexOf(3);  // 3
+
+arr.lastIndexOf(searchElement, startIndex?) starts at given index and searches
+backwards
+
+array iteration uses functions; there are three kinds:
+  - examination methods (observe content)
+  - transformation methods (derive a new array)
+  - reduction methods (compute a result)
+
+arr.examinationMethod(function callback(element, index, array), thisValue?)
+include forEach(), every(), and some()
+
+var arr = ['apple', 'pear', 'orange'];
+arr.forEach(function (elem) {
+  console.log(elem);
+});
+
+arr.every(callback, thisValue?) returns true if callback is true for every
+element. every() interprets an undefined returned as false
+
+var squares = [0, 1, 4, 9, 16, 25];
+squares.every(function (elem, index) {
+  return elem === index * index;
+});
+
+function isEven(x) { return x % 2 === 0 }
+[2, 4, 6].every(isEven);
+
+function returnNothing(x) { };
+['a', 'b'].every(returnNothing);
+
+if the array is empty, every() returns true, and callback is not called
+[].every(returnNothing);
+
+arr.some(callback, thisValue?) returns true if callback is true of at least
+one element. It is like asking "does there exist?"
+
+if the array is empty, some() returns false
+
+one drawback of forEach() is that it does not support break to end the loop
+
+some() may be used for this purpose
+
+function breakAtEmptyString(strArr) {
+  var lastNonEmpty = "";
+  strArr.some(function (elem) {
+    if (elem.length === 0) {
+      return true;  // has effect of break
+    }
+    console.log(elem);
+    lastNonEmpty = elem;
+    // implicit: return undefined, which is interpreted as false
+  });
+  return lastNonEmpty;
+}
+breakAtEmptyString(['a', 'b', '', 'd'])
+
+transformation methods take an input array and produce an output array, with
+  the callback controlling how the output is produced
+
+callbacks have this signature: function callback(element, index, array) { }
+
+there are two transformation methods: map(callback, thisValue?) and filter()
+
+map creates a new array whose elements are the result of applying callback to
+the input elements.
+
+the output of filter contains only those input elements for which callback
+returns true
+
+Array.prototype.reduce(callback, initialValue?) and
+Array.prototype.reduceRight(callback, initialValue?) are the reduction methods
+
+for reducing, the callback has a different signature:
+
+function callback(previousValue, currentElement, currentIndex, array) { }
+
+previousValue is the value previously returned by the callback. When first
+called, an explicit initialValue may be provided, making previousValue equal
+to initialValue. Then, currentElement is the first array element
+(for reduceRight, the last array element)
+
+if no explicit initialValue has been provided, previousValue is the first
+array element and currentElement, the second element. For reduceRight, they
+become the last and second-to-last array elements.
+
+function add(prev, cur) {
+  return prev + cur;
+}
+[1, 2, 3].reduce(add);  // 6
+[7].reduce(add);  // 7
+[].reduce(add, 10);  // 10
+
+reduceRight() works from right to left
+
+reducing is like applying a binary operator n times:
+(...(x_0 op x_1) op x2 ...) op x_n
+
+avoid for-in when iterating over arrays. Use a simple for loop or forEach(),
+every(), some(), map() or filter()
+
