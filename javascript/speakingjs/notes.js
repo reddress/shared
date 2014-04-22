@@ -67,7 +67,7 @@ Infinity can be used as default values in looking for a minimum or maximum
 
 get a string substring with slice()
 
-remove whitespace with trim()
+remove whitespace with trim(), trimLeft(), and trimRight()
 
 find a string with indexOf()
 
