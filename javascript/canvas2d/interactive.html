@@ -1,0 +1,40 @@
+  <html>
+  <body>
+  <canvas width="400" height="400"></canvas><hr>
+
+  <textarea id="input" rows="5" cols="78"></textarea><br>
+  <button id="btnClear">clear</button>
+  <button id="btnEval">eval me</button>
+  </body>
+  <script>
+  // 
+  
+var canvas = document.querySelector("canvas");
+var ctx = canvas.getContext("2d");
+
+var imageData = ctx.createImageData(1, 1);
+var data = imageData.data;
+
+function pixel(x, y, r, g, b, a) {
+  // (a)lpha up to 255
+  data[0] = r;
+  data[1] = g;
+  data[2] = b;
+  data[3] = a;
+  ctx.putImageData(imageData, x, y);
+}
+
+function pixelRect(x, y, r, g, b, a) {
+  ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (a/255) + ")";
+  ctx.fillRect(x, y, 1, 1);
+}
+
+document.getElementById("btnClear").onclick = function () {
+  document.getElementById("input").value = "";
+}
+
+document.getElementById("btnEval").onclick = function () {
+  eval(document.getElementById("input").value);
+}
+
+</script></html>

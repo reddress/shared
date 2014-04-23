@@ -82,7 +82,7 @@ class Application(tk.Frame):
             except AttributeError:
                 set(self.lastmod, "")
         except KeyError:
-            set(self.info, "\nÚltimo container - ")
+            set(self.info, "\nÚltimo container - \n")
             set(self.lastmod, "")
         
     def save(self, event):
