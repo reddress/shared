@@ -339,3 +339,17 @@ probe("average", avg);
 setValue(a, 10, 'user');
 setValue(b, 22, 'user');
 forgetValue(b, 'user');
+
+// contradiction
+var u = makeConnector();
+var v = makeConnector();
+var a = makeConnector();
+var b = makeConnector();
+var x = makeConnector();
+adder(u, v, x);
+adder(a, b, x);
+probe("a", a);
+setValue(u, 1, 'user');
+setValue(v, 2, 'user');
+setValue(a, 10, 'user');
+setValue(b, 20, 'user');
