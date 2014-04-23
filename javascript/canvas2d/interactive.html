@@ -37,4 +37,14 @@ document.getElementById("btnEval").onclick = function () {
   eval(document.getElementById("input").value);
 }
 
+// has bugs
+function line(x1, y1, x2, y2) {
+  var dx = (x2 - x1);
+  var dy = (y2 - y1);
+  for (var i = x1; i < x2; i++) {
+    pixel(i, Math.round((i/dx) * dy), 0, 120, 0, 255);
+  }
+}
+
+
 </script></html>
