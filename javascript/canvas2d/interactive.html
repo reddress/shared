@@ -1,7 +1,6 @@
   <html>
   <body>
   <canvas width="400" height="200" id="plot1"></canvas><hr>
-  <canvas width="400" height="200" id="plot2"></canvas><hr>
 
   <textarea id="input" rows="5" cols="78"></textarea><br>
   <button id="btnEval">eval me</button>
@@ -12,13 +11,35 @@
   //
 
 function Pixel(x, y) {
+  // element in PlotWindow, represents actual canvas pixels
+  this.x = Math.round(x);
+  this.y = Math.round(y);
+}
+
+function Point(x, y) {
+  // element in BoundedWindow restricted to bounds
   this.x = x;
   this.y = y;
 }
 
+function Bounds(xmin, xmax, ymin, ymax) {
+  this.xmin = xmin;
+  this.xmax = xmax;
+  this.ymin = ymin;
+  this.ymax = ymax;
+
+  this.xWidth = this.xmax - this.xmin;
+  this.yHeight = this.ymax - this.ymin;
+}
+Bounds.prototype.getWidth = function () {
+  return this.xWidth;
+}
+Bounds.prototype.getHeight = function () {
+  return this.yHeight;
+}
+
 function PlotWindow(canvasId, background) {
   // wrapper for canvas HTML element with given id
-  // background 
   this.canvas = document.getElementById(canvasId);
   this.cx = this.canvas.getContext("2d");
 
@@ -33,7 +54,7 @@ PlotWindow.prototype.cls = function () {
   this.cx.fillStyle = this.background;
   this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
-PlotWindow.prototype.setPixel = function (x, y, r, g, b, a) {
+PlotWindow.prototype.setPixel = function (px, r, g, b, a) {
   r = r || 0;
   g = g || 0;
   b = b || 0;
@@ -43,7 +64,8 @@ PlotWindow.prototype.setPixel = function (x, y, r, g, b, a) {
   this.data[1] = g;
   this.data[2] = b;
   this.data[3] = a;
-  this.cx.putImageData(this.imageData, x, y);
+  //console.log(px.x);
+  this.cx.putImageData(this.imageData, px.x, px.y);
 }
 PlotWindow.prototype.pixelRect = function (x, y, r, g, b, a) {
   this.cx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (a/255) + ")";
@@ -68,35 +90,76 @@ PlotWindow.prototype.plotLine = function (x0, y0, x1, y1) {
   var err = dx+dy, e2;                                   /* error value e_xy */
   
   for (;;){                                                          /* loop */
-    this.setPixel(x0,y0);
+    this.setPixel(new Pixel(x0, y0));
     if (x0 == x1 && y0 == y1) break;
     e2 = 2*err;
     if (e2 >= dy) { err += dy; x0 += sx; }                        /* x step */
     if (e2 <= dx) { err += dx; y0 += sy; }                        /* y step */
   }
 }
-PlotWindow.prototype.connectPath = function (pts) {
-  var startPt = pts[0];
+PlotWindow.prototype.connectPath = function (pxs) {
+  var startPx = pxs[0];
   
   this.cx.beginPath();
-  this.cx.moveTo(startPt.x, startPt.y);
-  for (var i = 1; i < pts.length; i++) {
-    this.plotLine(startPt.x, startPt.y, pts[i].x, pts[i].y);
-    startPt = pts[i];
+  this.cx.moveTo(startPx.x, startPx.y);
+  for (var i = 1; i < pxs.length; i++) {
+    this.plotLine(startPx.x, startPx.y, pxs[i].x, pxs[i].y);
+    startPx = pxs[i];
   }
   this.cx.stroke();
 }
 
-pw = new PlotWindow("plot1", "aliceblue");
-cx = pw.cx;
+function BoundedWindow(plotWindow, bounds) {
+  this.plotWindow = plotWindow;
+  this.bounds = bounds;
+}
+BoundedWindow.prototype.convertToPixel = function (pt) {
+  var canvasWidth = this.plotWindow.canvas.width;
+  var canvasHeight = this.plotWindow.canvas.height;
+  var b = this.bounds;
+  return new Pixel((pt.x-b.xmin)/b.getWidth() * canvasWidth,
+                   canvasHeight * (1 - (pt.y-b.ymin)/b.getHeight()));
+}
+BoundedWindow.prototype.setPoint = function (pt, r, g, b, a) {
+  this.plotWindow.setPixel(this.convertToPixel(pt), r, g, b, a);
+}
+BoundedWindow.prototype.plotLine = function (pt1, pt2) {
+  var px1 = this.convertToPixel(pt1);
+  var px2 = this.convertToPixel(pt2);
 
-function sineWave(width, amp, yOffset) {
+  this.plotWindow.plotLine(px1.x, px1.y, px2.x, px2.y);
+}
+BoundedWindow.prototype.connectPath = function (pts) {
+  var pxs = pts.map(this.convertToPixel, this);
+  this.plotWindow.connectPath(pxs);
+}
+
+
+
+
+
+wBounds = new Bounds(-2, 6.28, -2, 1);
+pw = new PlotWindow("plot1", "aliceblue");
+bw = new BoundedWindow(pw, wBounds);
+
+function sineWavePx(width, amp, yOffset) {
   ptArr = [];
   for (var x = 0; x < 400; x++) {
     var y = yOffset + Math.round(amp*(Math.sin(-6.28*x/width)));
     ptArr.push(new Pixel(x, y));
   }
   pw.connectPath(ptArr);
+}
+
+function sineWavePt(width, amp, yOffset) {
+  ptArr = [];
+  for (var x = 0; x < 6.28; x += 0.01) {
+    var y = yOffset + (amp * (Math.sin(x / width)));
+    newPt = new Point(x, y);
+    ptArr.push(newPt);
+    bw.setPoint(newPt);
+  }
+  bw.connectPath(ptArr);
 }
 
 document.getElementById("btnClear").onclick = function () {
