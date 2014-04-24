@@ -21,8 +21,14 @@
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 ;; globals
-(add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d")
-(add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/auto-complete")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
+(set-language-environment "UTF-8")
+(defun my-previous-window ()
+  (interactive)
+  (other-window -1))
+(global-set-key (kbd "C-x p") 'my-previous-window)
 
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
@@ -91,7 +97,7 @@
   (aset buffer-display-table ?\^M []))
 
 ;; Scheme
-(setq scheme-program-name "csi.exe -:c")
+(setq scheme-program-name "C:/chicken/bin/csi.exe -:c")
 (defun my-scheme-send-buffer ()
   (interactive)
   (mark-whole-buffer)
@@ -104,14 +110,14 @@
 
 (defun my-python-send-statement ()
   (interactive)
-  (local-set-key [S-return] 'my-python-send-statement)
+  ;; (local-set-key [S-return] 'my-python-send-statement)
   (python-shell-send-string (thing-at-point 'line))
   (python-shell-send-string "\n")
   (move-end-of-line nil))
 
 (defun my-python-send-block ()
   (interactive)
-  (local-set-key [C-return] 'my-python-send-block)
+  ;; (local-set-key [C-return] 'my-python-send-block)
   (set-mark (line-end-position))
   ; (previous-line)
   (let ((lines-of-block 0))
@@ -126,6 +132,41 @@
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
+
+;; javascript
+(require 'js-comint)
+;;;(setq inferior-js-program-command "java -jar c:/Users/heitor/Desktop/programming/js/rhino1_7R4/js.jar")
+(setq inferior-js-program-command "node.exe -i")
+
+(defun my-js-send-block ()
+  (interactive)
+  (set-mark (line-end-position))
+  ; (previous-line)
+  (let ((lines-of-block 0))
+    (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
+      (previous-line)
+      (beginning-of-line)
+      (set 'lines-of-block (+ 1 lines-of-block)))
+    (beginning-of-line)
+    (call-interactively 'js-send-region)
+    ;; (python-shell-send-string "\n")
+    ;; (python-shell-send-string "; print(end=\"\")")
+    (dotimes (i lines-of-block)
+      (next-line))
+    (end-of-line)))
+
+(defun my-js-send-line ()
+  (interactive)
+  (set-mark (line-end-position))
+  (beginning-of-line)
+  (call-interactively 'js-send-region)
+  (end-of-line))
+
+  ;; (js-send-last-sexp))
+
+(defun node-suppress-undefined ()
+  (interactive)
+  (comint-send-string inferior-js-buffer "module.exports.repl.ignoreUndefined = true;"))
 
 ;; auto-complete-mode
 (require 'auto-complete-config)
@@ -175,3 +216,11 @@
           (lambda ()
             (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [C-return] 'my-python-send-block)))
+
+(add-hook 'js-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c c") 'js-send-buffer)
+            (local-set-key (kbd "C-c n") 'node-suppress-undefined)
+            (local-set-key [S-return] 'my-js-send-line)
+            (local-set-key [C-return] 'my-js-send-block)
+            (call-interactively 'node-suppress-undefined)))
