@@ -1,50 +1,111 @@
   <html>
   <body>
-  <canvas width="400" height="400"></canvas><hr>
+  <canvas width="400" height="200" id="plot1"></canvas><hr>
+  <canvas width="400" height="200" id="plot2"></canvas><hr>
 
   <textarea id="input" rows="5" cols="78"></textarea><br>
-  <button id="btnClear">clear</button>
   <button id="btnEval">eval me</button>
+  <button id="btnClear">clear text</button>
+  <button id="btnCls">clear canvas</button>
   </body>
   <script>
-  // 
-  
-var canvas = document.querySelector("canvas");
-var ctx = canvas.getContext("2d");
+  //
 
-var imageData = ctx.createImageData(1, 1);
-var data = imageData.data;
-
-function pixel(x, y, r, g, b, a) {
-  // (a)lpha up to 255
-  data[0] = r;
-  data[1] = g;
-  data[2] = b;
-  data[3] = a;
-  ctx.putImageData(imageData, x, y);
+function Pixel(x, y) {
+  this.x = x;
+  this.y = y;
 }
 
-function pixelRect(x, y, r, g, b, a) {
-  ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (a/255) + ")";
-  ctx.fillRect(x, y, 1, 1);
+function PlotWindow(canvasId, background) {
+  // wrapper for canvas HTML element with given id
+  // background 
+  this.canvas = document.getElementById(canvasId);
+  this.cx = this.canvas.getContext("2d");
+
+  this.background = background || "white";
+  
+  this.imageData = this.cx.createImageData(1, 1);
+  this.data = this.imageData.data;
+
+  this.cls();
+}
+PlotWindow.prototype.cls = function () {
+  this.cx.fillStyle = this.background;
+  this.cx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+}
+PlotWindow.prototype.setPixel = function (x, y, r, g, b, a) {
+  r = r || 0;
+  g = g || 0;
+  b = b || 0;
+  a = a || 255;  // (a)lpha from 0 (transparent) up to 255 (opaque)
+  
+  this.data[0] = r;
+  this.data[1] = g;
+  this.data[2] = b;
+  this.data[3] = a;
+  this.cx.putImageData(this.imageData, x, y);
+}
+PlotWindow.prototype.pixelRect = function (x, y, r, g, b, a) {
+  this.cx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (a/255) + ")";
+  this.cx.fillRect(x, y, 1, 1);
+}
+PlotWindow.prototype.plotLine = function (x0, y0, x1, y1) {
+  // from bresenham.js
+  /**
+   * Bresenham Curve Rasterizing Algorithms
+   * @author  Zingl Alois
+   * @date    17.12.2012
+   * @version 1.1
+   * @url     http://members.chello.at/easyfilter/bresenham.html
+   */
+  x0 = Math.round(x0);
+  y0 = Math.round(y0);
+  x1 = Math.round(x1);
+  y1 = Math.round(y1);
+  
+  var dx =  Math.abs(x1-x0), sx = x0<x1 ? 1 : -1;
+  var dy = -Math.abs(y1-y0), sy = y0<y1 ? 1 : -1;
+  var err = dx+dy, e2;                                   /* error value e_xy */
+  
+  for (;;){                                                          /* loop */
+    this.setPixel(x0,y0);
+    if (x0 == x1 && y0 == y1) break;
+    e2 = 2*err;
+    if (e2 >= dy) { err += dy; x0 += sx; }                        /* x step */
+    if (e2 <= dx) { err += dx; y0 += sy; }                        /* y step */
+  }
+}
+PlotWindow.prototype.connectPath = function (pts) {
+  var startPt = pts[0];
+  
+  this.cx.beginPath();
+  this.cx.moveTo(startPt.x, startPt.y);
+  for (var i = 1; i < pts.length; i++) {
+    this.plotLine(startPt.x, startPt.y, pts[i].x, pts[i].y);
+    startPt = pts[i];
+  }
+  this.cx.stroke();
+}
+
+pw = new PlotWindow("plot1", "aliceblue");
+cx = pw.cx;
+
+function sineWave(width, amp, yOffset) {
+  ptArr = [];
+  for (var x = 0; x < 400; x++) {
+    var y = yOffset + Math.round(amp*(Math.sin(-6.28*x/width)));
+    ptArr.push(new Pixel(x, y));
+  }
+  pw.connectPath(ptArr);
 }
 
 document.getElementById("btnClear").onclick = function () {
   document.getElementById("input").value = "";
 }
-
 document.getElementById("btnEval").onclick = function () {
   eval(document.getElementById("input").value);
 }
-
-// has bugs
-function line(x1, y1, x2, y2) {
-  var dx = (x2 - x1);
-  var dy = (y2 - y1);
-  for (var i = x1; i < x2; i++) {
-    pixel(i, Math.round((i/dx) * dy), 0, 120, 0, 255);
-  }
+document.getElementById("btnCls").onclick = function () {
+  pw.cls();
 }
-
-
 </script></html>
