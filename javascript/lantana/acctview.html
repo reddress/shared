@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../jquery.treeview.css" />
+    <link rel="stylesheet" href="../screen.css" />
+    <script src="../jquery-1.11.0.min.js"></script>
+    <script src="../jquery.treeview.js"></script>
+    <script type="text/javascript">
+  $(function () {
+    $("#tree").treeview({
+      collapsed: true,
+      animated: "fast",
+      control:"#sidetreecontrol",
+      prerendered: true,
+      persist: "location"
+    });
+  })
+    </script>
+  </head>
+  <body>
+    
+    <div id="sidetree">
+      <div class="treeheader">&nbsp;</div>
+      <div id="sidetreecontrol"> <a href="?#">Collapse All</a> | <a href="?#">Expand All</a> </div>
+
+      <ul class="treeview" id="tree">
+        
+	    <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?/index.cfm">Assets: R$ 20,289.02</a>
+	      <ul style="display: none;">
+            <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?#">Bradesco: R$ 7,498.31</a>
+              <ul style="display: none;">
+		        <li><a href="?#">Conta corrente: R$ 498.51</a></li>
+		        <li><a href="?#">Poupanca: R$ 20.00</a></li>
+		        <li><a href="?#">Tesouro Direto: R$ 6,983.88</a></li>
+              </ul>
+            </li>
+
+            <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?#">CGD: R$ 20,158.34</a>
+              <ul style="display: none;">
+		        <li><a href="?#">Acoes: R$ 2,559.33</a></li>
+		        <li><a href="?#">Conta corrente: R$ 989.68</a></li>
+		        <li><a href="?#">Tesouro Direto: R$ 16,610.43</a></li>
+              </ul>
+            </li>
+
+            <li><a href="?#">Claro: R$ 21.80</a></li>
+            <li><a href="?#">Coins: R$ 1.10</a></li>
+            <li><a href="?#">Declaracao: R$ -58,717.15</a></li>
+
+            <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?#">Drawer: R$ 2600.00</a>
+              <ul style="display: none;">
+		        <li><a href="?#">Sorted bills: R$ 2,000.00</a></li>
+                <li><a href="?#">Drawer folded paper: R$ 400.00</a></li>
+                <li class="last"><a href="?#">Drawer envelope: R$ 200.00</a></li>
+              </ul>
+            </li>
+            
+            <li><a href="?#">Emergency: R$ 1,630.00</a></li>
+
+            <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?#">Itau: R$ 46,568.49</a>
+              <ul style="display: none;">
+		        <li><a href="?#">Conta corrente: R$ 1,265.22</a></li>
+		        <li><a href="?#">Poupanca: R$ 45,307.59</a></li>
+              </ul>
+            </li>
+
+            <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?#">Transit cards: R$ 171.02</a>
+              <ul style="display: none;">
+                <li><a href="?#">Bilhete Unico: R$ 84.02</a></li>
+                <li class="last"><a href="?#">Cartao Fidelidade: R$ 87.00</a></li>
+              </ul>
+            </li>
+
+            <li class="expandable lastExpandable"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><a href="?#">Wallets: R$ 237.50</a>
+              <ul style="display: none;">
+                <li><a href="?#">Front: R$ 137.50</a></li>
+                <li class="last"><a href="?#">Back: R$ 200.00</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="expandable"><div class="hitarea expandable-hitarea"></div><a href="?/index.cfm">Expenses: R$ 6,491.27</a>
+	      <ul style="display: none;">
+            <li><a href="?#">Bank fees: R$ 28.80</a></li>
+            <li><a href="?#">Books: R$ 465.80</a></li>
+            <li><a href="?#">Food and Restaurants: R$ 892.12</a></li>
+            <li><a href="?#">Groceries: R$ 329.23</a></li>
+            <li><a href="?#">Transportation: R$ 123.14</a></li>
+          </ul>
+        </li>
+        
+        <li class="expandable lastExpandable"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><a href="?/index.cfm">Income</a>
+          <ul style="display: none;">
+            <li><a href="?#">Itau juros</a></li>
+            <li class="last"><a href="?#">Pontual</a></li>
+          </ul>
+        </li>
+        
+
+      </ul>
+      
+    </div>
+    
+        
+  </body>
+</html>
