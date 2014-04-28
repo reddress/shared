@@ -1,0 +1,91 @@
+Learn SQL the Hard Way
+http://sql.learncodethehardway.org/book/ex1.html
+
+ex1
+
+CREATE TABLE person (
+  id INTEGER PRIMARY KEY,
+  first_name TEXT,
+  last_name TEXT,
+  age INTEGER
+);
+
+ex2
+
+-- table that links tables: a relation
+CREATE TABLE person_pet (
+  person_id INTEGER,
+  pet_id INTEGER
+);
+
+ex3
+
+-- recommended to always list column names
+INSERT INTO person(id, first_name, last_name, age)
+  VALUES (0, 'Zed', 'Shaw', 37);
+
+ex4
+
+-- insert referential data
+INSERT INTO person_pet (person_id, pet_id)
+  VALUES (0, 0);
+
+ex5
+
+SELECT last_name, age FROM person WHERE first_name = 'Zed';
+
+ex6
+
+SELECT pet.id, pet.name, pet.age, pet.dead
+  FROM pet, person_pet, person
+  WHERE
+  pet.id = person_pet.pet_id AND
+  person_pet.person_id = person.id AND
+  person.first_name = 'Zed';
+
+-- ignore people who say that not using joins is "low class"
+
+ex7
+
+DELETE FROM pet WHERE dead = 1;
+
+ex8
+
+-- delete can only delete from one table at a time
+
+-- delete can match ids from a subselect
+DELETE FROM pet WHERE id IN (
+  SELECT pet.id
+  FROM pet, person_pet, person
+  WHERE
+  person.id = person_pet.person_id AND
+  pet.id = person_pet.pet_id AND
+  person.first_name = 'Zed'
+);
+
+-- can also do the opposite (what does not match)
+DELETE FROM person_pet
+  WHERE pet_id NOT IN (
+    SELECT id FROM pet
+  );
+
+ex9
+
+UPDATE person SET first_name = 'Hilarious Guy', last_name = 'Esq.'
+  WHERE first_name = 'Zed';
+
+ex10
+
+SELECT * FROM pet;
+
+UPDATE pet SET name = 'Zed''s Pet' WHERE id IN (
+  SELECT pet.id
+  FROM pet, person_pet, person
+  WHERE
+  person.id = person_pet.person_id AND
+  pet.id = person_pet.pet_id AND
+  person.first_name = 'Zed'
+);
+
+SELECT * FROM pet;
+
