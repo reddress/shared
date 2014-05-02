@@ -1,0 +1,5 @@
+>> date and time - show local timezone
+
+>> fuzzy search, like "pon exp imp" or "pon imp exp"
+
+>> write tests for computing values
