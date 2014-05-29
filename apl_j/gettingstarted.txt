@@ -1,0 +1,7 @@
+c:\Users\Heitor\Desktop\emacs-24.3\bin>.\jconsole.lnk
+.\jconsole.lnk
+   1+2
+3
+   2*3+1
+8
+   
