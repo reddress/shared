@@ -1,7 +1,29 @@
-c:\Users\Heitor\Desktop\emacs-24.3\bin>.\jconsole.lnk
+NB. M-x shell
+NB. M-x isend-associate *shell*
+
 .\jconsole.lnk
+
+c:\Users\Heitor\Desktop\emacs-24.3\bin>.\jconsole.lnk
+
+
    1+2
 3
    2*3+1
 8
-   
+
+2 * 3 - 2
+9 + 9
+
+11
+
+1
+2
+3
+4
+
+2
+2
+
+1
+1
+2
