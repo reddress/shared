@@ -7,3 +7,5 @@ cd =: 1!:44
 pwd =: getcwd
 
 NB. precision (pps) for 14 digits is 9!:11]14
+
+pps =. 9!:11
