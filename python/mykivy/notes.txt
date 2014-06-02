@@ -1,0 +1,15 @@
+p. 10
+
+Layouts: BoxLayout
+		 GridLayout
+		 FloatLayout
+		 
+p. 16
+
+When setting width, height, or size, the corresponding size_hints
+must be set to None
+
+p. 17
+
+Author recommends using dp (display pixels)
+
