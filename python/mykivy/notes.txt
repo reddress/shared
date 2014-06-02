@@ -13,3 +13,12 @@ p. 17
 
 Author recommends using dp (display pixels)
 
+p. 24
+
+KV language's "magic variables"
+
+self refers to the rightmost indented object
+root refers to the leftmost indented object in the block
+app refers to the subclass of app on which the code originally called run()
+
+PROGRESS: p. 35 ch. 3
