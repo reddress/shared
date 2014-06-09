@@ -113,7 +113,7 @@
   (end-of-buffer))
 
 ;; Python
-(setq python-shell-interpreter "C:/Python27/python.exe")
+(setq python-shell-interpreter "C:/Python33/python.exe")
 ;;(setq python-shell-interpreter "C:/Python33/python.exe")
 (defun line-emptyp ()
   (= (line-beginning-position) (line-end-position)))
@@ -190,6 +190,7 @@
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
 (setq ac-delay 0.001)
+(setq ac-disable-faces nil)
 
 ;; settings for not immediately completing
 ;(global-auto-complete-mode t)
