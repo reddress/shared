@@ -14,7 +14,7 @@ from fractions import Fraction
 [ 1, 2, 3+4j, Decimal(), Fraction() ]
 
 # Strings
-[ 'abc', "Bob's", r"raw\now", b'a\x01c', u'sp\xc4m' ]
+[ 'abc', "Bob's", r"raw\new", b'a\x01c_bytes', u'sp\xc4m' ]
 
 # Tuples
 from collections import namedtuple
@@ -85,3 +85,49 @@ s * 3
 # Strings are immutable. As an alternative, convert to list then ''.join(lst)
 # or use bytearray(b'mystr')
 
+# find substring in a string (returns -1 if not found)
+s.find('dog')
+
+# replace returns a new string
+s.replace(' ', '-')
+
+# other string methods
+"1,2,3,Go".split(',')
+'fred'.upper()
+'bob'.isalpha()
+'123'.isdigit()
+" abc ".lstrip()  # remove whitespace
+" abc ".rstrip()
+' abc  '.strip()
+
+# string formatting can be done in two ways
+"%s, eggs, and %s" % ('Spam', 'Tomatoes')  # values are in a tuple
+'{0}, eggs, and {1}'.format('spam', 'tomatoes')
+'{}, eggs, and {}'.format('spam', 'tomatoes')  # numbers are optional
+
+# p. 103
+# generic operations spanning multiple types are usually built-in functions or
+# expressions, but type-specific operations are method calls
+
+# p. 104 Getting help
+########################################################################
+
+# get a list of all attributes available to the argument
+dir(s)
+
+# get documentation for the argument
+help(s.upper)
+
+# p. 105
+s = 'A\nB\tC'  # newline and tab
+ord('A')       # get ASCII/Unicode
+s = 'a\0b'     # zero byte
+
+multiline = """The story of a boy
+His name is Joe
+He is a 1337 hacker
+"""
+
+unicode_spam = 'sp\xc4m'
+
+id(s)  # get object's memory address
