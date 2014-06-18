@@ -2,19 +2,27 @@ NB. C-x 2
 NB. M-<down>
 NB. M-x shell
 NB. M-<up>
+NB. M-x isend-mode
 NB. M-x isend-associate RET *shell*
 
 .\jconsole.lnk
 
 NB. c:\Users\Heitor\Desktop\emacs-24.3\bin>.\jconsole.lnk
 
+NB. get current working directory
+1!:43 ''
+
+NB. change directory
+1!:44 'c:\path\to\dir'
+
+NB. load file to cd to jforc
+load 'setup.ijs'
+
    2*3+1
 8
 
 2 * 3 - 2
 9 + 9
-
-11
 
 1
 1

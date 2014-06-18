@@ -50,3 +50,12 @@ add2x3y =: dyad : '(2 * x) + 3 * y'
 1 2 3 add2x3y 4 5 6
 
 c =: 30
+
+NB. p. 35
+NB. an array q[4][5][6] has rank 3, with shape 4 5 6. The axes are of length
+NB. 4, 5, and 6. The shape array has rank 1
+
+NB. A single number or character is called an atom or scalar. It has rank 0,
+NB. that is, its shape is an array with 0 items, an empty array of rank 1
+
+4 5 6 2 $ i. 9
