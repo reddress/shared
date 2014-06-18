@@ -40,6 +40,9 @@
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
 
+(global-set-key (kbd "<M-up>") 'other-window)
+(global-set-key (kbd "<M-down>") 'other-window)
+
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
