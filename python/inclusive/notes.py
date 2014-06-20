@@ -112,7 +112,7 @@ s.replace(' ', '-')
 # p. 104 Getting help
 ########################################################################
 
-# get a list of all attributes available to the argument
+# get a list of all attributes, methods available to the argument
 dir(s)
 
 # get documentation for the argument
@@ -131,3 +131,229 @@ He is a 1337 hacker
 unicode_spam = 'sp\xc4m'
 
 id(s)  # get object's memory address
+
+# p. 108 Pattern matching (regular expressions, regexes)
+########################################################################
+
+# considered too advanced for Learning Python
+
+# a simple example
+import re
+match = re.match("Hello[ \t]*(.*) world", "Hello   Python world")
+match.group(1)
+
+# p. 109 Lists
+########################################################################
+
+lst = [123, 'spam', 1.23]
+len(lst)  # 3
+
+lst[0]
+lst[:-1]         # slicing returns a new list
+lst + [4, 5, 6]  # concatenation returns a new list
+lst * 2          # repetition returns a new list
+
+lst.index('spam')  # locate item
+lst.index('nope')  # ValueError if nonexistent
+
+lst.count(123)     # count occurrences of object
+
+# type-specific operations (methods) alters the list in place
+lst.append('zy') # adds to end of list, alters original list
+lst
+
+lst.pop(2)       # removes and returns item at given index
+                 # default is last item
+
+del(lst[2])      # same effect but returns nothing
+lst
+
+lst
+lst.insert(2, 'eggs')  # inserts before given index
+lst                    # object stays at given index.
+# if index is greater than length, object is simply added to the end
+
+# in-place sort and reverse
+lst = [3, 9, 2, 5, -2, -4]
+lst.sort()
+lst.reverse()
+lst
+
+# p. 110 Lists may be nested in any manner, and include any objects
+
+# p. 111 List comprehensions
+mat = [[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]]
+mat
+col2 = [row[1] for row in mat]  # does not alter mat
+col2
+
+[row[1] for row in mat if row[1] % 2 == 0]  # get even numbers
+
+[c * 2 for c in 'spam']
+
+list(range(-6, 6, 2))  # end value excluded in range, here step = 2
+
+# comprehension in parentheses is used to create generator
+gen = (sum(row) for row in mat)
+gen  # generator object
+next(gen)
+
+# map objects does similar work
+list(map(sum, mat))
+
+# can also create sets and dictionaries
+{sum(row) for row in mat}
+{i: sum(mat[i]) for i in range(3)}
+
+# p. 113 Dictionaries
+########################################################################
+
+# literal
+d = {'food': 'Spam', 'quantity': 4, 'color': 'pink'}
+d['food']
+
+# changed in place
+d['quantity'] += 1
+d
+
+# make dictionaries with dict
+bob = dict(name="Bob", job="dev", age=40)
+bob
+
+# check if a key is in a dictionary
+'lastname' in bob
+
+# return a default value if key is not found
+value = d.get('x', 'not found')
+value
+
+d['x'] if 'x' in d else 'not found'
+
+# iterate through sorted keys of a dictionary
+d = {'a': 1, 'b': 2, 'c': 3}
+d
+
+for key in sorted(d):
+    print(key, ': ', d[key])
+
+# p. 121 Tuples
+########################################################################
+
+# tuples are immutable
+t = (1, 2, 3, 4)
+
+t + (5, 6)  # concatenation
+t[-1]       # indexing
+
+t.index(3)  # locate object
+t.count(3)
+
+t = (1,)    # one-element tuple must have trailing comma
+
+# p. 122 Files
+########################################################################
+
+f = open('out.txt', 'w')  # 'w' indicates write mode, default 'r' read
+f.write("Hello\n")
+f.write("World\n")
+f.close()
+
+f = open('out.txt')
+text = f.read()
+text
+
+# p. 128 testing for type
+lst = [1, 2, 3]
+
+if type(lst) == type([]):
+    print('yes')
+
+if type(lst) == list:
+    print('yes')
+
+if isinstance(lst, list):
+    print('yes')
+
+# p. 182 shared references
+lst1 = [2, 3, 4]
+lst2 = lst1
+
+lst1[0] = 99  # affects lst2
+lst2
+
+# list in list
+lst1 = [1, 2, [10, 20]]
+lst2 = lst1[:]  # shallow copy
+
+lst1[1] = 19
+lst1[2][0] = 99
+lst2
+
+lst3 = lst1.copy()  # still shallow
+lst1[2][0] = 999
+lst3
+
+import copy
+lst4 = copy.deepcopy(lst1)  # deep copy
+lst1[2][0] = 99
+lst4
+
+d1 = {'a': 1}
+d2 = d1.copy()
+d2
+
+lst1 = [1, 2, 3]
+lst2 = [1, 2, 3]
+lst1 == lst2  # values are the same
+lst1 is lst2  # arguments are the same object
+
+# p. 206
+# character codes and back
+ord('s')
+chr(65)
+
+lst = ['m', 'ss', 'ss', 'pp']
+'i'.join(lst)
+
+s = 'a,man,a,plan'
+s.split(',')
+
+# string formatting
+"I want %d %s" % (2, 'pies')
+
+# p. 219
+# %[(keyname)][flags][width][.precision]typecode
+d = {'name': 'Joe'}
+"His name is %(name)s" % (d)
+
+# p. 255
+# merge keys (overwrites old values)
+d = {'a': 1, 'b': 2, 'c': 3}
+d.update({'b': 20, 'd': 40})
+d
+
+# create dictionary from zip
+dict(zip(['a', 'b'], [1, 2]))
+
+dict.fromkeys(['a', 'b'], 10)  # create with default value
+
+d.items()
+
+# p. 410
+# generate both offsets and items
+s = "spam"
+list(enumerate(s))
+for (offset, character) in enumerate(s):
+    print("%c appears in %d poaition" % (character, offset))
+
+# p. 419
+# manually iterate with next()
+f = open("out.txt")
+next(f)
+f.close()
+
+iter(f)  # obtains iterator object from iterable
+
+# p. 472
