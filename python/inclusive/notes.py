@@ -356,4 +356,54 @@ f.close()
 
 iter(f)  # obtains iterator object from iterable
 
-# p. 472
+# p. 591 Generator functions and expressions
+########################################################################
+def gensquares(n):
+    for i in range(n):
+        yield i ** 2
+
+g = gensquares(9)
+next(g)
+
+def gensquaresinf():
+    n = 0
+    while True:
+        yield n ** 2
+        n += 1
+
+g_inf = gensquaresinf()
+
+import itertools
+first5 = itertools.islice(g_inf, 5)
+list(first5)
+
+# p. 596
+def gen():
+    c = 10
+    a = 1
+    while True:
+        a = (yield c) + 1000
+        print("a: " + str(a))
+        c = c + a
+        print("c: " + str(c))
+
+g = gen()
+next(g)        # 10, result of yield c
+g.send(3000)   # a depends only on value sent
+
+# p. 596 send can be used to pass a termination code to the generator
+
+def genloop():
+    msg = "begin"
+    while True:
+        m = yield msg
+        if m == 'break':
+            break
+        print(m.upper())
+
+g = genloop()
+next(g)
+g.send(None)
+g.send("hello")
+g.send("break")
+
