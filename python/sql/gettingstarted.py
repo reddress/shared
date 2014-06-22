@@ -4,6 +4,7 @@
 
 import mysql.connector
 cnx = mysql.connector.connect(user='tina', password='tina3', host='127.0.0.1', database='mydb')
+cursor = cnx.cursor()
 
 cursor.execute("SELECT * FROM corp;")  # result is an iterable
 list(cursor)
