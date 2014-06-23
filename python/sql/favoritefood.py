@@ -65,3 +65,30 @@ sel("""SELECT person_id, fname, lname FROM person;""")
 
 sel("""SELECT person_id, fname, lname FROM person
 WHERE person_id = 8;""")
+
+run("""INSERT INTO favorite_food (person_id, food)
+VALUES(8, 'nachos');""")
+
+commit()
+
+sel("""SELECT * FROM favorite_food;""")
+
+sel("""SELECT food FROM favorite_food
+WHERE person_id = 8
+ORDER BY food;""")
+
+run("""UPDATE person
+SET street = "124 Tremont St.",
+city = "Boston"
+WHERE person_id = 8;""")
+
+sel("""SELECT * FROM person""")
+
+run("""DELETE FROM person WHERE person_id = 20;""")
+commit()
+
+run("""INSERT INTO favorite_food (person_id, food)
+VALUES (999, 'lasagna');""")
+
+run("DESC person")
+tbl()

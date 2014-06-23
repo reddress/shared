@@ -1,0 +1,82 @@
+Conventions
+==================================================================
+
+variable or parameter inside <angle brackets>
+optional keywords inside [square brackets]
+
+
+Create
+==================================================================
+
+USE <db_name>;
+
+CREATE DATABASE <db_name>;
+
+CREATE TABLE <table_name>
+(<column_name> <column_type>,
+ <column_name> <column_type>...
+ CONSTRAINT <pk_table_name> PRIMARY KEY (<column_name>));
+
+INSERT INTO <table_name>
+(<column_name>, <column_name>, ...)
+VALUES (<value>, <value>...);
+
+
+Read
+==================================================================
+
+DESC <table_name>;
+
+SELECT [DISTINCT] <column_name> [[AS] <alias>], <column_name>...
+FROM <table_name>
+WHERE <column_name> <?condition>
+ [AND | OR | NOT] <column_name> <?condition>
+ # can combine conditionals with parentheses
+[GROUP BY <[table_alias].column_name>
+ HAVING <?condition>]
+[ORDER BY <column_name> [DESC], <column_name>...]  # default ASC
+ 
+Table links
+
+SELECT <tbl_a_alias>.<column_name>, <tbl_a_alias>.<column_name>...,
+<tbl_b_alias>.<column_name>...
+FROM tbl_a [AS] [tbl_a_alias] INNER JOIN tbl_b [AS} [tbl_b_alias]
+ON tbl_a.<column_name> = tbl_b.<column_name>;
+
+
+Update
+==================================================================
+
+UPDATE <table_name>
+SET <column_name> = <value>,
+<column_name> = <value>
+WHERE <column_name> <?condition>;
+
+
+Delete
+==================================================================
+
+DROP TABLE <table_name>;
+
+DROP DATABASE <db_name>;
+
+
+Subquery
+==================================================================
+
+SELECT s.<column_name>, s.<column_name>...
+FROM (SELECT <column_name>, <column_name>... FROM <table_name>) s;
+# where s is the subtable (temporary table) alias
+
+
+Views
+==================================================================
+
+# p. 50 a view is a query stored in the data dictionary. It looks
+# and acts like a table but there is no data associated with it.
+# Also called a virtual table, can select from it like a regular table
+
+CREATE VIEW <view_name> AS
+SELECT <column_name>, <column_name>...
+FROM <table_name>;
+

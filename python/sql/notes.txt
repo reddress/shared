@@ -12,3 +12,24 @@ avoid compound columns (putting together distinct pieces of data, for
 example, first names and last names, street, city, and zip codes)
 
 include an id column to distinguish between otherwise identical rows
+
+p. 38
+
+date formatters
+
+%a Sun, Mon...
+%b Jan, Feb...
+%c numeric month (0..12)
+%d numeric day (00..31)
+%f microseconds
+%H hour in 24-hour format
+%h hour in 12-hour format
+%p AM or PM
+%i minutes within the hour
+%j day of the year
+%M January, February...
+%m numeric month
+%s seconds
+%W Sunday, Monday...
+%w numeric day of week (0=Sunday, 6=Saturday)
+%Y four-digit year
