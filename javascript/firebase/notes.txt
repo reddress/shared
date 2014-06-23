@@ -1,0 +1,19 @@
+
+
+var myDataRef = new Firebase("https://ivhsa8fsg8h.firebaseio-demo.com/");
+myDataRef.push({name: name, text: text});
+
+// https://www.firebase.com/docs/reading-data.html
+5 event types used with dataRef.on()
+
+value, child_added, child_changed, child_removed, child_moved
+
+auth rules to allow only a given user to read comments
+
+{
+  "rules": {
+    "comments": {
+      ".read": "root.child('users').child(auth.id).child('active').val() == true"
+    }
+  }
+}
