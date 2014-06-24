@@ -12,8 +12,38 @@ auth rules to allow only a given user to read comments
 
 {
   "rules": {
-    "comments": {
-      ".read": "root.child('users').child(auth.id).child('active').val() == true"
-    }
+	"comments": {
+	  ".read": "root.child('users').child(auth.id).child('active').val() == true"
+	}
   }
 }
+
+From Stack Overflow about performance
+http://stackoverflow.com/questions/16239819/performance-of-firebase-forge-with-large-data-sets
+
+DENORMALIZE, DENORMALIZE, DENORMALIZE
+
+If a data set will be iterated, and its records can be counted in thousands, store it in its own path.
+
+This is bad for iterating large data sets:
+
+/users/uid
+/users/uid/profile
+/users/uid/chat_messages
+/users/uid/groups
+/users/uid/audit_record
+
+This is good for iterating large data sets:
+
+/user_profiles/uid
+/user_chat_messages/uid
+/user_groups/uid
+/user_audit_records/uid
+
+Avoid 'value' on large data sets
+
+Use the child_added since value must load the entire record set to the client.
+
+Watch for hidden value operations on children
+
+When you call child_added, you are essentially calling value on every child record. So if those children contain large lists, they are going to have to load all that data to return. Thus, the DENORMALIZE section above.
