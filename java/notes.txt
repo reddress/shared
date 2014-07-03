@@ -1,0 +1,54 @@
+Learning Java, 4th ed.
+
+p. 85 Javadoc comments
+
+/**
+ * begin with /**
+ * and by convention lines start with *
+ * @ indicates special instructions
+ * @see produces hypertext links
+ * @author John Smith
+ * @version 0.1
+ */
+
+Doc comments can appear above class, method and variable definitions
+
+p. 87 table 4-2 primitive data types
+boolean	 true or false, default value is false
+char	 16-bit Unicode character, default value is \0 (null character)
+
+Integers
+byte	 8-bit, signed, default is 0
+short	 16-bit, signed
+int		 32-bit, signed
+long	 64-bit, signed
+
+Floating-point
+float	 32-bit
+double	 64-bit
+
+p. 88
+variable assignments can be separated by a comma after the type name
+double d1 = 3.14, d2 = 2 * 3.14;
+
+when a smaller type is used with a larger one, it is promoted to the larger
+type
+
+Integer types wrap around and become negative when overflowing
+
+p. 91
+primitives are passed by value, everything else is a reference type and is
+passed by reference (a handle or name for an object)
+
+p. 92
+if you need to change a caller's reference to an object, you need an extra
+level of indirection: wrapping the reference in another object
+
+an interface defines a set of methods and gives it a corresponding type.
+an object implementing the methods of the interface can be referred to by
+that interface type, as well as its own type.
+
+p. 93
++ and += are the only overloaded operators, adding a String to an int converts
+the int to a String
+

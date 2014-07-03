@@ -1,0 +1,7 @@
+/* AUTOMATICALLY GENERATED ON Thu Jul 03 12:48:45 BRT 2014*/
+/* DO NOT EDIT */
+
+grant codeBase "file:/c:/users/heitor/desktop/emacs-24.3/bin/shared/java/security" {
+  permission java.net.SocketPermission "207.46.131.13", "connect";
+};
+
