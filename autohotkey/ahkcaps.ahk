@@ -1,2 +1,2 @@
-Capslock::Control
 +Capslock::Capslock
+Capslock::Control
