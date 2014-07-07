@@ -1,5 +1,9 @@
 Learning Java, 4th ed.
 
+p. 55
+== is a test for identity (same object)
+the equals() method tests for equality
+
 p. 85 Javadoc comments
 
 /**
@@ -14,6 +18,7 @@ p. 85 Javadoc comments
 Doc comments can appear above class, method and variable definitions
 
 p. 87 table 4-2 primitive data types
+
 boolean	 true or false, default value is false
 char	 16-bit Unicode character, default value is \0 (null character)
 
@@ -52,3 +57,39 @@ p. 93
 + and += are the only overloaded operators, adding a String to an int converts
 the int to a String
 
+p. 93
+statements include variable initialization (declaration and assignment
+together), and language structures such as conditionals and loops
+
+expressions produce values, and include method calls, object allocations, and
+mathematical expressions
+
+variable assignment is both an expression and statement
+
+p. 94
+variable declarations are limited in scope to their enclosing code block {...}
+
+p. 96
+"foreach" loop
+
+for (varDeclaration : iterable)
+
+p. 97
+switch cases need a break
+
+p. 99
+enumerations may be used to replace integer constants
+enum Size { Small, Medium, Large }
+
+p. 103
+new binds more tightly than the dot operator, so a method can be called from a
+new object without an intermediate assignment step
+
+int hours = new Date().getHours();
+
+p. 104
+instanceof determines at runtime the type of an object. Note that null is not
+considered an instance of any object.
+
+String s = null;
+if (s instanceof String)  // false
