@@ -93,3 +93,77 @@ considered an instance of any object.
 
 String s = null;
 if (s instanceof String)  // false
+
+instanceof can also check for arrays or interfaces (foo instanceof byte[])
+
+p. 108
+try can be followed by multiple catch blocks, which should be ordered from
+most to least specific
+
+p. 109
+exceptions caught can be combined in a single catch() with the "|" or syntax
+catch(ZipException | SSLException e) { }
+
+in this case, the type of e is IOException, the two exceptions' nearest common
+ancestor. This syntax is useful to catch only the listed exceptions.
+
+p. 110
+try {
+	//
+} catch (Exception e) {
+	e.printStackTrace(System.err);
+}
+
+p. 111
+may also use getStackTrace() method
+
+most exceptions are checked, that is, methods must declare them if they can
+be thrown or allowed to be thrown
+
+the caller must either use a try/catch block to handle the exception, or
+declare that it can throw the exception from itself
+
+p. 112
+throw new IOException("Sunspots! with file " + f);
+
+p. 113
+custom exception
+
+class ParseException extends Exception {
+	ParseException() {
+		super();
+	}
+	ParseException(String desc) {
+		super(desc);
+	}
+}
+
+p. 114
+exception chaining: include original, causal exception when creating new
+exception
+
+throw new Exception("Here's the story...", causalException);
+
+alternately,
+Exception e = new IOException("the story is...");
+e.initCause(cause);
+throw e;
+
+p. 116
+the finally block is always executed
+
+p. 118
+try with resources:
+
+try (
+	Socket sock = new Socket("1.2.3.4");
+	FileWriter file = new FileWriter("out");
+) {
+	// work with resources
+} catch (IOException e) { }
+
+p. 120
+assert foo != null : "foo is null!"
+
+enable assertions when running the application
+java -ea MyApplication

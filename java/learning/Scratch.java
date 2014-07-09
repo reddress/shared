@@ -79,5 +79,7 @@ public class Scratch {
         // for (int i : aNull) {
         //     print(i);      NullPointerException
         // }
+        print("o hai");
+        
     }
 }
