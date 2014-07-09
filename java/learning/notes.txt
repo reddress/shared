@@ -39,7 +39,7 @@ double d1 = 3.14, d2 = 2 * 3.14;
 when a smaller type is used with a larger one, it is promoted to the larger
 type
 
-Integer types wrap around and become negative when overflowing
+integer types wrap around and become negative when overflowing
 
 p. 91
 primitives are passed by value, everything else is a reference type and is
@@ -57,7 +57,6 @@ p. 93
 + and += are the only overloaded operators, adding a String to an int converts
 the int to a String
 
-p. 93
 statements include variable initialization (declaration and assignment
 together), and language structures such as conditionals and loops
 
@@ -172,4 +171,35 @@ java -ea MyApplication
 p. 123
 declaring and allocating arrays:
 double[] someNumbers = new double[20];
+
+p. 124
+a newly allocated array of objects contains only reference variables, with
+default values of null
+
+p. 125
+array literal int[] primes = { 2, 3, 5, 7, 11 };
+
+the length of an array is a property (arr.length), while strings have the
+length() method
+
+p. 126
+java.util.Arrays.copyOf() and copyOfRange() methods may be used to copy arrays
+copyOf() takes the original array and a target length. It is a shallow copy
+
+p. 127
+example of anonymous array: setPets(new Animal[] { pokey, boojum, simon });
+
+p. 133
+instance methods are accessed through an object instance, but the object does
+not really have its own copy of the methods (code is not duplicated).
+static methods are more like global functions, associated with a class by name
+only
+
+p. 135
+static members (variables) are shared. They are associated with the class, not
+any particular instance
+
+p. 138
+enumerations create distinct identifiers
+public enum PendulumTypes { Simple, OneSpring, TwoSprings }
 
