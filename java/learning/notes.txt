@@ -165,5 +165,11 @@ try (
 p. 120
 assert foo != null : "foo is null!"
 
+by default, assertions are turned off
 enable assertions when running the application
 java -ea MyApplication
+
+p. 123
+declaring and allocating arrays:
+double[] someNumbers = new double[20];
+
