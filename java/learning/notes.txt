@@ -39,7 +39,7 @@ double d1 = 3.14, d2 = 2 * 3.14;
 when a smaller type is used with a larger one, it is promoted to the larger
 type
 
-Integer types wrap around and become negative when overflowing
+integer types wrap around and become negative when overflowing
 
 p. 91
 primitives are passed by value, everything else is a reference type and is
@@ -57,7 +57,6 @@ p. 93
 + and += are the only overloaded operators, adding a String to an int converts
 the int to a String
 
-p. 93
 statements include variable initialization (declaration and assignment
 together), and language structures such as conditionals and loops
 
@@ -93,3 +92,162 @@ considered an instance of any object.
 
 String s = null;
 if (s instanceof String)  // false
+
+instanceof can also check for arrays or interfaces (foo instanceof byte[])
+
+p. 108
+try can be followed by multiple catch blocks, which should be ordered from
+most to least specific
+
+p. 109
+exceptions caught can be combined in a single catch() with the "|" or syntax
+catch(ZipException | SSLException e) { }
+
+in this case, the type of e is IOException, the two exceptions' nearest common
+ancestor. This syntax is useful to catch only the listed exceptions.
+
+p. 110
+try {
+	//
+} catch (Exception e) {
+	e.printStackTrace(System.err);
+}
+
+p. 111
+may also use getStackTrace() method
+
+most exceptions are checked, that is, methods must declare them if they can
+be thrown or allowed to be thrown
+
+the caller must either use a try/catch block to handle the exception, or
+declare that it can throw the exception from itself
+
+p. 112
+throw new IOException("Sunspots! with file " + f);
+
+p. 113
+custom exception
+
+class ParseException extends Exception {
+	ParseException() {
+		super();
+	}
+	ParseException(String desc) {
+		super(desc);
+	}
+}
+
+p. 114
+exception chaining: include original, causal exception when creating new
+exception
+
+throw new Exception("Here's the story...", causalException);
+
+alternately,
+Exception e = new IOException("the story is...");
+e.initCause(cause);
+throw e;
+
+p. 116
+the finally block is always executed
+
+p. 118
+try with resources:
+
+try (
+	Socket sock = new Socket("1.2.3.4");
+	FileWriter file = new FileWriter("out");
+) {
+	// work with resources
+} catch (IOException e) { }
+
+p. 120
+assert foo != null : "foo is null!"
+
+by default, assertions are turned off
+enable assertions when running the application
+java -ea MyApplication
+
+p. 123
+declaring and allocating arrays:
+double[] someNumbers = new double[20];
+
+p. 124
+a newly allocated array of objects contains only reference variables, with
+default values of null
+
+p. 125
+array literal int[] primes = { 2, 3, 5, 7, 11 };
+
+the length of an array is a property (arr.length), while strings have the
+length() method
+
+p. 126
+java.util.Arrays.copyOf() and copyOfRange() methods may be used to copy arrays
+copyOf() takes the original array and a target length. It is a shallow copy
+
+p. 127
+example of anonymous array: setPets(new Animal[] { pokey, boojum, simon });
+
+p. 133
+instance methods are accessed through an object instance, but the object does
+not really have its own copy of the methods (code is not duplicated).
+static methods are more like global functions, associated with a class by name
+only
+
+p. 135
+static members (variables) are shared. They are associated with the class, not
+any particular instance
+
+p. 138
+enumerations create distinct identifiers
+public enum PendulumTypes { Simple, OneSpring, TwoSprings }
+
+p. 140
+use the special reference "this" to explicitly refer to the current object
+
+class Bird {
+	int xPos, yPos;
+
+	double fly (int xPos, int yPos) {
+		this.xPos = xPos;
+		this.yPos = yPos;
+	}
+}
+
+static methods can directly access only other static methods and static
+variables, because they are not bound to a particular object. Otherwise, we
+would have to ask which instance to act on
+
+p. 141
+static methods are used for factory methods, such as
+
+Bird bird = Bird.createBird("pigeon");
+
+p. 143
+since objects used as arguments to functions pass a copy of the reference to
+the function, if the original reference needs to be changed, it has to be
+wrapped in some kind of object. One way is to create a one-element array.
+
+SomeKindOfObject[] wrapper = new SomeKindOfObject[] { obj };
+
+then this object can be referenced as wrapper[0]
+
+another possibility is to use "this" to pass a reference to the calling object.
+The calling object serves as the wrapper for the reference
+
+p. 144
+primitive wrappers are java.lang.Void, java.lang.Boolean, Character, Byte,
+Short, Integer, Long, Float and Double
+
+a wrapper object can be created from the primitive value or a String
+representation
+
+Float pi = new Float("3.14");
+
+p. 145
+numeric wrappers provide "value" methods that is equivalent to casting:
+num.doubleValue(), floatValue(), longValue(), intValue()
+
+use .equals() to compare number objects
+
