@@ -203,3 +203,51 @@ p. 138
 enumerations create distinct identifiers
 public enum PendulumTypes { Simple, OneSpring, TwoSprings }
 
+p. 140
+use the special reference "this" to explicitly refer to the current object
+
+class Bird {
+	int xPos, yPos;
+
+	double fly (int xPos, int yPos) {
+		this.xPos = xPos;
+		this.yPos = yPos;
+	}
+}
+
+static methods can directly access only other static methods and static
+variables, because they are not bound to a particular object. Otherwise, we
+would have to ask which instance to act on
+
+p. 141
+static methods are used for factory methods, such as
+
+Bird bird = Bird.createBird("pigeon");
+
+p. 143
+since objects used as arguments to functions pass a copy of the reference to
+the function, if the original reference needs to be changed, it has to be
+wrapped in some kind of object. One way is to create a one-element array.
+
+SomeKindOfObject[] wrapper = new SomeKindOfObject[] { obj };
+
+then this object can be referenced as wrapper[0]
+
+another possibility is to use "this" to pass a reference to the calling object.
+The calling object serves as the wrapper for the reference
+
+p. 144
+primitive wrappers are java.lang.Void, java.lang.Boolean, Character, Byte,
+Short, Integer, Long, Float and Double
+
+a wrapper object can be created from the primitive value or a String
+representation
+
+Float pi = new Float("3.14");
+
+p. 145
+numeric wrappers provide "value" methods that is equivalent to casting:
+num.doubleValue(), floatValue(), longValue(), intValue()
+
+use .equals() to compare number objects
+
