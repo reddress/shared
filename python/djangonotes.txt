@@ -1,0 +1,29 @@
+# commonly seen expressions
+
+Date format in templates
+https://docs.djangoproject.com/en/dev/ref/templates/builtins/
+
+D weekday, 3 letters  'Mon'
+
+d day of month with leading zero  '01' to '31'
+j day of month without leading zero
+
+M month, 3 letters
+m month with leading zero
+n month without leading zero
+
+y year, 2 digits
+Y year, 4 digits
+
+h hour, 12-hour format
+H hour, 24-hour format
+
+g hour, 12-hour without leading zero
+G hour, 24-hour without leading zero
+
+i minutes
+
+s seconds
+
+"Mon, 15/01/14 23:10:01"
+"D, d/m/y H:i:s"

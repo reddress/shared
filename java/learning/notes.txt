@@ -1,3 +1,15 @@
+Effective Java, 2nd ed.
+
+p. 26
+The four types are
+
+interfaces (including annotations)
+classes (including enums)
+arrays
+primitives
+
+the first three are reference types; class instances and arrays are objects
+
 Learning Java, 4th ed.
 
 p. 55
@@ -265,4 +277,83 @@ printints(int ... list) { // list is int[] }
 there can only be one varargs declaration, coming last, after any number of
 fixed arguments
 
-PROGRESS p. 148 method overloading
+p. 151
+if a constructor calls another constructor, it must do so as its first
+statement, using the self-referential method this()
+
+class Car {
+	String model;
+	int doors;
+
+	Car(String model, int doors) { }
+
+	Car(String model) {
+		this(model, 4);
+	}
+}
+
+cannot call object's own functions before the constructor call has completed,
+nor refer to a (nonstatic) instance member
+
+p. 153
+static initializer blocks may be used to set up static class members
+
+class ColorWheel {
+	static Hashtable colors = new Hashtable();
+
+	static {
+		colors.put("red");
+		colors.put("green");
+		colors.put("blue");
+	}
+}
+
+p. 155
+an object's finalize() is invoked just before it is removed by garbage
+collection, so it may be used to clean up and free resources
+
+the superclass' finalize must be called explicitly
+
+java.lang.ref.Reference is a wrapper that allows you to hold an object
+reference indirectly
+
+if the object is removed, the wrapped reference becomes null
+
+p. 157
+an enumeration, is internally a "final class" that is a subtype of the
+Enum type, with static final constant object references
+
+using a static import, the enumeration's name does not need to be used
+
+import static mypackage.Weekday.*;
+
+setDay(Friday);	 // instead of Weekday.Friday
+
+p. 158
+Enum values can be obtained from TheEnum.values()
+
+Weekday[] weekdays = Weekday.values();
+
+an enum value can be compared by order with compareTo(), which returns an
+integer less than, greater than, or equal to zero
+
+enumerations can have values with constructors, methods, and fields just like
+regular classes. In these cases, a semicolon is needed after the enum values
+
+public enum Weekday {
+	Sunday(8), Friday(6), Saturday(10);
+
+	int fun;
+	Weekday(int fun) { this.fun = fun; }
+	public int getFun() { return fun; }
+}
+
+p. 163
+in the hierarchy Animal > Mammal > Cat, the following assignments are valid:
+
+Cat simon = new Cat();
+Animal creature = simon;
+
+however, creature will no longer have Cat-specific methods like purr()
+
+PROGRESS p. 165 top
