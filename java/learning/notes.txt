@@ -249,5 +249,20 @@ p. 145
 numeric wrappers provide "value" methods that is equivalent to casting:
 num.doubleValue(), floatValue(), longValue(), intValue()
 
-use .equals() to compare number objects
+wrappers are used when passing their values to a method that requires objects,
+such as the Collections API
 
+use .equals() to compare similar number objects, == tests memory locations
+
+p. 147
+varargs in methods use ... instead of []
+
+void printObjects(Object ... list) { // list is Object[], has length property }
+
+or
+printints(int ... list) { // list is int[] }
+
+there can only be one varargs declaration, coming last, after any number of
+fixed arguments
+
+PROGRESS p. 148 method overloading
