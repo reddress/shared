@@ -1,0 +1,6 @@
+use JMenu to load a numbers.txt file
+
+add letters to numbers is done before consuming verificar list
+
+global product db (containing sales, qtde caixa, and ultimo container) can it
+be done with a serializable hashtable?
