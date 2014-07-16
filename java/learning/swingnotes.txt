@@ -1,0 +1,3 @@
+p. 600
+GridBagLayout is similar to HTML tables
+
