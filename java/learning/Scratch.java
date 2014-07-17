@@ -46,5 +46,7 @@ public class Scratch {
 
         simon.purr();
         print(creature.getWeight());
+
+        print("no single quotes'\"");
     }
 }
