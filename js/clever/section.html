@@ -1,0 +1,36 @@
+<html>
+  <head>
+	<script type="text/javascript" src="../jquery-1.11.0.min.js"></script>
+  </head>
+  
+  <body>
+  	<div id="results">
+	</div>
+
+  <form action="#" id="action_form">
+  the form
+	  <input type="submit">
+	</form>
+	
+	<script>
+  $("#action_form").submit(function(event) {
+    var request = $.ajax({
+      url: "https://api.clever.com/v1.1/sections",
+      type: "GET",
+      crossDomain: true,
+      data: "",
+      dataType: 'jsonp',
+      beforeSend: function(xhr) {xhr.setRequestHeader("Authorization", "Bearer DEMO_TOKEN"); },
+      //header: { 'Authorization': 'Bearer DEMO_TOKEN', "Host": "api.clever.com" }
+    });
+    request.done(function (response, textStatus, jqXHR) {
+      $("#results").html(response);
+    });
+    event.preventDefault();
+  });
+
+
+	</script>
+	
+  </body>
+</html>
