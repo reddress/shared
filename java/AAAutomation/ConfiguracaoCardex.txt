@@ -1,0 +1,10 @@
+Chegando=N:\CHEGANDO.ods
+Dezembro31=485,437
+ProdutoBarra=30,10
+Imprimir=205,55
+Cardex=205,155
+InicialDia=405,230
+InicialMes=430,230
+InicialAno=455,230
+FinalFlecha=490,270
+CalendarioVoltar=415,300

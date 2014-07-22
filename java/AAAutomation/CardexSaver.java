@@ -2,6 +2,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.filechooser.*;
+
+import java.io.*;
+import java.nio.file.*;
+import java.nio.charset.*;
+
+import java.util.*;
 
 import static myutil.Convenience.print;
 
@@ -26,51 +33,6 @@ class CardexPanel extends JPanel implements ActionListener {
             };
         addContainerListener(listener);
 
-        /*
-        int codigoSectionHeight = 92;
-        Dimension outerDimension = new Dimension(262, outerHeight);
-        Container outerBox = Box.createVerticalBox();
-//        outerBox.setPreferredSize(outerDimension);
-
-        codigoListModel.addElement("Abra uma lista");
-        
-Container       codigoContainer = Box.createHorizontalBox();
-        codigoContainer.setMaximumSize(new Dimension(262, codigoSectionHeight));
-        
-        JScrollPane codigoScrollPane = new JScrollPane();
-        codigoScrollPane.setMaximumSize(new Dimension(105, codigoSectionHeight));
-        codigoScrollPane.setViewportView(codigoList);
-        codigoContainer.add(codigoScrollPane);
-       
-        Container codigoManagerBox = Box.createVerticalBox();
-        //        codigoManagerBox.setPreferredSize(new Dimension(87, 52));
-        codigoManagerBox.addContainerListener(listener);
-
-        
-        codigoManagerBox.add(new JButton("Adic. letras"));
-        codigoManagerBox.add(new JButton("Adic. codigo"));
-        codigoManagerBox.add(new JButton("Remover"));
-        codigoManagerBox.add(new JLabel("Atualizado"));
-
-        codigoContainer.add(codigoManagerBox);
-
-        outerBox.add(codigoContainer);
-
-        Container loadCardexBox = Box.createHorizontalBox();
-        loadCardexBox.addContainerListener(listener);
-
-//        loadCardexBox.add(new JLabel("Vendas: "));
-        loadCardexBox.add(new JButton("Antigo"));
-        loadCardexBox.add(new JButton("Atual"));
-        loadCardexBox.add(new JLabel("modificado"));
-
-        outerBox.add(loadCardexBox);
-
-        outerBox.add(new JScrollPane(new JTextArea(5, 5)));
-        outerBox.add(new JButton("Copiar para clipboard"));
-
-//        add(outerBox, BorderLayout.CENTER);
-*/
         setLayout(new GridBagLayout());
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
@@ -78,9 +40,10 @@ Container       codigoContainer = Box.createHorizontalBox();
         int x, y;
         int curRow = 0;
 
-        codigoListModel.addElement("Abra uma lista");
+//        codigoListModel.addElement("Abra uma lista");
         JScrollPane codigoScrollPane = new JScrollPane();
         codigoScrollPane.setViewportView(codigoList);
+        codigoScrollPane.setPreferredSize(new Dimension(100, 100));
 
         rowSpan(5);
         addGB(codigoScrollPane, x = 0, y = curRow);
@@ -182,7 +145,6 @@ Container       codigoContainer = Box.createHorizontalBox();
             
         case "Antigo":
             print("clicked antigo");
-            //codigoListModel.addElement(String.valueOf(codigoContainer.getSize().height));
             codigoListModel.addElement("abcdef");
             break;
             
@@ -202,33 +164,110 @@ Container       codigoContainer = Box.createHorizontalBox();
     }
 }
 
-public class CardexSaver extends JFrame {
+public class CardexSaver extends JFrame implements ActionListener {
+    JFileChooser fc;
+    Charset charset;
+    CardexPanel cardexPanel;
+    
     public CardexSaver() {
         super("Cardex Saver");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // setSize(CardexPanel.outerWidth, CardexPanel.outerHeight);
-        // frame.setLocation(0, 432);
-        setLocation(0, 200); 
+
+        ////////////
+        // location
+        setLocation(400, 200); 
 
         JMenuBar menuBar = new JMenuBar();
         
         JMenu fileMenu = new JMenu("Arquivo");
         fileMenu.setMnemonic(KeyEvent.VK_A);
 
+        JMenuItem menuItemNovo = new JMenuItem("Nova lista", KeyEvent.VK_N);
+        menuItemNovo.addActionListener(this);
+        fileMenu.add(menuItemNovo);
+        
         JMenuItem menuItemAbrir = new JMenuItem("Abrir lista", KeyEvent.VK_B);
+        menuItemAbrir.addActionListener(this);
         fileMenu.add(menuItemAbrir);
 
         JMenuItem menuItemSalvar = new JMenuItem("Salvar lista", KeyEvent.VK_S);
+        menuItemSalvar.addActionListener(this);
         fileMenu.add(menuItemSalvar);
 
         JMenuItem menuItemConfig = new JMenuItem("Configuracao", KeyEvent.VK_C);
+        menuItemConfig.addActionListener(this);
         fileMenu.add(menuItemConfig);
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
-        CardexPanel cardexPanel = new CardexPanel();
+        cardexPanel = new CardexPanel();
         add(cardexPanel, BorderLayout.CENTER);
         pack();
         setAlwaysOnTop(true);
+
+        fc = new JFileChooser();
+    }
+
+    public void sortCodigoList() {
+        Enumeration<String> codigoEnum = cardexPanel.codigoListModel.elements();
+        ArrayList<String> codigoList = new ArrayList<String>();
+
+        while (codigoEnum.hasMoreElements()) {
+            codigoList.add(codigoEnum.nextElement());
+        }
+        cardexPanel.codigoListModel.removeAllElements();
+        Collections.sort(codigoList);
+
+        for (String codigo : codigoList) {
+            cardexPanel.codigoListModel.addElement(codigo);
+        }
+
+    }
+
+    public void setCodigoList(String sourcePathString) {
+        cardexPanel.codigoListModel.removeAllElements();
+
+        print("Newer style file load");
+        
+        Charset charset = Charset.forName("US-ASCII");
+        Path configFile = Paths.get(sourcePathString);
+        try (BufferedReader reader = Files.newBufferedReader(configFile, charset)) {
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    cardexPanel.codigoListModel.addElement(line);
+                }
+            }
+        catch (IOException x) {
+            System.err.println("IOException when setting codigo list");
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+        case "Nova lista":
+            cardexPanel.codigoListModel.removeAllElements();
+            break;
+        case "Abrir lista":
+            print("selected abrir lista");
+            int returnVal = fc.showOpenDialog(CardexSaver.this);
+            
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+
+                print(file.getAbsolutePath());
+                setCodigoList(file.getAbsolutePath().replace("\\", "\\\\"));
+                sortCodigoList();
+            }
+            break;
+        case "Salvar lista":
+            print("selected salvar lista");
+            break;
+        case "Configuracao":
+            print("selected config");
+            break;
+        default:
+            print("Unknown command");
+            break;
+        }
     }
     
     public static void main(String[] args) {

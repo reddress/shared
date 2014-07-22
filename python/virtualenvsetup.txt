@@ -1,0 +1,11 @@
+pip install virtualenv
+
+cd Desktop/emacs-24.3/bin
+mkdir virtualenvs
+cd virtualenvs
+
+virtualenv -p "c:\\Python27\\python.exe" python2
+
+source python2/Scripts/activate
+
+deactivate
