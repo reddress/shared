@@ -7,8 +7,8 @@ public class Chegando {
     Sheet sheet = null;
     HashMap<String, String> chegaPorCodigo = new HashMap<String, String>();
     
-    public Chegando (String path) {
-        try {
+    public Chegando (String path) throws IOException {
+//        try {
             File file = new File(path);
             this.sheet = SpreadSheet.createFromFile(file).getSheet(0);
 
@@ -21,9 +21,9 @@ public class Chegando {
                                        formatChegando(row));
                 }
             }   
-        } catch (IOException e) {
-            System.err.println("Error reading spreadsheet file.");
-        }
+//        } catch (IOException e) {
+//            System.err.println("Error reading spreadsheet file.");
+//        }
         // chegaPorCodigo.put("123456", "10000");
     }
 

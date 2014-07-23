@@ -58,7 +58,7 @@ class CardexPanel extends JPanel implements ActionListener {
     JScrollPane infoScrollPane;
     
     // FIXME
-    final String chegandoPath = "D:/Pontual/tmp/CHEGANDO_COPY.ods";
+    final String chegandoPath = "D:/Pontual/tmp/CHEGANDO_COPY2.ods";
     Chegando chegando;
     
     public CardexPanel() {
@@ -159,7 +159,16 @@ class CardexPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(dialogFrame, "Error instantiating Robot");
         }
 
-        chegando = new Chegando(chegandoPath);
+        try { 
+            chegando = new Chegando(chegandoPath);
+            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + chegandoPath);
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(dialogFrame, "Erro carregando Chegando. Verifique ConfiguracaoCardex.txt");
+            // exit application
+            
+        }
+
     }
 
     void rowSpan(int rows) {
