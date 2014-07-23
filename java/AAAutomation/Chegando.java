@@ -24,7 +24,7 @@ public class Chegando {
         } catch (IOException e) {
             System.err.println("Error reading spreadsheet file.");
         }
-        chegaPorCodigo.put("123456", "10000");
+        // chegaPorCodigo.put("123456", "10000");
     }
 
     protected String readCell(String cellReference) {
