@@ -1,4 +1,4 @@
-Chegando=N:\CHEGANDO.ods
+Chegando=N:/CHEGANDO.ods
 CalendarioDezembro31=485,437
 ProdutoBarra=30,10
 Imprimir=205,55

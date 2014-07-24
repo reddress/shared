@@ -2,6 +2,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.datatransfer.*;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.*;
@@ -12,31 +14,22 @@ import java.nio.file.*;
 import java.nio.charset.*;
 
 import java.util.*;
+import java.text.*;
 
 import org.jopendocument.dom.*;
 import org.jopendocument.dom.spreadsheet.*;
 
 import static myutil.Convenience.print;
 
-class Coordinates {
-    int x;
-    int y;
-    Coordinates(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    Coordinates(String pair) {
-        String[] parts = pair.split(",");
-        this.x = Integer.parseInt(parts[0]);
-        this.y = Integer.parseInt(parts[1]);
-    }
-}    
-
 class CardexPanel extends JPanel implements ActionListener {
-    static int outerWidth = 268;
-    static int outerHeight = 292;
+    final String configurationFile = "ConfiguracaoCardex.txt";
+    Properties config;    
+    
+    Chegando chegando;
 
+    int todayMonth;
+    int todayYear;
+    
     GridBagConstraints constraints = new GridBagConstraints();
     
     DefaultListModel<String> codigoListModel = new DefaultListModel<String>();
@@ -56,11 +49,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
     JTextArea infoTextArea = new JTextArea();
     JScrollPane infoScrollPane;
-    
-    // FIXME 
-    final String chegandoPath = "c:/Users/heitor/Documents/CHEGANDO_COPY2.ods";
-    Chegando chegando;
-    
+        
     public CardexPanel() throws IOException {
         ContainerListener listener = new ContainerAdapter() {
                 public void componentAdded(ContainerEvent e) {
@@ -72,9 +61,15 @@ class CardexPanel extends JPanel implements ActionListener {
             };
         addContainerListener(listener);
 
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        todayMonth = cal.get(Calendar.MONTH);
+        todayYear = cal.get(Calendar.YEAR);
+            
         dialogFrame = new JFrame();
         dialogFrame.setAlwaysOnTop(true);
-        dialogFrame.setLocation(500, 400);
+        dialogFrame.setLocation(0, 405);
         dialogFrame.setUndecorated(true);
         dialogFrame.setVisible(true);
         
@@ -151,6 +146,34 @@ class CardexPanel extends JPanel implements ActionListener {
         
         colSpan(1);
 
+        // load config properties
+        InputStream inputStream = null;
+        config = new Properties();
+        
+        try {
+            inputStream = new FileInputStream(configurationFile);
+            config.load(inputStream);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }         
+
+        codigoList.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    loadSavedData();
+                }
+            });
+        
         try {
             bot = new Robot();
             kb = new Keyboard(bot);
@@ -160,8 +183,8 @@ class CardexPanel extends JPanel implements ActionListener {
         }
 
         try { 
-            chegando = new Chegando(chegandoPath);
-            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + chegandoPath);
+            chegando = new Chegando(config.getProperty("Chegando"));
+            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + config.getProperty("Chegando"));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -284,7 +307,8 @@ class CardexPanel extends JPanel implements ActionListener {
             codigoList.ensureIndexIsVisible(nextIndex);
 
             // load from chegando and data file
-            jaPedido.setText(chegando.getChegando(codigoList.getSelectedValue()));
+            loadSavedData();
+            // jaPedido.setText(chegando.getChegando(codigoList.getSelectedValue()));
             return true;
         }
         else {
@@ -292,15 +316,83 @@ class CardexPanel extends JPanel implements ActionListener {
         }
     }
 
+    public void loadSavedData() {
+        jaPedido.setText(chegando.getChegando(codigoList.getSelectedValue()));
+        ProductData productData = new ProductData("data/" + codigoList.getSelectedValue() + ".txt");
+        lastModified.setText(productData.lastModified);
+        vendasAntigo.setText(productData.vendasAntigo);
+        qtdePorCaixa.setText(productData.qtdePorCaixa);
+        infoTextArea.setText(productData.extraData);
+    }
+
     public void openCardex() {
-        // click on Produto bar, Imprimir icon, and Cardex button
-        print("activate robot for " + codigoList.getSelectedValue());
         botOpenCodigo(codigoList.getSelectedValue());
+        try {
+            click(configCoords("Imprimir"));
+            Thread.sleep(100);
+            click(configCoords("Cardex"));
+            Thread.sleep(300);
+        }
+        catch (Exception e) {
+            System.err.println("Exception in openCardex");
+        }
+    }
+    
+    public void openCardexAtual() {
+        // click on Produto bar, Imprimir icon, and Cardex button
+        //print("activate robot for " + codigoList.getSelectedValue());
+        openCardex();
+
+        try {
+            click(configCoords("InicialDia"));
+            kb.type("01");
+            Thread.sleep(200);
+            click(configCoords("InicialMes"));
+            kb.type("01\n");
+
+            Coordinates ultimaPaginaCoords = new Coordinates(config.getProperty("UltimaPagina"));
+            bot.mouseMove(ultimaPaginaCoords.x, ultimaPaginaCoords.y);
+        }
+        catch (Exception e) {
+            System.err.println("Error in Cardex Atual");
+        }
+    }
+
+    public void openCardexAntigo() {
+        // click on Produto bar, Imprimir icon, and Cardex button
+        openCardex();
+
+        try {
+            // click to set 01-01-2013 (year before)
+            click(configCoords("InicialDia"));
+            kb.type("01");
+            click(configCoords("InicialMes"));
+            kb.type("01");
+            click(configCoords("InicialAno"));
+            kb.type(String.valueOf(todayYear - 1));
+            Thread.sleep(200);
+            click(configCoords("FinalFlecha"));
+            Thread.sleep(300);
+            for (int i = 0; i <= todayMonth; i++) {
+                click(configCoords("CalendarioVoltar"));
+                Thread.sleep(50);
+            }
+            Thread.sleep(150);
+            click(configCoords("CalendarioDezembro31"));
+            Thread.sleep(200);
+            
+            Coordinates ultimaPaginaCoords = new Coordinates(config.getProperty("UltimaPagina"));
+            bot.mouseMove(ultimaPaginaCoords.x, ultimaPaginaCoords.y);
+        }
+        catch (Exception e) {
+            System.err.println("Error in Cardex Antigo");
+        }
     }
 
     public void proximo() {
         if (advanceCodigo()) {
-            openCardex();
+            // botOpenCodigo(codigoList.getSelectedValue());
+            openCardexAtual();
         }
     }
 
@@ -346,20 +438,40 @@ class CardexPanel extends JPanel implements ActionListener {
         }
     }
 
-    public void click(int x, int y) {
+    public void saveProductData() {
+        String filename = "data/" + codigoList.getSelectedValue() + ".txt"; 
+        ProductData productData = new ProductData(filename);
+        productData.save(vendasAntigo.getText(), qtdePorCaixa.getText(), infoTextArea.getText());
+    }
+
+    public void copyToClipboard() {
+        String output = "";
+        output += codigoList.getSelectedValue();
+        output += ";;;";
+        output += jaPedido.getText();
+        output += ";";
+        output += vendasAntigo.getText();
+        output += ";;";
+        output += qtdePorCaixa.getText();
+        output += "\n";
+        output += infoTextArea.getText();
+        
+        StringSelection ss = new StringSelection(output);
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+        cb.setContents(ss, null);
+    }
+
+    public void click(Coordinates c) {
         int mask = InputEvent.BUTTON1_DOWN_MASK;
-        bot.mouseMove(x, y);
+        bot.mouseMove(c.x, c.y);
         bot.mousePress(mask);
         bot.mouseRelease(mask);
     }
     
     public void botOpenCodigo(String codigo) {
         try {
-
-            // FIXME constant
-            Coordinates c = new Coordinates(600, 55);
-            
-            click(c.x, c.y);
+            click(configCoords("ProdutoBarra"));
+            click(configCoords("BuscaRapida"));
             Thread.sleep(200);
             kb.type(codigo + "\n");
         }
@@ -367,11 +479,14 @@ class CardexPanel extends JPanel implements ActionListener {
             System.err.println("Exception when opening codigo");
         }
     }
+
+    public Coordinates configCoords(String name) {
+        return new Coordinates(config.getProperty(name));
+    }
     
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
         case "Adicionar letras":
-            print("clicked add letras");
             if (codigoList.getSelectedIndex() != -1) {
                 String base = codigoList.getSelectedValue();
                 int index = codigoList.getSelectedIndex();
@@ -383,7 +498,6 @@ class CardexPanel extends JPanel implements ActionListener {
             break;
             
         case "Adicionar código":
-            print("clicked add codigo");
             int messageType = JOptionPane.INFORMATION_MESSAGE;
             addCodigo(JOptionPane.showInputDialog(dialogFrame, "Digite o código"));
             sortCodigoList();
@@ -391,36 +505,55 @@ class CardexPanel extends JPanel implements ActionListener {
             break;
             
         case "Remover código":
-            print("clicked remover codigo");
             deleteCodigo();
             break;
             
         case "Pular":
-            print("clicked pular");
             advanceCodigo();
             break;
 
         case "Próximo":
-            print("clicked proximo");
             proximo();
             break;
-            
+
         case "Antigo":
-            print("clicked antigo");
+            if (codigoList.getSelectedIndex() != -1) {
+                openCardexAntigo();
+            }
             break;
             
         case "Atual":
-            print("clicked atual");
+            if (codigoList.getSelectedIndex() != -1) {
+                openCardexAtual();
+            }
             break;
             
         case "Salvar info e copiar para clipboard":
-            print("clicked copy clipboard");
+            if (codigoList.getSelectedIndex() != -1) {
+                saveProductData();
+                copyToClipboard();
+            }
             break;
             
         default:
             print("Unknown command -- JButtons");
             break;
         }
+    }
+}
+
+class Coordinates {
+    int x;
+    int y;
+    Coordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    Coordinates(String pair) {
+        String[] parts = pair.split(",");
+        this.x = Integer.parseInt(parts[0]);
+        this.y = Integer.parseInt(parts[1]);
     }
 }
 
@@ -433,7 +566,7 @@ public class CardexSaver extends JFrame implements ActionListener {
         super("Cardex Saver");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setLocation(380, 330);
+        setLocation(0, 320);
 
         JMenuBar menuBar = new JMenuBar();
         
@@ -452,12 +585,12 @@ public class CardexSaver extends JFrame implements ActionListener {
         menuItemSalvar.addActionListener(this);
         fileMenu.add(menuItemSalvar);
 
-        JMenuItem menuItemConfig = new JMenuItem("Configuração", KeyEvent.VK_C);
-        menuItemConfig.addActionListener(this);
-        fileMenu.add(menuItemConfig);
+        JMenuItem menuItemSair = new JMenuItem("Sair", KeyEvent.VK_R);
+        menuItemSair.addActionListener(this);
+        fileMenu.add(menuItemSair);
+        
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
-
 
         try {
             cardexPanel = new CardexPanel();
@@ -477,38 +610,35 @@ public class CardexSaver extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
         case "Nova lista":
-            print("selected nova lista");
+            //print("selected nova lista");
             cardexPanel.codigoListModel.removeAllElements();
             break;
         case "Abrir lista":
-            print("selected abrir lista");
+            //print("selected abrir lista");
             int returnVal = fc.showOpenDialog(CardexSaver.this);
             
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
 
-                print(file.getAbsolutePath());
+                //print(file.getAbsolutePath());
                 cardexPanel.setCodigoList(file.getAbsolutePath().replace("\\", "\\\\"));
                 cardexPanel.sortCodigoList();
             }
             break;
         case "Salvar lista":
-            print("selected salvar lista");
+            //print("selected salvar lista");
             int saveReturnVal = fc.showSaveDialog(CardexSaver.this);
             
             if (saveReturnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
 
-                print(file.getAbsolutePath());
+                //print(file.getAbsolutePath());
                 cardexPanel.saveCodigoList(file.getAbsolutePath().replace("\\", "\\\\"));
             }
             break;
-        case "Configuração":
-            print("selected config");
-            break;
-
-        case "Adicionar código":
-            print("add codigo from frame");
+        case "Sair":
+            //print("Selected sair");
+            System.exit(0);
             break;
         default:
             print("Unknown command -- Menu bar");
@@ -521,10 +651,9 @@ public class CardexSaver extends JFrame implements ActionListener {
         try {
             cardexSaver = new CardexSaver();
             cardexSaver.setVisible(true);
-            print("WARNING USING TEST CHEGANDO_COPY");
         }
-        catch (IOException ioe) {
-            ioe.printStackTrace();
+        catch (IOException e) {
+            e.printStackTrace();
             System.exit(-1);
         }
     }

@@ -40,6 +40,13 @@ public class Chegando {
     }
 
     public String getChegando(String codigo) {
-        return chegaPorCodigo.get(codigo.toUpperCase());
+        String chegandoData = "";
+        try {
+            chegandoData = chegaPorCodigo.get(codigo.toUpperCase());
+        }
+        catch (Exception e) {
+            chegandoData = "";
+        }
+        return chegandoData;
     }
 }
