@@ -1,4 +1,4 @@
-// Look at FIXME and XXXX
+// Look at FIXME
 
 import java.awt.*;
 import java.awt.event.*;
@@ -57,11 +57,11 @@ class CardexPanel extends JPanel implements ActionListener {
     JTextArea infoTextArea = new JTextArea();
     JScrollPane infoScrollPane;
     
-    // FIXME
-    final String chegandoPath = "D:/Pontual/tmp/CHEGANDO_COPY2.ods";
+    // FIXME 
+    final String chegandoPath = "c:/Users/heitor/Documents/CHEGANDO_COPY2.ods";
     Chegando chegando;
     
-    public CardexPanel() {
+    public CardexPanel() throws IOException {
         ContainerListener listener = new ContainerAdapter() {
                 public void componentAdded(ContainerEvent e) {
                     Component comp = e.getChild();
@@ -164,11 +164,11 @@ class CardexPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + chegandoPath);
         }
         catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(dialogFrame, "Erro carregando Chegando. Verifique ConfiguracaoCardex.txt");
             // exit application
-            
+            throw new IOException();
         }
-
     }
 
     void rowSpan(int rows) {
@@ -429,7 +429,7 @@ public class CardexSaver extends JFrame implements ActionListener {
     Charset charset;
     CardexPanel cardexPanel;
     
-    public CardexSaver() {
+    public CardexSaver() throws IOException {
         super("Cardex Saver");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -457,15 +457,21 @@ public class CardexSaver extends JFrame implements ActionListener {
         fileMenu.add(menuItemConfig);
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
-        cardexPanel = new CardexPanel();
 
+
+        try {
+            cardexPanel = new CardexPanel();
         
-        add(cardexPanel, BorderLayout.CENTER);
-        pack();
-        setResizable(false);
-        setAlwaysOnTop(true);
-
-        fc = new JFileChooser();
+            add(cardexPanel, BorderLayout.CENTER);
+            pack();
+            setResizable(false);
+            setAlwaysOnTop(true);
+            
+            fc = new JFileChooser();
+        }
+        catch (IOException ioe) {
+            throw new IOException();
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -511,7 +517,15 @@ public class CardexSaver extends JFrame implements ActionListener {
     }
     
     public static void main(String[] args) {
-        new CardexSaver().setVisible(true);
-        print("WARNING USING TEST CHEGANDO_COPY");
+        CardexSaver cardexSaver = null;
+        try {
+            cardexSaver = new CardexSaver();
+            cardexSaver.setVisible(true);
+            print("WARNING USING TEST CHEGANDO_COPY");
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+            System.exit(-1);
+        }
     }
 }
