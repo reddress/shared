@@ -1,6 +1,6 @@
 Chegando=N:/CHEGANDO.ods
 CalendarioDezembro31=485,437
-MainLocation=1100,320
+MainLocation=1100,305
 DialogLocation=1200,405
 ProdutoBarra=600,10
 Imprimir=205,55
@@ -12,3 +12,4 @@ FinalFlecha=490,270
 CalendarioVoltar=415,300
 BuscaRapida=600,55
 UltimaPagina=410,70
+GUIProximo=1240,485

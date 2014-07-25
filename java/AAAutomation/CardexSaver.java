@@ -159,6 +159,7 @@ class CardexPanel extends JPanel implements ActionListener {
         infoTextArea.setRows(5);
         infoScrollPane = new JScrollPane();
         infoScrollPane.setViewportView(infoTextArea);
+        infoScrollPane.setPreferredSize(new Dimension(100, 100));
         
         addGB(infoScrollPane, x = 0, y = curRow);
         curRow += 1;
@@ -172,6 +173,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
         codigoList.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
+                    vendasAtual.setText("");
                     loadSavedData();
                 }
             });
@@ -396,8 +398,9 @@ class CardexPanel extends JPanel implements ActionListener {
 
     public void proximo() {
         if (advanceCodigo()) {
-            // botOpenCodigo(codigoList.getSelectedValue());
-            openCardexAtual();
+            botOpenCodigo(codigoList.getSelectedValue());
+            Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+            bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
         }
     }
 
@@ -444,6 +447,9 @@ class CardexPanel extends JPanel implements ActionListener {
                 codigoList.ensureIndexIsVisible(newIndex);
             }
         }
+        else {
+            advanceCodigo();
+        }
     }
         
     public void saveProductData() {
@@ -480,7 +486,7 @@ class CardexPanel extends JPanel implements ActionListener {
         try {
             click(configCoords("ProdutoBarra"));
             click(configCoords("BuscaRapida"));
-            Thread.sleep(200);
+            Thread.sleep(300);
             kb.type(codigo.trim() + "\n");
         }
         catch (Exception e) {
@@ -500,7 +506,7 @@ class CardexPanel extends JPanel implements ActionListener {
                     String base = codigoList.getSelectedValue();
                     int index = codigoList.getSelectedIndex();
                     botOpenCodigo(base);
-                    Thread.sleep(350);
+                    Thread.sleep(550);
                     addLetras(index, base, JOptionPane.showInputDialog(dialogFrame, "Tecle 'Espaço' para manter o código numérico.\nPara inserir letras duplas (como GG) use Adicionar código\n" + base));
                 }
                 catch (Exception ex) {
