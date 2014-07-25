@@ -12,4 +12,4 @@ FinalFlecha=490,270
 CalendarioVoltar=415,300
 BuscaRapida=600,55
 UltimaPagina=410,70
-GUIProximo=1240,485
+GUIProximo=1240,465
