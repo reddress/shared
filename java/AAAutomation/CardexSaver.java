@@ -465,7 +465,9 @@ class CardexPanel extends JPanel implements ActionListener {
         output += jaPedido.getText();
         output += ";";
         output += vendasAntigo.getText();
-        output += ";;";
+        output += ";";
+        output += vendasAtual.getText();
+        output += ";";
         output += qtdePorCaixa.getText();
         output += "\n";
         output += infoTextArea.getText();
