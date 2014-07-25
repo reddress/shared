@@ -322,7 +322,8 @@ class CardexPanel extends JPanel implements ActionListener {
 
     public void loadSavedData() {
         jaPedido.setText(chegando.getChegando(codigoList.getSelectedValue()));
-        ProductData productData = new ProductData("data/" + codigoList.getSelectedValue().trim() + ".txt");
+        // print(codigoList.getSelectedValue().trim());
+        ProductData productData = new ProductData("data/" + codigoList.getSelectedValue() + ".txt");
         lastModified.setText(productData.lastModified);
         vendasAntigo.setText(productData.vendasAntigo);
         qtdePorCaixa.setText(productData.qtdePorCaixa);
@@ -427,21 +428,24 @@ class CardexPanel extends JPanel implements ActionListener {
     }
 
     public void addLetras(int index, String base, String lettersToAdd) {
-        if (lettersToAdd != null && lettersToAdd.length() > 1) {
-            for (int i = 0; i < lettersToAdd.length(); i++) {
-                char c = lettersToAdd.charAt(i);
-                String codigoToAdd = base + c;
-                addCodigo(codigoToAdd.toUpperCase());
-            }
-            sortCodigoList();
+        if (lettersToAdd != null && !lettersToAdd.equals("")) {
             codigoListModel.removeElementAt(index);
-            
-            int newIndex = index + lettersToAdd.length();
-            codigoList.setSelectedIndex(newIndex);
-            codigoList.ensureIndexIsVisible(newIndex);
+
+            if (lettersToAdd != null && lettersToAdd.length() > 0) {
+                for (int i = 0; i < lettersToAdd.length(); i++) {
+                    char c = lettersToAdd.charAt(i);
+                    String codigoToAdd = base + c;
+                    addCodigo(codigoToAdd.toUpperCase());
+                }
+                sortCodigoList();
+                
+                int newIndex = index + lettersToAdd.length();
+                codigoList.setSelectedIndex(newIndex);
+                codigoList.ensureIndexIsVisible(newIndex);
+            }
         }
     }
-
+        
     public void saveProductData() {
         String filename = "data/" + codigoList.getSelectedValue() + ".txt"; 
         ProductData productData = new ProductData(filename);
