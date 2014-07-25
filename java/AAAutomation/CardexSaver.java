@@ -61,6 +61,28 @@ class CardexPanel extends JPanel implements ActionListener {
             };
         addContainerListener(listener);
 
+        // load config properties
+        InputStream inputStream = null;
+        config = new Properties();
+        
+        try {
+            inputStream = new FileInputStream(configurationFile);
+            config.load(inputStream);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
         Date today = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(today);
@@ -69,10 +91,12 @@ class CardexPanel extends JPanel implements ActionListener {
             
         dialogFrame = new JFrame();
         dialogFrame.setAlwaysOnTop(true);
-        dialogFrame.setLocation(0, 405);
         dialogFrame.setUndecorated(true);
         dialogFrame.setVisible(true);
         
+        Coordinates dialogFrameCoords = new Coordinates(config.getProperty("DialogLocation"));
+        dialogFrame.setLocation(dialogFrameCoords.x, dialogFrameCoords.y);
+
         setLayout(new GridBagLayout());
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
@@ -145,28 +169,6 @@ class CardexPanel extends JPanel implements ActionListener {
         curRow += 1;
         
         colSpan(1);
-
-        // load config properties
-        InputStream inputStream = null;
-        config = new Properties();
-        
-        try {
-            inputStream = new FileInputStream(configurationFile);
-            config.load(inputStream);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }         
 
         codigoList.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
@@ -320,7 +322,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
     public void loadSavedData() {
         jaPedido.setText(chegando.getChegando(codigoList.getSelectedValue()));
-        ProductData productData = new ProductData("data/" + codigoList.getSelectedValue() + ".txt");
+        ProductData productData = new ProductData("data/" + codigoList.getSelectedValue().trim() + ".txt");
         lastModified.setText(productData.lastModified);
         vendasAntigo.setText(productData.vendasAntigo);
         qtdePorCaixa.setText(productData.qtdePorCaixa);
@@ -420,7 +422,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
     public void addCodigo(String codigoToAdd) {
         if (codigoToAdd != null && codigoToAdd.length() > 5 && !codigoListModel.contains(codigoToAdd)) {
-            codigoListModel.addElement(codigoToAdd.toUpperCase());
+            codigoListModel.addElement(codigoToAdd.toUpperCase().trim());
         }
     }
 
@@ -475,7 +477,7 @@ class CardexPanel extends JPanel implements ActionListener {
             click(configCoords("ProdutoBarra"));
             click(configCoords("BuscaRapida"));
             Thread.sleep(200);
-            kb.type(codigo + "\n");
+            kb.type(codigo.trim() + "\n");
         }
         catch (Exception e) {
             System.err.println("Exception when opening codigo");
@@ -490,9 +492,16 @@ class CardexPanel extends JPanel implements ActionListener {
         switch (e.getActionCommand()) {
         case "Adicionar letras":
             if (codigoList.getSelectedIndex() != -1) {
-                String base = codigoList.getSelectedValue();
-                int index = codigoList.getSelectedIndex();
-                addLetras(index, base, JOptionPane.showInputDialog(dialogFrame, "Tecle 'Espaço' para manter o código numérico.\nPara inserir letras duplas (como GG) use Adicionar código\n" + base));
+                try {
+                    String base = codigoList.getSelectedValue();
+                    int index = codigoList.getSelectedIndex();
+                    botOpenCodigo(base);
+                    Thread.sleep(350);
+                    addLetras(index, base, JOptionPane.showInputDialog(dialogFrame, "Tecle 'Espaço' para manter o código numérico.\nPara inserir letras duplas (como GG) use Adicionar código\n" + base));
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
             else {
                 JOptionPane.showMessageDialog(dialogFrame, "Primeiro selecione um código");
@@ -559,16 +568,42 @@ class Coordinates {
     }
 }
 
-public class CardexSaver extends JFrame implements ActionListener {
+public class CardexSaver extends JFrame implements ActionListener { 
+    final String configurationFile = "ConfiguracaoCardex.txt";
+
     JFileChooser fc;
     Charset charset;
     CardexPanel cardexPanel;
+    Properties config;
     
     public CardexSaver() throws IOException {
         super("Cardex Saver");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setLocation(0, 320);
+        // load config properties
+        InputStream inputStream = null;
+        config = new Properties();
+        
+        try {
+            inputStream = new FileInputStream(configurationFile);
+            config.load(inputStream);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Coordinates mainCoords = new Coordinates(config.getProperty("MainLocation"));
+        setLocation(mainCoords.x, mainCoords.y);
 
         JMenuBar menuBar = new JMenuBar();
         
