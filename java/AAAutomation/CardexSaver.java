@@ -219,7 +219,8 @@ class CardexPanel extends JPanel implements ActionListener {
         Collections.sort(codigoList);
 
         for (String codigo : codigoList) {
-            codigoListModel.addElement(codigo);
+            //codigoListModel.addElement(codigo);
+            addCodigo(codigo);
         }
     }
 
@@ -249,7 +250,8 @@ class CardexPanel extends JPanel implements ActionListener {
             for (int row = 1; row <= sheet.getRowCount(); row++) {
                 String cellContents = sheet.getImmutableCellAt("A" + row).getTextValue();
                 if (!cellContents.equals("codigo")) {
-                    codigoListModel.addElement(cellContents);
+                    addCodigo(cellContents);
+                    // codigoListModel.addElement(cellContents);
                 }
             }
         }
@@ -417,7 +419,7 @@ class CardexPanel extends JPanel implements ActionListener {
     }
 
     public void addCodigo(String codigoToAdd) {
-        if (codigoToAdd != null && codigoToAdd.length() > 5) {
+        if (codigoToAdd != null && codigoToAdd.length() > 5 && !codigoListModel.contains(codigoToAdd)) {
             codigoListModel.addElement(codigoToAdd.toUpperCase());
         }
     }
