@@ -177,6 +177,15 @@ class CardexPanel extends JPanel implements ActionListener {
                     loadSavedData();
                 }
             });
+        codigoList.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent me) {
+                    if (me.getClickCount() == 2) {
+                        botOpenCodigo(codigoList.getSelectedValue());
+                        Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+                        bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
+                    }
+                }
+            });
         
         try {
             bot = new Robot();
@@ -336,7 +345,7 @@ class CardexPanel extends JPanel implements ActionListener {
         botOpenCodigo(codigoList.getSelectedValue());
         try {
             click(configCoords("Imprimir"));
-            Thread.sleep(100);
+            Thread.sleep(200);
             click(configCoords("Cardex"));
             Thread.sleep(300);
         }
@@ -355,7 +364,9 @@ class CardexPanel extends JPanel implements ActionListener {
             kb.type("01");
             Thread.sleep(200);
             click(configCoords("InicialMes"));
-            kb.type("01\n");
+            kb.type("01");
+            Thread.sleep(300);
+            kb.type("\n");
 
             Coordinates ultimaPaginaCoords = new Coordinates(config.getProperty("UltimaPagina"));
             bot.mouseMove(ultimaPaginaCoords.x, ultimaPaginaCoords.y);
@@ -377,16 +388,15 @@ class CardexPanel extends JPanel implements ActionListener {
             kb.type("01");
             click(configCoords("InicialAno"));
             kb.type(String.valueOf(todayYear - 1));
-            Thread.sleep(200);
+            Thread.sleep(350);
             click(configCoords("FinalFlecha"));
             Thread.sleep(300);
             for (int i = 0; i <= todayMonth; i++) {
                 click(configCoords("CalendarioVoltar"));
-                Thread.sleep(50);
+                Thread.sleep(100);
             }
-            Thread.sleep(150);
+            Thread.sleep(250);
             click(configCoords("CalendarioDezembro31"));
-            Thread.sleep(200);
             
             Coordinates ultimaPaginaCoords = new Coordinates(config.getProperty("UltimaPagina"));
             bot.mouseMove(ultimaPaginaCoords.x, ultimaPaginaCoords.y);
@@ -488,8 +498,10 @@ class CardexPanel extends JPanel implements ActionListener {
         try {
             click(configCoords("ProdutoBarra"));
             click(configCoords("BuscaRapida"));
-            Thread.sleep(300);
-            kb.type(codigo.trim() + "\n");
+            Thread.sleep(350);
+            kb.type(codigo.trim());
+            Thread.sleep(200);
+            kb.type("\n");
         }
         catch (Exception e) {
             System.err.println("Exception when opening codigo");
