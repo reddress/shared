@@ -357,3 +357,36 @@ Animal creature = simon;
 however, creature will no longer have Cat-specific methods like purr()
 
 PROGRESS p. 165 top
+
+p. 166
+for behavior (invoking methods), a subclass (Cat) acts like a Cat, even if the
+object is referred to as a superclass (Animal). However, access to a shadowed
+variable will find it in the Animal class
+
+in other words, the behavior is dynamic
+
+p. 167
+@Override is an annotation that generates a warning if the methods don't match
+
+p. 168
+instance methods are dynamic by default. Declaring them final prevents
+overriding
+
+p. 171
+an overriding method can throw subtypes of the original's exception types. In
+addition, the return type may be a subclass of the original's return type.
+
+p. 172
+this is a special reference that allows you to refer to members of the current
+object instance. super is a reference for the object's superclass.
+
+super can be used to access members of a superclass that have been shadowed or
+overridden.
+
+p. 173
+casting changes the apparent type of an object reference. Casting is mainly
+used to restore a type after an object is temporarily assigned to a more
+general type.
+
+casts affect only the treatment of references, and never change the form of
+the actual object.

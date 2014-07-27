@@ -1,0 +1,22 @@
+tag
+---
+name
+
+language
+--------
+name
+
+post
+----
+title
+url (optional, blank, null true)
+body
+tags = many-to-many, see howifeel
+votes (integer)
+public (boolean)
+
+sample
+------
+post = many-to-one (foreign key)
+language
+code

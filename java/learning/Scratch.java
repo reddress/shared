@@ -2,8 +2,10 @@ import static myutil.Convenience.print;
 
 class Animal {
     float weight;
+    String type;
     Animal(float weight) {
         this.weight = weight;
+        this.type = "Animal";
     }
 
     float getWeight() {
@@ -12,6 +14,10 @@ class Animal {
     
     void eat() {
         print("OM NOM NOM");
+    }
+
+    void sleep() {
+        print("catch some zzz");
     }
 }
 
@@ -28,13 +34,18 @@ class Mammal extends Animal {
 }
 
 class Cat extends Mammal {
+    String type;
     Cat(float weight) {
         super(weight);
+        this.type = "Cat";
     }
     
     boolean longHair;
     void purr() {
         print("Purrrrrrrrrr");
+    }
+    @Override void sleep() {
+        print("taking a catnap");
     }
 }
 
@@ -47,6 +58,12 @@ public class Scratch {
         simon.purr();
         print(creature.getWeight());
 
-        print("no single quotes'\"");
+        creature.sleep();
+        print(creature.type);
+        String commaSeparated = "eggs, ham, toast";
+        String[] foods = commaSeparated.split(",");
+        for (String food : foods) {
+            print("(" + food + ")");
+        }
     }
 }
