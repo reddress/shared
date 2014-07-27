@@ -14,7 +14,6 @@ url (optional, blank, null true)
 body
 tags = many-to-many, see howifeel
 votes (integer)
-public (boolean)
 
 sample
 ------
