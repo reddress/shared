@@ -9,6 +9,7 @@ name
 post
 ----
 title
+date (and time - see vertfolia)
 url (optional, blank, null true)
 body
 tags = many-to-many, see howifeel
