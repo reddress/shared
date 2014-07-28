@@ -22,9 +22,15 @@ public class Keyboard {
 
     public void type(CharSequence characters) {
         int length = characters.length();
-        for (int i = 0; i < length; i++) {
-            char character = characters.charAt(i);
-            type(character);
+        try {
+            for (int i = 0; i < length; i++) {
+                char character = characters.charAt(i);
+                type(character);
+                Thread.sleep(20);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

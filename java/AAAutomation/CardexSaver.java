@@ -108,7 +108,7 @@ class CardexPanel extends JPanel implements ActionListener {
         codigoScrollPane.setViewportView(codigoList);
         codigoScrollPane.setPreferredSize(new Dimension(100, 70));
 
-        rowSpan(3);
+        rowSpan(2);
         addGB(codigoScrollPane, x = 0, y = curRow);
         
         rowSpan(1);
@@ -122,22 +122,27 @@ class CardexPanel extends JPanel implements ActionListener {
             
         rowSpan(1);
         colSpan(1);
-        addGB(new JLabel("Abrir Cardex"), x = 0, y = curRow);
-        addGB(new JLabel("Atualizado"), x = 2, y = curRow);
-        curRow += 1;
+        // addGB(new JLabel("Abrir Cardex"), x = 0, y = curRow);
+        // addGB(new JLabel("Atualizado"), x = 2, y = curRow);
+        // curRow += 1;
 
-        lastModified = new JLabel();
         addGB(new JButton("Antigo"), x = 0, y = curRow);
         addGB(new JButton("Atual"), x = 1, y = curRow);
-        addGB(lastModified, x = 2, y = curRow);
+        // addGB(lastModified, x = 2, y = curRow);
+        addGB(new JButton("2008"), x = 2, y = curRow);
         curRow += 1;
 
         addGB(new JLabel("Já pedido"), x = 0, y = curRow);
+        addGB(new JLabel("Atualizado"), x = 2, y = curRow);
         curRow += 1;
         
-        colSpan(3);
+        colSpan(2);
         jaPedido = new JTextField();
         addGB(jaPedido, x = 0, y = curRow);
+
+        lastModified = new JLabel("()");
+        colSpan(1);
+        addGB(lastModified, x = 2, y = curRow);
         curRow += 1;
 
         colSpan(1);
@@ -156,10 +161,10 @@ class CardexPanel extends JPanel implements ActionListener {
 
         colSpan(3);
         infoTextArea = new JTextArea();
-        infoTextArea.setRows(5);
+        infoTextArea.setRows(4);
         infoScrollPane = new JScrollPane();
         infoScrollPane.setViewportView(infoTextArea);
-        infoScrollPane.setPreferredSize(new Dimension(100, 75));
+        infoScrollPane.setPreferredSize(new Dimension(100, 100));
         
         addGB(infoScrollPane, x = 0, y = curRow);
         curRow += 1;
@@ -334,13 +339,20 @@ class CardexPanel extends JPanel implements ActionListener {
     }
 
     public void loadSavedData() {
-        jaPedido.setText(chegando.getChegando(codigoList.getSelectedValue()));
+        String chegandoValue = chegando.getChegando(codigoList.getSelectedValue());
+        if (chegandoValue != null) {
+            if (chegandoValue.length() > 25) {
+                chegandoValue = chegandoValue.substring(0, 25) + "*";
+            }
+        }
+        jaPedido.setText(chegandoValue);
         // print(codigoList.getSelectedValue().trim());
         ProductData productData = new ProductData("data/" + codigoList.getSelectedValue() + ".txt");
         lastModified.setText(productData.lastModified);
         vendasAntigo.setText(productData.vendasAntigo);
         qtdePorCaixa.setText(productData.qtdePorCaixa);
         infoTextArea.setText(productData.extraData);
+        infoTextArea.setCaretPosition(0);
     }
 
     public void openCardex() {
@@ -364,9 +376,34 @@ class CardexPanel extends JPanel implements ActionListener {
         try {
             click(configCoords("InicialDia"));
             kb.type("01");
-            Thread.sleep(200);
+            Thread.sleep(100);
             click(configCoords("InicialMes"));
             kb.type("01");
+            Thread.sleep(200);
+            kb.type("\n");
+
+            Coordinates ultimaPaginaCoords = new Coordinates(config.getProperty("UltimaPagina"));
+            bot.mouseMove(ultimaPaginaCoords.x, ultimaPaginaCoords.y);
+        }
+        catch (Exception e) {
+            System.err.println("Error in Cardex Atual");
+        }
+    }
+
+    public void openCardex2008() {
+        // click on Produto bar, Imprimir icon, and Cardex button
+        //print("activate robot for " + codigoList.getSelectedValue());
+        openCardex();
+
+        try {
+            click(configCoords("InicialDia"));
+            kb.type("01");
+            Thread.sleep(100);
+            click(configCoords("InicialMes"));
+            kb.type("01");
+            Thread.sleep(100);
+            click(configCoords("InicialAno"));
+            kb.type("2008");
             Thread.sleep(300);
             kb.type("\n");
 
@@ -528,7 +565,7 @@ class CardexPanel extends JPanel implements ActionListener {
                     int index = codigoList.getSelectedIndex();
                     botOpenCodigo(base);
                     Thread.sleep(550);
-                    addLetras(index, base, JOptionPane.showInputDialog(dialogFrame, "Tecle 'Espaço' para manter o código numérico.\nPara inserir letras duplas (como GG) use Adicionar código\n" + base));
+                    addLetras(index, base, JOptionPane.showInputDialog(dialogFrame, "Tecle 'Espaço' para manter o código numérico.\nPara inserir letras duplas (como GG) repita esta ação.\n" + base));
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
@@ -569,7 +606,13 @@ class CardexPanel extends JPanel implements ActionListener {
                 openCardexAtual();
             }
             break;
-            
+
+        case "2008":
+            if (codigoList.getSelectedIndex() != -1) {
+                openCardex2008();
+            }
+            break;
+
         case "Salvar info e copiar para clipboard":
             if (codigoList.getSelectedIndex() != -1) {
                 saveProductData();

@@ -65,5 +65,10 @@ public class Scratch {
         for (String food : foods) {
             print("(" + food + ")");
         }
+
+        String s = "giraffe";
+        for (int i = 0; i < 10; i++) {
+            print(s.length() + " " + String.valueOf(i) + " " + s.substring(0, i));
+        }
     }
 }
