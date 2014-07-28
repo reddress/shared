@@ -22,7 +22,7 @@ public class ProductData {
             load();
         }
         else {
-            this.extraData = "\nÚltimo container - ";
+            this.extraData = "\nÚltimo container - \n";
         }
     }
 

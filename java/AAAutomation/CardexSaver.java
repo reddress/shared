@@ -106,19 +106,19 @@ class CardexPanel extends JPanel implements ActionListener {
 
         JScrollPane codigoScrollPane = new JScrollPane();
         codigoScrollPane.setViewportView(codigoList);
-        codigoScrollPane.setPreferredSize(new Dimension(100, 100));
+        codigoScrollPane.setPreferredSize(new Dimension(100, 70));
 
-        rowSpan(5);
+        rowSpan(3);
         addGB(codigoScrollPane, x = 0, y = curRow);
         
         rowSpan(1);
         colSpan(2);
         addGB(new JButton("Adicionar letras"), x = 1, y = 0);
-        addGB(new JButton("Adicionar código"), x = 1, y = 1);
-        addGB(new JButton("Remover código"), x = 1, y = 2);
-        addGB(new JButton("Pular"), x = 1, y = 3);
-        addGB(new JButton("Próximo"), x = 1, y = 4);
-        curRow += 5;
+        // addGB(new JButton("Adicionar código"), x = 1, y = 1);
+        // addGB(new JButton("Remover código"), x = 1, y = 2);
+        addGB(new JButton("Pular"), x = 1, y = 1);
+        // addGB(new JButton("Próximo"), x = 1, y = 2);
+        curRow += 2;
             
         rowSpan(1);
         colSpan(1);
@@ -159,7 +159,7 @@ class CardexPanel extends JPanel implements ActionListener {
         infoTextArea.setRows(5);
         infoScrollPane = new JScrollPane();
         infoScrollPane.setViewportView(infoTextArea);
-        infoScrollPane.setPreferredSize(new Dimension(100, 100));
+        infoScrollPane.setPreferredSize(new Dimension(100, 75));
         
         addGB(infoScrollPane, x = 0, y = curRow);
         curRow += 1;
@@ -181,8 +181,10 @@ class CardexPanel extends JPanel implements ActionListener {
                 public void mouseClicked(MouseEvent me) {
                     if (me.getClickCount() == 2) {
                         botOpenCodigo(codigoList.getSelectedValue());
-                        Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
-                        bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
+                        // Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+                        // bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
+                        Coordinates guiPularCoords = new Coordinates(config.getProperty("GUIPular"));
+                        bot.mouseMove(guiPularCoords.x, guiPularCoords.y);
                     }
                 }
             });
@@ -393,7 +395,7 @@ class CardexPanel extends JPanel implements ActionListener {
             Thread.sleep(300);
             for (int i = 0; i <= todayMonth; i++) {
                 click(configCoords("CalendarioVoltar"));
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             Thread.sleep(250);
             click(configCoords("CalendarioDezembro31"));
@@ -408,9 +410,14 @@ class CardexPanel extends JPanel implements ActionListener {
 
     public void proximo() {
         if (advanceCodigo()) {
-            botOpenCodigo(codigoList.getSelectedValue());
-            Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
-            bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
+            try {
+                botOpenCodigo(codigoList.getSelectedValue());
+                Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+                bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
