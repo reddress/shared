@@ -31,11 +31,11 @@ for key in pdb:
         #   print("skipping " + key)
         #else:
         #    print("add " + key)
-        try:
-            print("|"+key+"|")
-            write_to_data_file(key)
-        except:
-            pass
+#        try:
+#            print("|"+key+"|")
+#            write_to_data_file(key)
+#       except:
+#            pass
 
 def format_data(key):
     produto = pdb[key]
