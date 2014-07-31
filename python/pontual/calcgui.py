@@ -68,7 +68,7 @@ class Application(tk.Frame):
 
 root = tk.Tk()
 root.wm_title("Calc")
-root.geometry("115x94+268+603")
+root.geometry("115x94+162+603")
 root.wm_attributes("-topmost", 1)
 app = Application(master=root)
 app.mainloop()

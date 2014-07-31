@@ -541,6 +541,7 @@ class CardexPanel extends JPanel implements ActionListener {
     public void botOpenCodigo(String codigo) {
         try {
             click(configCoords("ProdutoBarra"));
+            Thread.sleep(200);
             click(configCoords("BuscaRapida"));
             Thread.sleep(350);
             kb.type(codigo.trim());
