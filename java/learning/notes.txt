@@ -368,6 +368,9 @@ in other words, the behavior is dynamic
 p. 167
 @Override is an annotation that generates a warning if the methods don't match
 
+http://stackoverflow.com/questions/14694852/can-overridden-methods-differ-in-return-type
+an overridden method may have a more specific return type
+
 p. 168
 instance methods are dynamic by default. Declaring them final prevents
 overriding
@@ -390,3 +393,229 @@ general type.
 
 casts affect only the treatment of references, and never change the form of
 the actual object.
+
+a downcast narrows down the type of a reference (makes it more specific)
+
+widening the reference implicitly casts the object
+
+p. 175
+to invoke a superclass constructor that takes arguments, super() is needed. It
+must be the first statement of the constructor
+
+p. 175-176
+if the first statement of a constructor is an ordinary statement, an implicit
+call to super() is made.
+
+if the first statement is a call to an overloaded constructor via this(), it
+is invoked then the current constructor's statements are executed
+
+p. 176
+an abstract method means that it is a prototype. A class containing an abstract
+method cannot be used directly. It must be subclassed and then the method must
+be implemented.
+
+the class containing abstract methods must also be declared abstract
+
+unless all abstract methods are implemented, a subclass must also be declared
+abstract
+
+p. 177
+an interface specifies a group of abstract methods defining behavior without
+tying it to any implementation at all
+
+implementing an interface does not make the object inherit any part of the
+inheritance hierarchy
+
+interface types act like class types, but instead of representing what an
+object is (inheritance), it defines what the object can do (implementation)
+
+a class can implement any number of interfaces, replacing much of the need for
+multiple inheritance
+
+p. 178
+interfaces define capabilities, so they are named after them. For example,
+Driveable, Runnable, Updateable
+
+class Automobile implements Driveable { }
+class Lawnmower implements Driveable { }
+
+Driveable vehicle;
+vehicle = auto;
+
+p. 179
+interfaces can be used to implement callbacks. For example, a TickerTape class
+displays data from a TextSource. The TextSource can store a reference to an
+interface, TextReceiver, and send text to it
+
+p. 180
+interfaces can contain constants (static final variables)
+
+p. 181
+interfaces can extend various interfaces (separated with commas)
+
+p. 182
+when two or more interfaces are implemented by a class, a compile-time error
+will occur if there are methods with the same name but differ in return or
+exception types
+
+a package is a name for a group of related classes and interfaces
+
+p. 183
+the package namespace is flat, not hierarchical
+
+by default, a class is accessible only to other classes in the same package
+
+to be used outside its package, a class must be declared public
+
+p. 184
+a Java source file can have only a single public class and the file must be
+named for that class
+
+p. 185
+if there is ambiguity in using a class name, the fully qualified name must be
+used
+
+p. 186
+import static can be used to import static members of a class so they don't
+have to be qualified
+
+p. 187
+protected members are visible to subclasses, even if they are defined in a
+different package
+
+p. 188
+a member that is private is visible only in its class
+default (blank) is visible to classes in the package
+protected is visible to classes in the package and subclasses (anywhere)
+public is visible everywhere
+
+overriding methods must be at least as visible as the overridden method
+
+the protected variables of a class are visible only through objects of the
+subclass's type
+
+p. 189
+an array class for a direct subclass of Object is also a direct subclass of
+Object
+
+arrays of derived classes are subclasses of the corresponding array classes
+
+p. 191
+the meaning of an inner class is made the same, as much as possible, as the
+other members that exist at that level of scope
+
+p. 192
+an inner class's object cannot exist outside an enclosing instance
+
+Animal monkey = new Animal();
+Animal.brain monkeyBrain = monkey.new Brain()  // not commonly used
+
+inner classes can be used as adapter classes, that ties one class to another
+in a very specific way
+
+public class EmployeeList {
+	private Employee[] employees = ... ;
+
+	class Iterator implements java.util.Iterator {
+		int element = 0;
+		boolean hasNext() ...
+	}
+
+	Iterator getIterator() {
+		return new Iterator();
+	}
+}
+
+p. 195
+a method's local variables and arguments referenced by an inner class must be
+declared final
+
+p. 196
+an inner class that lives within the body of a top-level class can be declared
+static
+
+p. 197
+creating an anonymous inner class is combining a class declaration with the
+allocation of an instance of that class. A one-time only class and instance
+is created in one operation
+
+p. 198
+from an inner class, an outside reference can be obtained by prefixing the
+"this" keyword with the class name -- Animal ourAnimal = Animal.this;
+
+p. 199
+automated utilities like jar may not find inner class files, so a wildcard is
+needed: jar cvf animal.jar Animal*class
+
+p. 201
+the ancestor object Object and class Class are fundamental
+
+p. 202
+the == operator tests if two reference variables refer to the same object
+(identity). For equality, the equals() method is used
+
+equals() may be overridden but must use Object as an argument (otherwise,
+equals will be overloaded)
+
+p. 203
+hashCode() is used for storage in Hashtables
+
+objects must implement Cloneable to allow cloning
+
+p. 206
+classes in Java are represented at runtime by instances of the Class class.
+There is a Class object for every object type you use.
+
+p. 207
+Class stringClass = myString.getClass();
+Class stringClass = String.class;
+
+try {
+	String s2 = (String)stringClass.newInstance();
+}
+catch (InstantiationException e) { }
+catch (IllegalAccessException e) { }
+
+p. 208
+lookup a class by name with Class.forName("MyClass");
+
+p. 209
+through the Class object, we can access the Field, Method, and Constructor
+classes in java.lang.reflect
+
+getFields() returns an array of Field objects representing all public
+variables, including inherited ones
+
+getDeclaredFields() returns an array of all variables declared in the class,
+regardless of their access modifiers, similarly for methods
+
+getConstructors() returns only public constructors, getDeclaredConstructors()
+returns all of them
+
+getInterfaces() gets all interfaces implemented by the class
+
+p. 211
+the reflection methods don't belong to a particular instance; they belong to
+the java.lang.Class object that describes the given class
+
+a class can still be obtained from an instance:
+Method[] methods = myObject.getClass().getMethods()
+
+the java.lang.reflect.Modifier class can tell if a modifier isPublic(), etc.
+
+setAccessible() circumvents normal security
+
+p. 212
+a java.lang.reflect.Field represents static variables and instance variables
+
+there are getInt(), setInt(), etc. and get(), set()
+
+p. 213
+a java.lang.reflect.Method represents a static or instance method. It may be
+called with the invoke() method
+
+p. 215
+constructors
+
+p. 216
+java.lang.reflect.Type represents generic types
