@@ -1,0 +1,9 @@
+{{ post.title }}
+<br>
+
+{% for sample in post.sample_set.all %}
+<h3>{{ sample.language }}</h3>
+<pre>
+{{ sample.code }}
+</pre>
+{% endfor %}
