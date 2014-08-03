@@ -1,0 +1,11 @@
+To ignore "This class should be public" (android.support.v7...)
+
+Open File, properties and find Android Lint preferences
+set Instantiable to warning level
+
+sign apk with keystore
+
+To send apk
+
+cd sdk/platform-tools
+adb install path/app.sdk (androidsdk/Welcome.apk)
