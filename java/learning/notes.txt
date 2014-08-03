@@ -619,3 +619,8 @@ constructors
 
 p. 216
 java.lang.reflect.Type represents generic types
+
+p. 217
+the java.lang.reflect.Proxy class allows the creation of adapter objects that
+implement arbitrary interfaces at runtime
+
