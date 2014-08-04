@@ -32,6 +32,7 @@ Doc comments can appear above class, method and variable definitions
 p. 87 table 4-2 primitive data types
 
 boolean	 true or false, default value is false
+
 char	 16-bit Unicode character, default value is \0 (null character)
 
 Integers
@@ -623,4 +624,88 @@ java.lang.reflect.Type represents generic types
 p. 217
 the java.lang.reflect.Proxy class allows the creation of adapter objects that
 implement arbitrary interfaces at runtime
+
+p. 221
+Java packages may be annotated in a special file named package-info.java,
+placed in the folder corresponding to the Java package
+
+common annotations are @Deprecated, @Override, and
+@SuppressWarnings(value="type")
+
+p. 222
+apt, the Annotation Processing Tool, can generate additional files defined by
+your plug-ins
+
+p. 225
+a generic class requires one or more type parameters
+
+public class List<E> { ... }
+
+p. 227
+List<String> listOfStrings = new ArrayList<>();
+
+type parameters to a generic class must be class types (such as Integer)
+However, autoboxing makes it appear that regular ints are being used
+
+p. 233
+for the simple types of generic instantiations, inheritance applies only to
+the base generic type and not to parameter types
+
+there is one-dimensional inheritance, with the additional restriction that
+the parameter types must be identical
+
+p. 234
+using an actual Java type as a parameter is a concrete type instantiation.
+There are also wildcard instantiations, like mathematical set operations on
+types
+
+p. 236
+you cannot invoke a static method through a parametrized type
+
+p. 238
+a class parametrized on a type that must be Throwable
+ExceptionTester<T extends Throwable> { ... }
+
+p. 239
+the only way to get type information at runtime is to explicitly pass in a
+Class reference, generally as an argument to a method, then use reflection or
+create instances
+
+p. 240
+Class itself is a generic type, such as Class<String>
+
+a bound is a constraint on the type of a type parameter. Bounds use the
+extends keyword and & to require implementation of interfaces
+
+class EmployeeList<T extends Employee & Ranked & Printable> { }
+
+p. 241
+only one class type may be specified
+
+p. 242
+the unbounded wildcard is ? and it is a supertype of everything
+
+List<?> anyInstantiationOfList = new ArrayList<Date>();
+anyInstantiationOfList = new ArrayList<String>();
+
+p. 243
+bounded wildcards is ? extending a certain type that limits the range of
+assignable types
+
+p. 244
+a wildcard does not create a new type of collection, but acts as a reference
+
+a wildcard lower bound is specified with super:
+List<? super MyDate>
+
+p. 246
+wildcard instantiations of generic types can be read as their upper bound and
+written as their lower bound
+
+all wildcard instantiations have an upper bound of Object even if none is
+specified
+
+p. 252
+generic methods may be invoked with specific parameter types
+String s = myObject.<String>foo("foo");
 
