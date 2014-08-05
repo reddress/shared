@@ -5,7 +5,7 @@ public class HelloWorld {
     }
 
     public static String getName() {
-        return "Ernesto";
+        return "Harry";
     }
 
     public static String getNameTwice() {

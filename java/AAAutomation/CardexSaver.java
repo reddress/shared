@@ -108,17 +108,17 @@ class CardexPanel extends JPanel implements ActionListener {
         codigoScrollPane.setViewportView(codigoList);
         codigoScrollPane.setPreferredSize(new Dimension(100, 70));
 
-        rowSpan(2);
+        rowSpan(3);
         addGB(codigoScrollPane, x = 0, y = curRow);
         
         rowSpan(1);
         colSpan(2);
         addGB(new JButton("Adicionar letras"), x = 1, y = 0);
-        // addGB(new JButton("Adicionar código"), x = 1, y = 1);
+        addGB(new JButton("Adicionar código"), x = 1, y = 1);
         // addGB(new JButton("Remover código"), x = 1, y = 2);
-        addGB(new JButton("Pular"), x = 1, y = 1);
-        // addGB(new JButton("Próximo"), x = 1, y = 2);
-        curRow += 2;
+        // addGB(new JButton("Pular"), x = 1, y = 2);
+        addGB(new JButton("Próximo"), x = 1, y = 2);
+        curRow += 3;
             
         rowSpan(1);
         colSpan(1);
@@ -188,8 +188,10 @@ class CardexPanel extends JPanel implements ActionListener {
                         botOpenCodigo(codigoList.getSelectedValue());
                         // Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
                         // bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
-                        Coordinates guiPularCoords = new Coordinates(config.getProperty("GUIPular"));
-                        bot.mouseMove(guiPularCoords.x, guiPularCoords.y);
+                        // Coordinates guiPularCoords = new Coordinates(config.getProperty("GUIPular"));
+                        // bot.mouseMove(guiPularCoords.x, guiPularCoords.y);
+                        Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+                        bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
                     }
                 }
             });
@@ -593,7 +595,8 @@ class CardexPanel extends JPanel implements ActionListener {
             break;
 
         case "Próximo":
-            proximo();
+            // proximo();
+            advanceCodigo();
             break;
 
         case "Antigo":
