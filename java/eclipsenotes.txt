@@ -1,0 +1,14 @@
+Add JRE in Window > Preferences
++ Java + Installed JREs
+Navigate to JRE 1.8 folder (program files/java)
+
+Automatically insert semicolon
+Window > Preferences
+type semicolon into search filter
+
+Anykey code completion
+http://swaroopmurthy.wordpress.com/2009/12/30/any-key-code-completion-in-eclipse-and-netbeans-ides/
+Window > Preferences
+type Content Assist (open the Java editor one)
+set delay to 0
+enter qwerty...QWERTY... @. (dot) into the textbox
