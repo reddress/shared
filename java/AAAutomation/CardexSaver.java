@@ -334,27 +334,6 @@ class CardexPanel extends JPanel implements ActionListener {
     }
 
     public void saveCodigoList(String destination) {
-
-        /* 
-        Path codigoListFile = Paths.get(destination);
-        // OpenOption[] options = { StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING };
-        try (BufferedWriter writer = Files.newBufferedWriter(codigoListFile, StandardCharsets.UTF_8)) {
-                Enumeration<String> codigoEnum = codigoListModel.elements();
-                ArrayList<String> codigoList = new ArrayList<String>();
-
-                while (codigoEnum.hasMoreElements()) {
-                    codigoList.add(codigoEnum.nextElement());
-                }
-                
-                for (String codigo : codigoList) {
-                    writer.write(codigo + "\n");
-                }
-            }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-
         Object[][] data = new Object[codigoListModel.getSize()][1];
 
         for (int i = 0; i < codigoListModel.getSize(); i++) {
