@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+// version of Java
+sourceCompatibility = 1.8
+version = '0.1'
+
+// p. 30 see how to add JUnit
+
+jar {
+    manifest {
+    // some comment
+            attributes 'Main-class': 'com.tinacg.MyMainMan',
+             'Implementation-Version': version
+    }
+}
