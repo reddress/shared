@@ -1,5 +1,0 @@
-add fields "estoque" and "reserva", place date next to it
-
-add to vendas atual only if estoque or reserva drops
-
-re-add pular
