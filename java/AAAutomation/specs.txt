@@ -1,9 +1,7 @@
-configuration file holds date ranges and file location of CHEGANDO
+add fields "estoque" and "reserva", place date next to it
 
+clicking on a text field highlights all
 
-use JMenu to load a numbers.txt file
+add to vendas atual only if estoque or reserva drops
 
-add letters to numbers is done before consuming verificar list
-
-global product db (containing sales, qtde caixa, and ultimo container) can it
-be done with a serializable hashtable?
+re-add pular

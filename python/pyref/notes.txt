@@ -1,0 +1,100 @@
+p. 12
+Dynamic typing means that variables are not declared. They are created by
+being assigned, their values are object references, and may reference any
+type of object. They also have no default value.
+
+Objects referenced by variables are automatically created and reclaimed by the
+garbage collector.
+
+p. 16
+All objects have a Boolean value. Boolean true means any nonzero number or
+nonempty collection (list, dictionary, etc.)
+
+True and False behave like 1 and 0.
+
+None is false.
+
+p. 16, 17
+X == Y tests the value
+X is Y or X is not Y tests if they are the same object
+
+not X negates X
+
+learningpython/sandbox.py line 227
+out = []
+out += "123" is L.extend, results in ['1', '2', '3']
+out + [1] is concatenation, returns a new list (out is not modified)
+
+p. 17
+Sequence operations
+X in S
+X not in S test membership
+
+S1 + S2	  concatenation
+S * N	repetition
+S[i:j:k]   i, j may be negative, k is step
+
+len(S)	 length
+iter(S)	  iteration protocol
+
+p. 18
+Mutable sequences (lists, bytearray)
+S[i:j:k] = I   slice assignment
+del S[i:j:k]   slice deletion
+
+p. 19
+Dictionaries
+D[k] = X   key assignment
+del D[k]   delete by key
+k in D	  key membership
+k not in D
+iter(D)	  iterator object for D's keys
+for k in D: ... iterate through keys
+
+p. 20
+int(X)	 convert to integer
+float(X)   convert to float
+
+p. 22
+Sets may contain only immutable objects (hashable)
+
+p. 23
+decimal.Decimal("1.33")	  module for guaranteed precision
+
+p. 25
+bytearray is a mutable variant of bytes
+
+"""triple quotes
+collect multiple lines"""
+
+p. 26
+r'Raw String"
+
+p. 27
+use \ to continue to next line
+
+p. 28
+string formatting % operator
+"%s %s, %.2f" % (42, 'a string', 1 / 3.0)
+
+string format method
+"{0} {1}, {2:.2f}".format(42, 'a string', 1 / 3.0)
+
+p. 34
+s = string.Template("$who likes $what at $$$price")
+s.substitute(who='Bob', what="bananas", price=3.20)
+or safe_substitute
+
+p. 35
+String methods that modify text always return a new string (they do not modify
+the object in-place)
+
+p. 39
+String splitting and joining
+S.split(separator)
+S.join(iterable)
+
+p. 44
+opening files with given encoding
+open("myfile.txt", 'r', encoding="utf-8").read()
+
