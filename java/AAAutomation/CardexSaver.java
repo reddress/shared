@@ -42,6 +42,10 @@ class CardexPanel extends JPanel implements ActionListener {
     Robot bot;
     Keyboard kb;
 
+    JTextField estoque;
+    JTextField reservado;
+    int pecasTotais;
+
     JTextField jaPedido;
     JTextField vendasAntigo;
     JTextField vendasAtual;
@@ -108,7 +112,7 @@ class CardexPanel extends JPanel implements ActionListener {
         codigoScrollPane.setViewportView(codigoList);
         codigoScrollPane.setPreferredSize(new Dimension(100, 70));
 
-        rowSpan(3);
+        rowSpan(4);
         addGB(codigoScrollPane, x = 0, y = curRow);
         
         rowSpan(1);
@@ -116,9 +120,9 @@ class CardexPanel extends JPanel implements ActionListener {
         addGB(new JButton("Adicionar letras"), x = 1, y = 0);
         addGB(new JButton("Adicionar código"), x = 1, y = 1);
         // addGB(new JButton("Remover código"), x = 1, y = 2);
-        // addGB(new JButton("Pular"), x = 1, y = 2);
-        addGB(new JButton("Próximo"), x = 1, y = 2);
-        curRow += 3;
+        addGB(new JButton("Pular"), x = 1, y = 2);
+        addGB(new JButton("Próximo"), x = 1, y = 3);
+        curRow += 4;
             
         rowSpan(1);
         colSpan(1);
@@ -132,17 +136,47 @@ class CardexPanel extends JPanel implements ActionListener {
         addGB(new JButton("2008"), x = 2, y = curRow);
         curRow += 1;
 
+        colSpan(2);
         addGB(new JLabel("Já pedido"), x = 0, y = curRow);
+        colSpan(1);
         addGB(new JLabel("Atualizado"), x = 2, y = curRow);
         curRow += 1;
         
         colSpan(2);
         jaPedido = new JTextField();
         addGB(jaPedido, x = 0, y = curRow);
-
-        lastModified = new JLabel("()");
         colSpan(1);
-        addGB(lastModified, x = 2, y = curRow);
+        lastModified = new JLabel("");
+        addGB(lastModified, x = 2, y = curRow);        
+        curRow += 1;
+
+        colSpan(1);
+        addGB(new JLabel("Estoque"), x = 0, y = curRow);
+        addGB(new JLabel("Reservado"), x = 1, y = curRow);
+        rowSpan(2);
+        addGB(new JButton("Calcular"), x = 2, y = curRow);
+        curRow += 1;
+
+        rowSpan(1);
+        colSpan(1);
+        estoque = new JTextField();
+        reservado = new JTextField();
+        estoque.addFocusListener(new FocusListener() {
+                @Override public void focusLost(final FocusEvent fe) {
+                }
+                @Override public void focusGained(final FocusEvent fe) {
+                    estoque.selectAll();
+                }
+            });
+        reservado.addFocusListener(new FocusListener() {
+                @Override public void focusLost(final FocusEvent fe) { }
+                @Override public void focusGained(final FocusEvent fe) {
+                    reservado.selectAll();
+                }
+            });
+
+        addGB(estoque, x = 0, y = curRow);
+        addGB(reservado, x = 1, y = curRow);
         curRow += 1;
 
         colSpan(1);
@@ -154,6 +188,24 @@ class CardexPanel extends JPanel implements ActionListener {
         vendasAntigo = new JTextField();
         vendasAtual = new JTextField();
         qtdePorCaixa = new JTextField();
+        vendasAntigo.addFocusListener(new FocusListener() {
+                @Override public void focusLost(final FocusEvent fe) { }
+                @Override public void focusGained(final FocusEvent fe) {
+                    vendasAntigo.selectAll();
+                }
+            });
+        vendasAtual.addFocusListener(new FocusListener() {
+                @Override public void focusLost(final FocusEvent fe) { }
+                @Override public void focusGained(final FocusEvent fe) {
+                    vendasAtual.selectAll();
+                }
+            });
+        qtdePorCaixa.addFocusListener(new FocusListener() {
+                @Override public void focusLost(final FocusEvent fe) { }
+                @Override public void focusGained(final FocusEvent fe) {
+                    qtdePorCaixa.selectAll();
+                }
+            });
         addGB(vendasAntigo, x = 0, y = curRow);
         addGB(vendasAtual, x = 1, y = curRow);
         addGB(qtdePorCaixa, x = 2, y = curRow);
@@ -178,7 +230,6 @@ class CardexPanel extends JPanel implements ActionListener {
 
         codigoList.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
-                    vendasAtual.setText("");
                     loadSavedData();
                 }
             });
@@ -186,12 +237,12 @@ class CardexPanel extends JPanel implements ActionListener {
                 public void mouseClicked(MouseEvent me) {
                     if (me.getClickCount() == 2) {
                         botOpenCodigo(codigoList.getSelectedValue());
+                        Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+                        bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
                         // Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
                         // bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
                         // Coordinates guiPularCoords = new Coordinates(config.getProperty("GUIPular"));
                         // bot.mouseMove(guiPularCoords.x, guiPularCoords.y);
-                        Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
-                        bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
                     }
                 }
             });
@@ -341,22 +392,32 @@ class CardexPanel extends JPanel implements ActionListener {
     }
 
     public void loadSavedData() {
-        String chegandoValue = chegando.getChegando(codigoList.getSelectedValue());
-        if (chegandoValue != null) {
-            if (chegandoValue.length() > 25) {
-                chegandoValue = chegandoValue.substring(0, 25) + "*";
+        if (codigoList.getSelectedIndex() != -1) {        
+            String chegandoValue = chegando.getChegando(codigoList.getSelectedValue());
+            if (chegandoValue != null) {
+                if (chegandoValue.length() > 25) {
+                    chegandoValue = chegandoValue.substring(0, 25) + "*";
+                }
             }
+            jaPedido.setText(chegandoValue);
+            // print(codigoList.getSelectedValue().trim());
+            
+            ProductData productData = new ProductData("data/" + codigoList.getSelectedValue() + ".txt");
+            lastModified.setText(productData.lastModified);
+            estoque.setText(productData.estoque);
+            reservado.setText(productData.reservado);
+            vendasAntigo.setText(productData.vendasAntigo);
+            vendasAtual.setText(productData.vendasAtual);
+            qtdePorCaixa.setText(productData.qtdePorCaixa);
+            infoTextArea.setText(productData.extraData);
+            infoTextArea.setCaretPosition(0);
+            
+            pecasTotais = Integer.parseInt(productData.estoque) +
+                Integer.parseInt(productData.reservado);
+            // print("LOADED PCS TOTAIS " + pecasTotais);
         }
-        jaPedido.setText(chegandoValue);
-        // print(codigoList.getSelectedValue().trim());
-        ProductData productData = new ProductData("data/" + codigoList.getSelectedValue() + ".txt");
-        lastModified.setText(productData.lastModified);
-        vendasAntigo.setText(productData.vendasAntigo);
-        qtdePorCaixa.setText(productData.qtdePorCaixa);
-        infoTextArea.setText(productData.extraData);
-        infoTextArea.setCaretPosition(0);
     }
-
+    
     public void openCardex() {
         botOpenCodigo(codigoList.getSelectedValue());
         try {
@@ -511,14 +572,18 @@ class CardexPanel extends JPanel implements ActionListener {
     public void saveProductData() {
         String filename = "data/" + codigoList.getSelectedValue() + ".txt"; 
         ProductData productData = new ProductData(filename);
-        productData.save(vendasAntigo.getText(), qtdePorCaixa.getText(), infoTextArea.getText());
+        productData.save(estoque.getText(), reservado.getText(), vendasAntigo.getText(), vendasAtual.getText(), qtdePorCaixa.getText(), infoTextArea.getText());
     }
 
     public void copyToClipboard() {
         String output = "";
         output += codigoList.getSelectedValue();
-        output += ";;;";
-        output += jaPedido.getText();
+        output += ";";
+        output += estoque.getText();
+        output += ";";
+        output += reservado.getText();
+        output += ";";
+        output += jaPedido.getText().trim().equals("") ? "0" : jaPedido.getText().trim();
         output += ";";
         output += vendasAntigo.getText();
         output += ";";
@@ -595,8 +660,7 @@ class CardexPanel extends JPanel implements ActionListener {
             break;
 
         case "Próximo":
-            // proximo();
-            advanceCodigo();
+            proximo();
             break;
 
         case "Antigo":
@@ -614,6 +678,21 @@ class CardexPanel extends JPanel implements ActionListener {
         case "2008":
             if (codigoList.getSelectedIndex() != -1) {
                 openCardex2008();
+            }
+            break;
+
+        case "Calcular":
+            if (codigoList.getSelectedIndex() != -1) {
+                // print("CALCULAR");
+                int newPecas = Integer.parseInt(estoque.getText()) +
+                    Integer.parseInt(reservado.getText());
+
+                if (newPecas < pecasTotais) {
+                    // print("NEW PECAS " + newPecas);
+                    int difference = pecasTotais - newPecas;
+                    int currentVendasAtual = Integer.parseInt(vendasAtual.getText());
+                    vendasAtual.setText(String.valueOf(currentVendasAtual + difference));
+                }
             }
             break;
 

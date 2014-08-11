@@ -1,10 +1,10 @@
 Chegando=N:/CHEGANDO.ods
 ChegandoLocal=c:/Users/Heitor/Desktop/emacs-24.3/bin/shared/java/AAAutomation/CHEGANDO_COPY.ods
 ChegandoRede=N:/CHEGANDO.ods
-MainLocation=1100,380
-DialogLocation=1200,405
-GUIPular=1240,480
-GUIProximo=1240,490
+MainLocation=1100,310
+DialogLocation=1200,330
+GUIPular=1240,420
+GUIProximo=1240,445
 CalendarioDezembro31=485,437
 ProdutoBarra=600,10
 Imprimir=205,55

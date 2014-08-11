@@ -10,7 +10,10 @@ public class ProductData {
 
     String filename;
     String lastModified;
+    String estoque;
+    String reservado;
     String vendasAntigo;
+    String vendasAtual;
     String qtdePorCaixa;
     String extraData;
     
@@ -22,6 +25,12 @@ public class ProductData {
             load();
         }
         else {
+            this.lastModified = "";
+            this.estoque = "0";
+            this.reservado = "0";
+            this.vendasAntigo = "0";
+            this.vendasAtual = "0";
+            this.qtdePorCaixa = "0";
             this.extraData = "\nÚltimo container - \n";
         }
     }
@@ -32,8 +41,11 @@ public class ProductData {
                 String firstLine = reader.readLine();
                 String[] firstValues = firstLine.split(";");
                 this.lastModified = firstValues[0];
-                this.vendasAntigo = firstValues[1];
-                this.qtdePorCaixa = firstValues[2];
+                this.estoque = firstValues[1];
+                this.reservado = firstValues[2];
+                this.vendasAntigo = firstValues[3];
+                this.vendasAtual = firstValues[4];
+                this.qtdePorCaixa = firstValues[5];
 
                 String line = "";
                 while ((line = reader.readLine()) != null) {
@@ -46,17 +58,25 @@ public class ProductData {
     }
             
 
-    public void save(String vendasAntigo, String qtdePorCaixa, String extraData) {
+    public void save(String estoque, String reservado, String vendasAntigo, String vendasAtual, String qtdePorCaixa, String extraData) {
         Date today = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         this.lastModified = sdf.format(today);
+        this.estoque = estoque.equals("") ? "0" : estoque;
+        this.reservado = reservado.equals("") ? "0" : reservado;
         this.vendasAntigo = vendasAntigo.equals("") ? "0" : vendasAntigo;
+        this.vendasAtual = vendasAtual.equals("") ? "0" : vendasAtual;
         this.qtdePorCaixa = qtdePorCaixa.equals("") ? "0" : qtdePorCaixa;
         this.extraData = extraData;
 
         try (BufferedWriter writer = Files.newBufferedWriter(this.filePath, StandardCharsets.UTF_8)) {
-                writer.write(this.lastModified + ";" + this.vendasAntigo + ";" + this.qtdePorCaixa + "\n");
+                writer.write(this.lastModified + ";" +
+                             this.estoque + ";" +
+                             this.reservado + ";" +
+                             this.vendasAntigo + ";" +
+                             this.vendasAtual + ";" +
+                             this.qtdePorCaixa + "\n");
                 writer.write(this.extraData);
             }
         catch (IOException e) {
