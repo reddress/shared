@@ -3,8 +3,13 @@ package com.tinacg;
 import static com.tinacg.util.Shortcuts.print;
 
 public class MyMainMan {
+    // in directory c:\Users\Heitor\Desktop\emacs-24.3\bin\shared\java\cookbook
+    // > gradle build
+    // > java -ea -jar build/libs/cookbook-0.1.jar
     // p.36 1.12 Buggy
+    /*
     static String name;
+    */
     
     public static void main(String[] args) {
         // p. 35 1.11 AssertDemo
@@ -18,10 +23,14 @@ public class MyMainMan {
         */
 
         // p. 36 1.12 Buggy
+        /* // use jdb
         int n = name.length();
         print(n);
 
         name += "; the end.";
         print(name);
+        */
+
+        print("hei");
     }
 }

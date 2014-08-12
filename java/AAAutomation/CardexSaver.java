@@ -112,17 +112,17 @@ class CardexPanel extends JPanel implements ActionListener {
         codigoScrollPane.setViewportView(codigoList);
         codigoScrollPane.setPreferredSize(new Dimension(100, 70));
 
-        rowSpan(4);
+        rowSpan(5);
         addGB(codigoScrollPane, x = 0, y = curRow);
         
         rowSpan(1);
         colSpan(2);
         addGB(new JButton("Adicionar letras"), x = 1, y = 0);
         addGB(new JButton("Adicionar código"), x = 1, y = 1);
-        // addGB(new JButton("Remover código"), x = 1, y = 2);
-        addGB(new JButton("Pular"), x = 1, y = 2);
-        addGB(new JButton("Próximo"), x = 1, y = 3);
-        curRow += 4;
+        addGB(new JButton("Remover código"), x = 1, y = 2);
+        addGB(new JButton("Pular"), x = 1, y = 3);
+        addGB(new JButton("Próximo"), x = 1, y = 4);
+        curRow += 5;
             
         rowSpan(1);
         colSpan(1);
@@ -549,9 +549,11 @@ class CardexPanel extends JPanel implements ActionListener {
     }
         
     public void saveProductData() {
-        String filename = "data/" + codigoList.getSelectedValue() + ".txt"; 
-        ProductData productData = new ProductData(filename);
-        productData.save(estoque.getText(), reservado.getText(), vendasAntigo.getText(), vendasAtual.getText(), qtdePorCaixa.getText(), infoTextArea.getText());
+        if (codigoList.getSelectedIndex() != -1) {
+            String filename = "data/" + codigoList.getSelectedValue() + ".txt"; 
+            ProductData productData = new ProductData(filename);
+            productData.save(estoque.getText(), reservado.getText(), vendasAntigo.getText(), vendasAtual.getText(), qtdePorCaixa.getText(), infoTextArea.getText());
+        }
     }
 
     public void copyToClipboard() {
@@ -601,6 +603,17 @@ class CardexPanel extends JPanel implements ActionListener {
 
     public Coordinates configCoords(String name) {
         return new Coordinates(config.getProperty(name));
+    }
+
+    public void clearFields() {
+        jaPedido.setText("");
+        lastModified.setText("");
+        estoque.setText("");
+        reservado.setText("");
+        vendasAntigo.setText("");
+        vendasAtual.setText("");
+        qtdePorCaixa.setText("");
+        infoTextArea.setText("");
     }
     
     public void actionPerformed(ActionEvent e) {
@@ -796,6 +809,7 @@ public class CardexSaver extends JFrame implements ActionListener {
                 //print(file.getAbsolutePath());
                 cardexPanel.setCodigoList(file.getAbsolutePath().replace("\\", "\\\\"));
                 cardexPanel.sortCodigoList();
+                cardexPanel.clearFields();
             }
             break;
         case "Salvar lista":
