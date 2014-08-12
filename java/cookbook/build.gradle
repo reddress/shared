@@ -6,10 +6,26 @@ version = '0.1'
 
 // p. 30 see how to add JUnit
 
+/*
 jar {
     manifest {
     // some comment
             attributes 'Main-class': 'com.tinacg.MyMainMan',
              'Implementation-Version': version
     }
+}
+*/
+
+repositories {
+             mavenCentral()
+}
+
+dependencies {
+             testCompile 'junit:junit:[4,)'
+}
+
+test {
+     testLogging {
+                 events 'started', 'passed'
+     }
 }
