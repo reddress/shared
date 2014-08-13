@@ -32,17 +32,21 @@ class Application(tk.Frame):
         self.twentytwo.grid(row=3, column=1)
 
         # self.all = tk.Text(width=19, height=2, font="ProggyTinyTTSZ", wrap=tk.WORD)
-        self.all = tk.Entry(width=8)
-        self.all.grid(row=4, column=0, columnspan=2)
+        #self.all = tk.Entry(width=8)
+        #self.all.grid(row=4, column=0, columnspan=2)
+        self.label5 = tk.Label(text="23%").grid(row=4, column=0)
+        self.twentythree = tk.Entry(width=9)
+        self.twentythree.grid(row=4, column=1)
 
     def clearall(self, event):
         self.twenty.delete(0, len(self.twenty.get()))
         self.twentyone.delete(0, len(self.twentyone.get()))
         self.twentytwo.delete(0, len(self.twentytwo.get()))
+        self.twentythree.delete(0, len(self.twentythree.get()))
 
 
         # self.all.delete("1.0", tk.END)
-        self.all.delete(0, len(self.all.get()))
+        # self.all.delete(0, len(self.all.get()))
         self.entryx.delete(0, len(self.entryx.get()))
         
     def update_values(self, event):
@@ -58,12 +62,15 @@ class Application(tk.Frame):
         self.twentytwo.delete(0, len(self.twentytwo.get()))
         self.twentytwo.insert(0, '{0:.4f}'.format(roundup(x, '23400')))
 
+        self.twentythree.delete(0, len(self.twentytwo.get()))
+        self.twentythree.insert(0, '{0:.4f}'.format(roundup(x, '23100')))
+
         fl = float(x)
 
         # self.all.delete("1.0", tk.END)
         # self.all.insert("1.0", '{:.2f}, {:.4f}, {:.4f}, {:.4f}'.format(fl * 2.4, fl * 2.37, fl * 2.34, fl * 3))
-        self.all.delete(0, len(self.all.get()))
-        self.all.insert(0, '{:.2f}'.format(fl * 3.0))
+        # self.all.delete(0, len(self.all.get()))
+        # self.all.insert(0, '{:.2f}'.format(fl * 3.0))
 
 
 root = tk.Tk()
