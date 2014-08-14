@@ -1,4 +1,4 @@
-23/05/14;255;1500
+23/05/14;0;0;255;0;1500
 ABRIDOR DE GARRAFA
 Último container - 09/12/13 - CCTC/1346 - 13.500 pçs + 20.937 saldo anterior
 28/02/14 - Unity - 10.050 pçs

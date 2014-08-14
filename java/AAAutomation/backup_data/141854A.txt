@@ -1,4 +1,4 @@
-04/06/14;8476;240
+04/06/14;0;0;8476;0;240
 BLOCO P/ ANOTAÇAO
 Último container - 27/02/12 - CCTC/1207 - 12.000 pçs
 Sem estoque de 17/01/14 até agora

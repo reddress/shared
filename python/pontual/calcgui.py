@@ -38,12 +38,16 @@ class Application(tk.Frame):
         self.twentythree = tk.Entry(width=9)
         self.twentythree.grid(row=4, column=1)
 
+        self.label6 = tk.Label(text="3.0").grid(row=5, column=0)
+        self.three = tk.Entry(width=9)
+        self.three.grid(row=5, column=1)
+
     def clearall(self, event):
         self.twenty.delete(0, len(self.twenty.get()))
         self.twentyone.delete(0, len(self.twentyone.get()))
         self.twentytwo.delete(0, len(self.twentytwo.get()))
         self.twentythree.delete(0, len(self.twentythree.get()))
-
+        self.three.delete(0, len(self.three.get()))
 
         # self.all.delete("1.0", tk.END)
         # self.all.delete(0, len(self.all.get()))
@@ -62,8 +66,11 @@ class Application(tk.Frame):
         self.twentytwo.delete(0, len(self.twentytwo.get()))
         self.twentytwo.insert(0, '{0:.4f}'.format(roundup(x, '23400')))
 
-        self.twentythree.delete(0, len(self.twentytwo.get()))
+        self.twentythree.delete(0, len(self.twentythree.get()))
         self.twentythree.insert(0, '{0:.4f}'.format(roundup(x, '23100')))
+
+        self.three.delete(0, len(self.three.get()))
+        self.three.insert(0, '{0:.4f}'.format(roundup(x, '30000')))
 
         fl = float(x)
 
@@ -75,7 +82,7 @@ class Application(tk.Frame):
 
 root = tk.Tk()
 root.wm_title("Calc")
-root.geometry("115x94+162+603")
+root.geometry("115x112+162+585")
 root.wm_attributes("-topmost", 1)
 app = Application(master=root)
 app.mainloop()

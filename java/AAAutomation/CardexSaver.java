@@ -120,8 +120,8 @@ class CardexPanel extends JPanel implements ActionListener {
         addGB(new JButton("Adicionar letras"), x = 1, y = 0);
         addGB(new JButton("Adicionar código"), x = 1, y = 1);
         addGB(new JButton("Remover código"), x = 1, y = 2);
-        addGB(new JButton("Pular"), x = 1, y = 3);
-        addGB(new JButton("Próximo"), x = 1, y = 4);
+        addGB(new JButton("Próximo"), x = 1, y = 3);
+        addGB(new JButton("Abrir código"), x = 1, y = 4);
         curRow += 5;
             
         rowSpan(1);
@@ -257,7 +257,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
         try { 
             chegando = new Chegando(config.getProperty("Chegando"));
-            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + config.getProperty("Chegando"));
+            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + config.getProperty("Chegando") + "\nPegou lista do Sr. Yeh?");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -652,7 +652,15 @@ class CardexPanel extends JPanel implements ActionListener {
             break;
 
         case "Próximo":
-            proximo();
+            // proximo();
+            advanceCodigo();
+            break;
+
+        case "Abrir código":
+            //FIXME
+            botOpenCodigo(codigoList.getSelectedValue());
+            Coordinates guiProximoCoords = new Coordinates(config.getProperty("GUIProximo"));
+            bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
             break;
 
         case "Antigo":
@@ -798,6 +806,7 @@ public class CardexSaver extends JFrame implements ActionListener {
         case "Nova lista":
             //print("selected nova lista");
             cardexPanel.codigoListModel.removeAllElements();
+            cardexPanel.clearFields();
             break;
         case "Abrir lista":
             //print("selected abrir lista");
