@@ -692,6 +692,7 @@ class CardexPanel extends JPanel implements ActionListener {
                     int difference = pecasTotais - newPecas;
                     int currentVendasAtual = Integer.parseInt(vendasAtual.getText());
                     vendasAtual.setText(String.valueOf(currentVendasAtual + difference));
+                    pecasTotais = newPecas;
                 }
             }
             break;
