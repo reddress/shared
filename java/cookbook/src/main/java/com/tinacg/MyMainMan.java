@@ -5,7 +5,13 @@ import static com.tinacg.util.Shortcuts.print;
 public class MyMainMan {
     // in directory c:\Users\Heitor\Desktop\emacs-24.3\bin\shared\java\cookbook
     // > gradle build
+
+    // If jar is activated in build.gradle
     // > java -ea -jar build/libs/cookbook-0.1.jar
+
+    // otherwise
+    // run.bat
+    
     // p.36 1.12 Buggy
     /*
     static String name;
@@ -31,6 +37,6 @@ public class MyMainMan {
         print(name);
         */
 
-        print("hei");
+        print("i is well");
     }
 }
