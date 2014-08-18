@@ -2,6 +2,8 @@ package com.tinacg;
 
 import static com.tinacg.util.Shortcuts.print;
 
+import java.io.File;
+
 public class MyMainMan {
     // in directory c:\Users\Heitor\Desktop\emacs-24.3\bin\shared\java\cookbook
     // > gradle build
@@ -11,6 +13,9 @@ public class MyMainMan {
 
     // otherwise
     // run.bat
+
+    // shorter:
+    // compile.bat then run.bat
     
     // p.36 1.12 Buggy
     /*
@@ -18,6 +23,9 @@ public class MyMainMan {
     */
     
     public static void main(String[] args) {
+        System.out.println(System.getProperty("java.specification.version"));
+        print(File.separator);
+        print(File.pathSeparatorChar);
         // p. 35 1.11 AssertDemo
         /*
         int i = 4;
@@ -36,7 +44,5 @@ public class MyMainMan {
         name += "; the end.";
         print(name);
         */
-
-        print("i is well");
     }
 }
