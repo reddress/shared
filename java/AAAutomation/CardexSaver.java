@@ -35,12 +35,16 @@ class CardexPanel extends JPanel implements ActionListener {
     DefaultListModel<String> codigoListModel = new DefaultListModel<String>();
     JList<String> codigoList = new JList<String>(codigoListModel);
 
+    int codigoListSize;
+    
     JLabel lastModified;
     
     JFrame dialogFrame;
 
     Robot bot;
     Keyboard kb;
+
+    JLabel progress;
 
     JTextField estoque;
     JTextField reservado;
@@ -153,8 +157,8 @@ class CardexPanel extends JPanel implements ActionListener {
         colSpan(1);
         addGB(new JLabel("Estoque"), x = 0, y = curRow);
         addGB(new JLabel("Reservado"), x = 1, y = curRow);
-        rowSpan(2);
-        addGB(new JButton("Calcular"), x = 2, y = curRow);
+        progress = new JLabel("");
+        addGB(progress, x = 2, y = curRow);
         curRow += 1;
 
         rowSpan(1);
@@ -177,6 +181,8 @@ class CardexPanel extends JPanel implements ActionListener {
 
         addGB(estoque, x = 0, y = curRow);
         addGB(reservado, x = 1, y = curRow);
+        addGB(new JButton("Calcular"), x = 2, y = curRow);
+        rowSpan(1);
         curRow += 1;
 
         colSpan(1);
@@ -327,6 +333,8 @@ class CardexPanel extends JPanel implements ActionListener {
                     // codigoListModel.addElement(cellContents);
                 }
             }
+            codigoListSize = codigoList.getModel().getSize();
+            progress.setText("(" + codigoListSize + ")");
         }
         catch (Exception e) {
             System.err.println("Error opening spreadsheet to set codigo list");
@@ -394,6 +402,7 @@ class CardexPanel extends JPanel implements ActionListener {
             pecasTotais = Integer.parseInt(productData.estoque) +
                 Integer.parseInt(productData.reservado);
             // print("LOADED PCS TOTAIS " + pecasTotais);
+            progress.setText((1 + codigoList.getSelectedIndex()) + " de " + codigoListSize);
         }
     }
     
@@ -517,12 +526,14 @@ class CardexPanel extends JPanel implements ActionListener {
                 newIndex -= 1;
             }
             codigoList.setSelectedIndex(newIndex);
+            codigoListSize = codigoList.getModel().getSize();
         }
     }
 
     public void addCodigo(String codigoToAdd) {
         if (codigoToAdd != null && codigoToAdd.length() > 5 && !codigoListModel.contains(codigoToAdd)) {
             codigoListModel.addElement(codigoToAdd.toUpperCase().trim());
+            codigoListSize = codigoList.getModel().getSize();
         }
     }
 
