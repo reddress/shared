@@ -1,3 +1,5 @@
-cd src\main\java
-javac com\tinacg\MyMainMan.java
-cd ..\..\..
+javac com\tinacg\Scratch.java
+
+@if %ERRORLEVEL% == 0 (
+java com.tinacg.Scratch
+)

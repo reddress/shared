@@ -93,6 +93,9 @@ p. 99
 enumerations may be used to replace integer constants
 enum Size { Small, Medium, Large }
 
+p. 101
+== tests primitives' equality
+
 p. 103
 new binds more tightly than the dot operator, so a method can be called from a
 new object without an intermediate assignment step
