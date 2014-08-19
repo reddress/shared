@@ -3,6 +3,7 @@ package com.tinacg;
 import static com.tinacg.util.Shortcuts.print;
 
 import java.io.*;
+import java.util.*;
 
 public class MyMainMan {
     // in directory c:\Users\Heitor\Desktop\emacs-24.3\bin\shared\java\cookbook
@@ -23,7 +24,15 @@ public class MyMainMan {
     */
     
     public static void main(String[] args) {
-        // PROGRESS: p. 83
+        // PROGRESS: p. 114
+
+        String s = "The rain in Spain is mainly in the plain";
+
+        StringTokenizer st = new StringTokenizer(s);
+        String token;
+        while ((token = st.nextToken()) != null) {
+            print(token);
+        }
 
         /* p. 82
         try {
