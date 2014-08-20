@@ -716,7 +716,8 @@ class CardexPanel extends JPanel implements ActionListener {
             break;
             
         default:
-            print("Unknown command -- JButtons");
+            // print("Unknown command -- JButtons");
+            System.err.println("Unknown command -- JButtons");
             break;
         }
     }
@@ -849,7 +850,8 @@ public class CardexSaver extends JFrame implements ActionListener {
             System.exit(0);
             break;
         default:
-            print("Unknown command -- Menu bar");
+            // print("Unknown command -- Menu bar");
+            System.err.println("Unknown command -- Menu bar");
             break;
         }
     }
