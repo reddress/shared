@@ -1,0 +1,143 @@
+p. 22
+Characters go in single quotes, Strings in double quotes
+
+p. 26
+to check if 0.0 is positive or negative, divide 1.0 by it, resulting in
+positive or negative infinity
+
+to check for NaN, use Float.isNaN() or Double.isNaN()
+
+p. 27
+to narrow a variable (convert it to a type with a more restrictive range),
+a cast is necessary
+
+p. 30
+assignment combined with comparison
+while((line = in.readLine()) != null) { }
+
+p. 31
+arithmetic return types are double if an operand is double, same with float
+and long. Otherwise, they return an int
+
+p. 33
+if either operand to + is a String, the other operand is converted to a String
+
+p. 34
+to print array contents, import java.util.* and use Arrays.toString(a);
+
+p. 35
+== tests if two primitives are identical, but with reference types (objects
+and arrays), == tests if they refer the same object or array.
+
+use .equals() to compare Strings
+
+narrower types of numbers are converted before comparing
+
+the special negative and positive 0.0 are considered equal
+
+use Float/Double.isNaN() to compare NaN values
+
+p. 35-36
+boolean operators are &&, || (short-circuit) and !
+
+& and | evaluates both sides, but are rarely used
+
+boolean ^ (XOR) is equivalent to !=
+
+p. 40
+the ternary conditional operator test ? a : b never evaluates both a and b
+
+null is never an instance of anything
+
+all arrays are instances of Object
+
+p. 43
+
+the body of a for loop (contained in curly braces) is a compound statement
+
+an empty loop body is simply a semicolon ;
+
+labeled statements are used by break and continue
+
+rowLoop: for (int r = 0; ...) {
+	colLoop: for (int c = 0; ...) {
+		break rowLoop;
+	}
+}
+
+p. 44
+a variable declaration statement can declare and initialize several variables
+of the same type, separated by commas
+
+double x = 1.0, y = 2.0;
+
+variables marked final can never change
+
+p. 50-51
+for loops can initialize objects, such as nodes of a linked list
+
+a regular for loop can use a variable declared outside the loop
+
+p. 51
+the for/in loop is also called "enhanced for" and "foreach"
+
+int[] primes = new int[] { 2, 3, 5, 7, 11 };
+for (int n : primes) { }
+
+the declared loop variable can be final, to prevent it from being modified
+
+p. 55
+continue, when called in a for loop, will evaluate the loop's update
+expression, but in a while loop, control just jumps back to the top of the loop
+
+p. 56
+synchronized (expr) {
+	statements
+}
+protects the sections of code that must not be executed simultaneously,
+called critical sections
+
+the object or array specified in expr becomes locked, making other threads wait
+
+for example,
+public static void SortIntArray(int[] a) {
+	synchronized (a) {
+		// sort
+	}
+}
+
+more commonly, synchronized is applied to a method, locking the class or
+instance before executing the method
+
+p. 60
+if a finally clause issues a return statement, the method returns normally,
+even if there have been exceptions thrown
+
+p. 61-62
+assert boolean assertion : error message;
+
+assertions are disabled by default, and are enabled with java -ea MyClass
+
+p. 63
+verify that the current thread holds the lock
+assert Thread.holdsLock(data);
+
+p. 67
+an abstract method is a specification without an implementation. Classes with
+abstract methods must also be declared abstract
+
+p. 69
+a varargs declaration indicates that the last argument can be repeated zero or
+more times, such as max(int first, int... rest) { }
+
+if method arguments already exist in an array, they may be passed to the
+method that way
+
+p. 70
+to pass an Object[] as a single argument, we can pass it as the element of
+an array
+
+out.printf("%s\n", new Object[] { arg });
+
+or cast it as (Object) arg
+
