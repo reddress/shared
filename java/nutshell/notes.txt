@@ -141,3 +141,118 @@ out.printf("%s\n", new Object[] { arg });
 
 or cast it as (Object) arg
 
+covariant returns refer to overriding methods that narrow the return type
+
+p. 71
+a class defines a new data type, that is, a new kind of object
+
+p. 72
+a class example
+
+public class Point {
+	public double x, y;
+	public Point(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public double distanceFromOrigin() {
+		return Math.sqrt(x*x + y*y);
+	}
+}
+
+the 'new' operator creates an object
+
+Point p = new Point(3.0, 2.0);
+
+p. 74
+multi-line strings must be concatenated with +
+
+type literals are names of data types followed by .class
+Class typeIntArray = int[].class;
+Class typePoint = Point.class;
+
+null is a reference to nothing, or an absence of a reference
+
+p. 75
+the length of an array is not part of the array type, so it is not possible to
+declare a method that expects an array of exactly three int values
+
+array types are not classes, but array instances are objects
+
+all arrays have a field named length
+
+an array type can be widened if its element type can be widened to the new type
+
+p. 76
+a length must be specified when an array is created
+
+the automatic default values for primitives are false, '\u0000', 0, 0.0, and
+null for reference types
+
+p. 77
+arrays may be initialized by a comma-separated list of expressions in curly
+braces; a trailing comma is legal
+
+String[] greetings = new String[] { "Hello", "Hi", "Howdy", };
+
+this syntax is used to create anonymous array literals
+
+'new' and the type are optional in a variable declaration
+
+String[] greetings = { "Hello", "Hi", "Howdy", };
+
+array initialization happens at runtime, so expressions may be computed at
+runtime
+
+p. 79
+an array can be iterated with the for/in loop
+
+for (int p : primes) { }
+
+p. 80
+when using new with multidimensional arrays, only the leftmost dimension(s)
+must be specified. Because it is an array of arrays, it does not need to be
+rectangular
+
+p. 81
+the five reference types are classes, arrays, interfaces, enumerations and
+annotations
+
+p. 82
+primitives are handled exclusively by value, and references exclusively by
+reference.
+
+p. 84
+a copy of a reference can change the object that it references, but cannot
+change the fact that the original reference refers to that object
+
+the clone() method makes an actual copy of an object. A cast is needed, and
+the object must explicitly implement Cloneable
+
+Point q = (Point) p.clone();
+
+arrays are always cloneable
+
+clone produces shallow copies; a class may need to override the clone() method
+
+p. 85
+when used with primitives, == tests that the two values are identical (same
+bits), but with reference types, == compares references, not the objects'
+values
+
+== tests whether two references refer to the same object, not whether they
+have the same content
+
+the default behavior of .equals(), inherited from Object, is simply ==, that
+tests for identity of references
+
+a class can define its version of equals() for meaningful comparisons
+
+for arrays, .equals() does the same thing as ==
+
+arrays can be compared for equality with java.util.Arrays.equals()
+
+p. 86
+Java is a pass by value language; the value passed in methods are references
+
