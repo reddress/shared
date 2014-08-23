@@ -18,32 +18,30 @@ class Point {
     public void setX(double newx) {
         this.x = newx;
     }
+    @Override
+    public String toString() {
+        return "regular point " + this.x + this.y;
+    }
 }
-    
+
+class ColoredPoint extends Point {
+    public String color;
+    public ColoredPoint(String color) {
+        super(1.0, 2.0);
+        this.color = color;
+    }
+    @Override
+    public String toString() {
+        return this.color + this.x + this.y;
+    }
+}
+
 class Scratch {
     public static void main(String[] args) {
-        Point origin = new Point(0, 0);
-        Point[] triangle = new Point[3];
-        triangle[0] = origin;
-        triangle[1] = new Point(3, 10);
-        triangle[2] = new Point(0, 3);
+        short m = 2;
+        short n = 4;
+        boolean b = true;
 
-        Point[] triclone = triangle.clone();
-
-        triclone[1].setX(2.0);
-        print(triangle[1].sum());
-
-        byte[] a = { 1, 2, 3 };
-        byte[] b = (byte[]) a.clone();
-
-        int aa = 290138814;
-        int bb = 290138814;
-        if ("abc".equals("abc")) {
-            print("equal");
-        }
-
-        Dog d = new Dog();
-        d.answer();
     }
 
     public static void setHeadToZero(int[] arr) {
