@@ -49,4 +49,144 @@ unchecked exceptions
 p. 77
 the length of an array never changes
 
-p. 98
+p. 99
+instances of a class which implements an interface are also instances of the
+interface type
+
+an abstract class is one whose implementation is incomplete and cannot be
+instantiated
+
+p. 100
+class fields and methods are declared 'static'
+
+p. 102
+a 'transient' field is not part of the persistent state of an object and is not
+serialized
+
+a 'volatile' field must always be read from and flushed to main memory, and not
+cached by a thread
+
+a public static field is essentially a global variable, and should not be used
+except as a constant with 'final'
+
+p. 103
+a class method cannot use any instance fields or methods because class methods
+are not associated with an instance of the class. Another way to explain this
+restriction is that instances always have a 'this' reference to the current
+object. But class methods do not have a 'this' reference, and no access to
+instance fields.
+
+p. 107
+this() is used to invoke a constructor from another constructor, but must be
+the first statement of the constructor
+
+p. 109
+class fields are initialized even before a constructor is called, in a class
+initialization method that is invoked exactly once before the class is first
+used
+
+a static initializer block is the keyword 'static' followed by a block of code
+in curly braces. There can be many static initializers
+
+p. 110
+an instance initializer is just a block of arbitrary code inside curly braces
+
+in practice, they are fairly rare
+
+
+p. 114
+super(), like the this() constructor, must appear as the first statement in a
+constructor
+
+every constructor calls its superclass constructor
+
+if the first statement of a constructor does not explicitly invoke this() or
+super(), the compiler automatically inserts super(). This implicit invocation
+causes a compilation error if the superclass does not have a visible
+constructor that takes no arguments
+
+p. 115
+the body of Object() always runs first, then the subclasses' constructors run
+
+the default constructor is super(); If a class does not define a no-argument
+constructor, all its subclasses must define constructors that explicitly invoke
+the superclass constructor with the necessary arguments
+
+defining a private constructor will prevent the insertion of a default public
+constructor
+
+p. 116
+a hidden field may be accessed as super.x or ((Circle) this).x
+
+super cannot be chained (super.super.x does not work)
+
+p. 117
+class fields can still be accessed as ClassName.field
+
+a covariant return is returning a subclass of the overridden method
+
+class methods can be hidden, but not overridden
+
+p. 118
+although you can refer to hidden fields with super.x or casting the object to
+the appropriate superclass, you cannot invoke overridden instance methods with
+this technique
+
+p. 120
+using super to invoke an overridden method is not the same as casting the
+this reference ((A) this).f()
+
+super invokes the most immediately overridden version of a method
+
+super can be used only to invoke an overridden method from within the class
+that overrides it
+
+given a reference to a subclass object, obj, there is no way for a program that
+uses obj to invoke an overridden method defined by the superclass
+
+p. 122
+if a method is visible to users, it must be documented, and might just clutter
+the API if it can be hidden
+
+p. 123
+the default access rule is package access, that is, members of a class are
+accessible throughout the package in which the class is defined
+
+private members are accessible only within the class itself
+
+protected includes package access and accessibility from any subclass of the
+class, regardless of the package in which the subclass is defined
+
+the subclass can access the protected field in any instances of the subclass,
+but cannot read the protected fields of arbitrary instances of the superclass
+
+p. 124
+Java packages do not nest
+
+p. 125
+every instance of a subclass includes a complete instance of its superclass,
+including inaccessible fields and methods
+
+p. 126
+'public' should only apply to methods and constants that form part of the
+public API. public fields should only be constants or immutable objects, and
+must also be declared final
+
+use default package visibility for internal implementation details that are
+used by cooperating classes in the same package
+
+when unsure, use private and then consider relaxing the restriction, or provide
+accessor methods in the case of fields
+
+p. 127
+methods can perform error checking, while public fields can allow the user to
+set an invalid value
+
+p. 129
+a class with an abstract method is itself abstract. An abstract method has no
+body; it is simply a signature ending with a semicolon
+
+p. 133
+all interfaces are abstract
+
+p. 136
