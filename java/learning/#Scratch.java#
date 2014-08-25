@@ -21,7 +21,8 @@ public class Scratch {
         print(five);
     }
 
-    public static double inverse(double x) {
+    public static double inverse(doub
+                                 le x) {
         try {
             return 1.0 / x;
         }

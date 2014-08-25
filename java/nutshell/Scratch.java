@@ -1,86 +1,47 @@
 import java.util.*;
 import java.io.*;
 
-class Dog {
-    public void answer() {
-        System.out.println("Yes this is dog");
-    }
-}
+import static util.Convenience.print;
 
-class Point {
-    public double x, y;
-    public Point(double x, double y) {
-        this.x = x; this.y = y;
-    }
-    public double sum() {
-        return this.x + this.y;
-    }
-    public void setX(double newx) {
-        this.x = newx;
-    }
-    @Override
-    public String toString() {
-        return "regular point " + this.x + this.y;
-    }
-}
-
-class ColoredPoint extends Point {
-    public String color;
-    public ColoredPoint(String color) {
-        super(1.0, 2.0);
-        this.color = color;
-    }
-    @Override
-    public String toString() {
-        return this.color + this.x + this.y;
+class Boy {
+    String name;
+    public Boy(String name) {
+        this.name = name;
     }
 }
 
 class Scratch {
     public static void main(String[] args) {
-        short m = 2;
-        short n = 4;
-        boolean b = true;
 
     }
 
-    public static void setHeadToZero(int[] arr) {
-        arr[0] = 0;
-    }
-        
-    public static void countdown(int from) throws InterruptedException {
-        for (; from > 0; from--) {
-            Thread.sleep(200);
-            print(from);
-        }
-    }
-    public static int getNumber(Object o) {
-        String s = "one";
-        return (int) o;
-    }
-
-    public static int divideBy(int x) {
+    public static int useFactorial() {
         try {
-            print("trying " + x);
-            return 3 / x;
+            print(factorial(-9));
+            File f = new File("notes.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(f));
+            
         }
-        catch (NullPointerException e) {
-            e.printStackTrace();
+        catch (IOException e) {
+            print("caught an exception");
         }
         finally {
-            print("in finally block");
-            return 10;
+            print("in finally");
+
         }
-    }
-    public static void printRem(int x) {
-        if (x % 2 == 0) {
-            print("no rem");
-            return;
-        }
-        print("remainder 1");
+        return 0;
     }
 
-    public static <T> void print(T arg) {
-        System.out.println(arg);
+
+
+    
+    public static double factorial(int x) {
+        if (x < 0) {
+            throw new IllegalArgumentException("x must be >= 0");
+        }
+        double fact;
+        for (fact = 1.0; x > 1; fact *= x, x--)
+            ;
+        return fact;
     }
 }

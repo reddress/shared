@@ -1,3 +1,52 @@
 Sixth edition
+See 5thednotes.txt also
 
 p. 43
+an assignment expression evaluates to the value that is assigned to the
+variable
+
+p. 45
+null is never an instance of anything
+
+instanceof can be used to ensure safety of casting an object
+
+p. 53
+to exit a switch statement, return and throw can be used in addition to break
+
+p. 55
+do
+	statement
+while (expr);	// a semicolon is needed here
+
+p. 57
+the foreach loop is commonly read "foreach name in dogs"
+
+p. 62
+multi-catch statement
+catch (SomeException | AnotherException e) { }
+but they cannot be related by subclassing
+
+p. 64
+if a finally block has a return statement, the method returns normally, even if
+an exception has been thrown and not yet handled.
+
+try-with-resources (detailed in p. 299-300) separate resources with a semicolon
+
+try (BufferedReader in = new BufferedReader(new FileReader("/path/"));
+	 PrintWriter out = new PrintWriter(new BufferedWriter(...))) { ... }
+
+p. 69
+checked exceptions are a category of exception classes that must be listed in
+the throws clauses of methods that can throw them
+
+p. 71
+checked exceptions occur in specific, well-defined circumstances, and you can
+often recover from them
+
+"Error" and RuntimeExceptions, OutOfMemoryError, and NullPointerException are
+unchecked exceptions
+
+p. 77
+the length of an array never changes
+
+p. 98
