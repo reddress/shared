@@ -190,3 +190,164 @@ p. 133
 all interfaces are abstract
 
 p. 136
+an interface is designed to represent an API, describing the methods that
+classes implementing that API should provide
+
+optional methods are marked 'default'
+
+objects that do not share the same class or superclass may still be of the same
+type by virtue of implementing the same interface
+
+p. 137
+all interface methods are public and abstract by default
+
+the only fields allowed in an interface are static and final
+
+an interface may be extended, and an interface may extend more than one
+superinterface
+
+p. 139
+when a class implements an interface, instances of that class can be assigned
+to variables of the interface type
+
+p. 140
+implementing default methods in an interface is optional
+
+p. 142
+a marker interface is empty, and used to make instances of classes implementing
+it a valid instance of the interface
+
+p. 144
+container types are usually called generic types:
+
+interface Box<T> {
+	void box(T t);
+	T unbox();
+}
+
+<T> is called a type parameter, and a generic type is also called a
+parametrized type. That is, a container type is parametrized by another type
+
+p. 145
+type parameters are always reference types, never a primitive type
+
+the type parameter can be used as though it is a real type:
+
+interface List<E> extends Collection<E> {
+	boolean add(E e);
+	E get(int index);
+}
+
+http://stackoverflow.com/questions/6008241/java-generics-e-and-t-what-is-the-difference
+
+T stands for Type, E Element, N number, K key and V value
+
+p. 146
+the non-generic type List is usually called a raw type
+
+what looks like overloading through different generic types won't compile
+because of type erasure
+
+the unknown type, represented as <?>, is an example of a wildcard type
+
+ArrayList<?> mysteryList = unknownList();
+Object o = mysteryList.get(0);
+
+p. 148
+List<String> is a subtype of List<?>, but not the other way around
+
+bounded wildcards always use 'extends', even for interfaces
+
+covariance refers to how inheritance between container types relates to the
+inheritance of their payload types
+
+type covariance means the container types have the same relationship to each
+other as the payload types, and is expressed with 'extends'
+
+type contravariance means the container types have the inverse relationship
+to each other as the payload types, and is expressed with 'super'
+
+p. 149
+for example, List<Cat> is a subtype of List<? extends Pet>
+
+arrays in Java are covariant; for example, String[] can be assigned to Object[]
+
+but if we try to assign a different type to an element of objects[], we get a
+runtime error (because the different type is not a String)
+
+a generic method can take instances of any reference type; its class does not
+need to be generic
+
+public static <T> T comma(T a, T b) {
+	return a;
+}
+
+p. 151
+an enum is a variation of classes with a limited number of possible values
+
+with simple instances, a semicolon is not required
+
+public enum PrimaryColor {
+	RED, GREEN, BLUE
+}
+
+an enum can take parameters
+
+public enum RegularPolygon {
+	TRIANGLE(3), SQUARE(4), PENTAGON(5);  // semicolon needed when parameters
+										  // are used
+
+	private Shape shape;
+
+	public Shape getShape() {
+		return shape;
+	}
+	
+	private RegularPolygon(int sides) {
+		switch (sides) {
+		case 3:
+			shape = new Triangle();
+			break;
+		case 4:
+			...
+		}
+	}
+}
+
+enums all extend java.lang.Enum, may implement interfaces, may not be generic,
+cannot be extended, may only have abstract methods if all enum values provide
+an implementation body, and may only have a private or package access
+constructor
+
+p. 153
+annotations do not have direct effects, but adds information about the
+annotated method
+
+annotations may not be generic, may not extend another interface, may only
+define zero-argument methods, may not have methods that throw exceptions, have
+restrictions on return types, and can have a default return value for methods
+
+p. 154
+the key to creating annotations is the use of meta-annotations, that is,
+special annotations which appear as annotations on definitions of new, custom
+annotations
+
+the two primary meta-annotations are @Target and @Retention
+
+@Target indicates where the new annotation may be placed, such as TYPE, FIELD,
+METHOD, etc., values of the enum ElementType
+
+@Retention indicates how the compiler and runtime process the custom annotation
+
+the three @Retention values are SOURCE, CLASS, and RUNTIME, values of the enum
+RetentionPolicy
+
+an example annotation, @Nickname
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Nickname {
+	String[] value() default {};
+}
+
+p. 155 Nested Types

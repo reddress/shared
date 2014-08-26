@@ -1,0 +1,3 @@
+interface Cornered {
+    String returnANumber();
+}

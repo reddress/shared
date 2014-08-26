@@ -5,25 +5,10 @@ import static util.Convenience.print;
 
 class Scratch {
     public static void main(String[] args) {
-        Double d = new Double(10);
-        print(d.i);
+        String[] words = { " Hello" };
+        Object[] objects = { 1, "2" };
+
+        objects[1] = new Integer(9);
+        print(objects[1]);
     }
 }
-
-class Single {
-    int i = 0;
-    Single(int i) {
-        this.i = i;
-    }
-}
-
-class Double extends Single {
-    Double(int mario) {
-        super(mario*3);
-    }
-    Double() {
-        super(2);
-        this.i = 18;
-    }
-}
-
