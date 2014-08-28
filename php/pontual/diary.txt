@@ -1,0 +1,16 @@
+Found PHP-LOGIN project
+
+Figured one page package will lead to bloated application
+
+Installed EasyPHP Dev edition, which triggered a MS 110 dll error
+
+Found solution through about.com, downloaded VC Redist_x86 from MS site
+
+Unpacked php-login-minimal-master files (including index.html) to
+C:\Program Files\EasyPHP-DevServer\data\localweb\clientes
+
+looks like I need to rename the login database to pontualimportb1
+
+Going to try the one page solution, using a sqlite file, to avoid the
+possibility of a mysql password being sniffed
+

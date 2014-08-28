@@ -1,0 +1,21 @@
+fixed username and password is simpler, my idea is pontual/caneca
+
+product boxes have conditional tag that displays price if visitor is logged in
+
+database structure
+
+TABLE categoria
+id, nome
+
+used by itself to generate sidebar. 
+
+TABLE produto
+id, codigo, descricao, dimensoes, preco
+
+TABLE produto_categoria
+produto_id, categoria_id
+
+one produto_id can belong to multiple categoria_id
+
+when loading product boxes, select the categoria_id from this table
+
