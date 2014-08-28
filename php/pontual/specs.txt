@@ -1,3 +1,5 @@
+IF ADDING PRECO
+---------------
 fixed username and password is simpler, my idea is pontual/caneca
 
 product boxes have conditional tag that displays price if visitor is logged in
@@ -5,17 +7,45 @@ product boxes have conditional tag that displays price if visitor is logged in
 database structure
 
 TABLE categoria
-id, nome
+id, nome, ordem
 
 used by itself to generate sidebar. 
 
 TABLE produto
-id, codigo, descricao, dimensoes, preco
+id, codigo, descricao, dimensoes, preco, ordem
+
+preco default is 0
 
 TABLE produto_categoria
 produto_id, categoria_id
 
 one produto_id can belong to multiple categoria_id
 
-when loading product boxes, select the categoria_id from this table
+when loading product boxes, select rows matching the categoria_id
 
+TABLE contato
+campo, valor
+
+valor VARCHAR(200)
+contains static fields like telephone, address
+
+TABLE pagina
+nome, codigofonte
+
+contains mapa, for example, codigofonte is a blob-like text field
+
+access with index.php?action=pagina&nome=NOME
+
+ADMIN PAGES
+-----------
+in separate folder with .htaccess AND php-login protected
+
+ability to drag-and-drop to assign display order, click button to auto-sort
+
+individual page to modify categories
+
+individual page to modify products
+
+upload, overwrite and manage photos? allow jpg and png only
+
+WYSIWYG or HTML form to update phone, address, map page
