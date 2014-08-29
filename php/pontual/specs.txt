@@ -1,3 +1,7 @@
+Create mirror pages and fotos folder for testing
+
+write test routines
+
 IF ADDING PRECO
 ---------------
 fixed username and password is simpler, my idea is pontual/caneca
