@@ -1,0 +1,100 @@
+EasyPHP URL 127.0.0.1/ptl
+Local folder Desktop/emacs-24.3/bin/kitweb
+
+p. 25
+Strings in single quotes will not escape variables or characters, except for
+the single quote itself, \'
+
+p. 26
+multiline strings uses heredoc syntax
+$mystring = <<<EOT			 // EOT can be any kind of marker
+  this is my string
+  etc.
+EOT;						 // but EOT; must appear in the first column
+
+p. 30
+if (), elseif (), then
+
+p. 32
+basic usage of foreach pulls values individually, but ignores the array key
+foreach ($array as $val) { }
+
+this usage extracts keys
+foreach ($array as $key => $val) { }
+
+foreach also accepts objects, iterating over their public variables
+
+p. 36
+a number after break indicates how many loops to break out of
+
+p. 37
+mixed-mode processing enters and exits PHP parsing mode. For example, a chunk
+of HTML can appear between a PHP for loop declaration and a closing brace
+
+p. 37-38
+include/combine files with: include 'myscript.php'; only issues a warning if
+the file is not found. Use require instead.
+
+p. 39
+use include_once and require_once when files only need to be processed once
+
+p. 40
+assigning a variable to the empty return of a function results in null
+
+p. 40-41
+returning a boolean results in 1 for true and 0 for false
+
+p. 41
+passing parameters by reference is done in the function definition, not call
+function square(&$number) {
+	$number = $number * $number;
+}
+
+square($val);
+
+p. 42
+a function defined to accept references cannot be called with constants
+
+to return by reference, & is placed before the function name, and at call time
+function &return_fish() {
+	$fish = "Wanda";
+	return $fish;
+}
+
+$fish_ref =& return_fish();
+
+default parameters in function hello($name = "Paul") { }
+
+p. 43-44
+functions accept any number of arguments, and the functions func_num_args(),
+func_get_arg(), and func_get_args() serve to manipulate them
+
+p. 45
+the $GLOBALS array is a superglobal array that allows access to global
+variables even from within functions
+
+function foo() {
+	$GLOBALS['bar'] = "wombat";
+}
+
+alternatively, use the GLOBAL keyword
+
+function myfunc() {
+	GLOBAL $foo, $bar;
+	$bar++;
+}
+
+p. 47
+the seven data types are
+string: no limit
+integer: limited range to +/-2147483647
+float: beyond about 1.0E+300 it prints INF
+boolean: behind the scenes, 0 is false and everything else is true
+array: one array can hold different data types
+object: complex variables that have multiple values and their own functions
+resource: a handle to anything that is not PHP data
+
+p. 48
+these are false: 0, 0.0, 0.00000000, "", and "0"
+"0.0" and "0.00000000" are both true
+

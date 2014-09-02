@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+	<title>Timer</title>
+	<script src="jquery-1.11.0.min.js"></script>
+  </head>
+  <body>
+	<input type="text" id="mins">
+	<button id="start">Start</button>
+  <script>
+  //
+  var intv;
+
+  $("#start").click(function () {
+	var mins = parseInt($("#mins").val());
+    var secs = 60 * mins;
+
+    clearInterval(intv);
+    
+	intv = setInterval(function () {
+      document.title = secstomins(secs--);
+    }, 1000);
+
+    if (secs < 1) {
+      clearInterval(intv);
+    }
+  });
+
+function secstomins(s) {
+  var secsdisp = s % 60;
+  var minsdisp = Math.floor(s / 60);
+  if (secsdisp < 10) {
+	secsdisp = "0" + secsdisp;
+  }
+  return minsdisp + ":" + secsdisp;
+}
+	</script>
+  </body>
+</html>

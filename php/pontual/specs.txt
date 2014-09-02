@@ -1,6 +1,22 @@
-Create mirror pages and fotos folder for testing
+LATEST IDEA
+-----------
+Step 1. Load a password-protected (use PHP-Login) "control panel" that has
+a link to https://Locaweb's phpMyAdmin (Remember to use HTTPS)
 
-write test routines
+Step 2. Backup current page by downloading from WinSCP and export DB
+
+Step 3. Add rows through phpMyAdmin as needed
+
+Step 4. Upload photos through WinSCP
+
+Step 5. (Write test routines) These will indicate if photos are missing,
+and point out the number of items per category. Useful before committing
+changes
+
+Step 6. Return to "control panel". Clicking on a link leads to another
+password-protected page (but user should be logged in) that generates the
+static HTML
+
 
 IF ADDING PRECO
 ---------------
