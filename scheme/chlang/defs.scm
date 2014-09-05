@@ -21,3 +21,16 @@
           (else
            (nth (rest lst) (- i 1))))))
 
+(define empty? null?)
+
+(define (append elt lst)
+  (if (empty? lst)
+      (list elt)
+      (cons (first lst) (append elt (rest lst)))))
+
+(define (reverse lst)
+  (define (accum lst2 result)
+    (if (empty? lst2)
+        result
+        (accum (rest lst2) (append (first lst2) result))))
+  (accum lst '()))
