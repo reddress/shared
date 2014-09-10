@@ -2,6 +2,7 @@ import java.util.*;
 import java.io.*;
 
 import static util.Convenience.print;
+// c.bat Scratch
 
 // TO RUN:
 // c.bat Scratch
@@ -21,7 +22,5 @@ class Dog {
 
 class Scratch {
     public static void main(String[] args) {
-        Dog d = new Dog();
-        d.showInner();
     }
 }
