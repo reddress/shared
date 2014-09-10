@@ -16,8 +16,8 @@
       (lambda ()
         (read-line)))))
 
-(define elephant-list (with-input-from-string (read-elephant-list)
-                        (lambda () (eval (quote (read))))))
+(set! elephant-list (with-input-from-string (read-elephant-list)
+                      (lambda () (eval (quote (read))))))
 
 (define first car)
 
@@ -77,7 +77,7 @@
 
 (define is-tagged
   (lambda (entry tag)
-    (element-in tag entry)))
+    (element-in tag (car entry))))
 
 (define filter-match
   (lambda (lst tag)
@@ -90,3 +90,27 @@
 (define find-tagged
   (lambda (tag)
     (filter-match elephant-list tag)))
+
+(define filter-predicate
+  (lambda (lst pred)
+    (if (empty? lst)
+        '()
+        (if (pred (first lst))
+            (cons (first lst) (filter-predicate (rest lst) pred))
+            (filter-predicate (rest lst) pred)))))
+
+(define repeatedly-add
+  (lambda (n)
+    (if (> n 0)
+        (begin
+          (add-entry (list 'auto n) (list n))
+          (repeatedly-add (- n 1))))))
+
+(define remove-tagged
+  (lambda (tag)
+    (set! elephant-list (filter-predicate elephant-list
+                                          (lambda (entry) (not (is-tagged entry tag)))))))
+
+(define clear-list
+  (lambda ()
+    (set! elephant-list '())))
