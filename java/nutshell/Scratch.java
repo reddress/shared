@@ -3,12 +3,25 @@ import java.io.*;
 
 import static util.Convenience.print;
 
+// TO RUN:
+// c.bat Scratch
+
+class Dog {
+    static class Toy {
+        static class Wheel {
+            static int roundness = 96;
+        }
+        static int wheels = 4;
+    }
+
+    static void showInner() {
+        print(Toy.Wheel.roundness);
+    }
+}
+
 class Scratch {
     public static void main(String[] args) {
-        String[] words = { " Hello" };
-        Object[] objects = { 1, "2" };
-
-        objects[1] = new Integer(9);
-        print(objects[1]);
+        Dog d = new Dog();
+        d.showInner();
     }
 }

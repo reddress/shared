@@ -350,4 +350,32 @@ public @interface Nickname {
 	String[] value() default {};
 }
 
-p. 155 Nested Types
+p. 155
+nested types may need close access to the internals of the enclosing type
+
+the nested type may be required only for a specific reason, and be tightly
+localized
+
+the four kinds of nested types are
+
+static member: defined as static. interfaces, enums and annotations are always
+static
+
+nonstatic member classes: not declared static
+
+local classes: defined and only visible within a block of Java code
+
+anonymous classes: a kind of local class that does not have a meaningful name
+
+the term 'inner class' is more commonly used
+
+p. 159
+a static member type is analogous to a class field or method, and a nonstatic
+member class is analogous to an instance field or method
+
+p. 161
+the most important feature of a member class is that it can access the instance
+fields and methods in its containing object
+
+to reference a containing instance, the syntax is classname.this
+
