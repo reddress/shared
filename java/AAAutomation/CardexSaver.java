@@ -38,6 +38,7 @@ class CardexPanel extends JPanel implements ActionListener {
     int codigoListSize;
     
     JLabel lastModified;
+    JLabel estoqueCaixas;
     
     JFrame dialogFrame;
 
@@ -155,7 +156,8 @@ class CardexPanel extends JPanel implements ActionListener {
         curRow += 1;
 
         colSpan(1);
-        addGB(new JLabel("Estoque"), x = 0, y = curRow);
+        estoqueCaixas = new JLabel("Est.");
+        addGB(estoqueCaixas, x = 0, y = curRow);
         addGB(new JLabel("Reservado"), x = 1, y = curRow);
         progress = new JLabel("");
         addGB(progress, x = 2, y = curRow);
@@ -167,13 +169,17 @@ class CardexPanel extends JPanel implements ActionListener {
         reservado = new JTextField();
         estoque.addFocusListener(new FocusListener() {
                 @Override public void focusLost(final FocusEvent fe) {
+                    // LOST FOCUS ACTION
+                    countAndSetCaixas();
                 }
                 @Override public void focusGained(final FocusEvent fe) {
                     estoque.selectAll();
                 }
             });
         reservado.addFocusListener(new FocusListener() {
-                @Override public void focusLost(final FocusEvent fe) { }
+                @Override public void focusLost(final FocusEvent fe) {
+                    countAndSetCaixas();
+                }
                 @Override public void focusGained(final FocusEvent fe) {
                     reservado.selectAll();
                 }
@@ -207,7 +213,9 @@ class CardexPanel extends JPanel implements ActionListener {
                 }
             });
         qtdePorCaixa.addFocusListener(new FocusListener() {
-                @Override public void focusLost(final FocusEvent fe) { }
+                @Override public void focusLost(final FocusEvent fe) {
+                    countAndSetCaixas();
+                }
                 @Override public void focusGained(final FocusEvent fe) {
                     qtdePorCaixa.selectAll();
                 }
@@ -270,6 +278,18 @@ class CardexPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(dialogFrame, "Erro carregando Chegando. Verifique ConfiguracaoCardex.txt");
             // exit application
             throw new IOException();
+        }
+    }
+
+    void countAndSetCaixas() {
+        if (Integer.parseInt(qtdePorCaixa.getText()) == 0) {
+            estoqueCaixas.setText("Est. ? cx");
+        }
+        else {
+            estoqueCaixas.setText("Est. " + String.valueOf(
+                                      (Integer.parseInt(estoque.getText()) +
+                                       Integer.parseInt(reservado.getText())) /
+                                      (Integer.parseInt(qtdePorCaixa.getText()))) + " cx");
         }
     }
 
@@ -403,6 +423,8 @@ class CardexPanel extends JPanel implements ActionListener {
                 Integer.parseInt(productData.reservado);
             // print("LOADED PCS TOTAIS " + pecasTotais);
             progress.setText((1 + codigoList.getSelectedIndex()) + " de " + codigoListSize);
+
+            countAndSetCaixas();
         }
     }
     
