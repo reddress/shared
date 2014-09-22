@@ -1,0 +1,50 @@
+Q for mortals
+
+1  boolean	b
+4  byte		x
+5  short	h
+6  int		i
+7  long		j
+8  real		e
+9  float	f
+10 char		c
+11 symbol	s
+13 month	m
+14 date		d
+15 datetime	z
+17 minute	u
+18 second	v
+19 time		t
+98 table
+99 dictionary
+
+types are given as shorts by the TYPE function
+
+q) type 9
+-7h
+
+q) type type 9
+-5h
+
+the minus sign indicates the item is an atom
+
+the type 0h indicates a general list
+
+the number of items in a list is given by COUNT
+
+q) count (2;4;6)
+3
+
+the empty list is ()
+
+a double-colon :: indicates the null item
+
+placing a null item in a list forces it to remain general
+
+(),x always yields a list with the content of x
+
+there are two notations for indexing at depth
+L[1;2;0] is the same as L[1][2][0]
+
+there is no unary minus -, instead, use neg
+
