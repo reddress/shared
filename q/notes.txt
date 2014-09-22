@@ -1,5 +1,21 @@
 Q for mortals
 
+to quit enter \\
+
+first, load util.q script
+\l util.q
+myload[] / load saved environment (variables)
+mysave[] / save environment
+
+contained in util.q:
+to save workspace
+`:curws set value `.
+
+to load workspace (WARNING: replaces entire contents)
+dc:get `:curws
+`. set dc
+
+
 1  boolean	b
 4  byte		x
 5  short	h
@@ -48,3 +64,31 @@ L[1;2;0] is the same as L[1][2][0]
 
 there is no unary minus -, instead, use neg
 
+to download a csv from the running kdb+ server:
+
+start server with a port number
+
+C:\q) w32\q -p 31337
+
+q) tbl:([] name:`Joe`Ken; bday:2009.03.20 1985.07.23)
+
+in the web browser
+127.0.0.1:31337/bday.csv?select from tbl where name=`Ken
+
+to apply a function to an array:
+function array
+function til n
+{x*x} til 10
+
+to create a column
+flip enlist array
+flip enlist 1 2 3 4 5
+flip enlist til 9
+
+assigning an element of a homogeneous list must match its type
+
+ones
+(1+til 10)%1+til 10
+
+powers of two
+1*\2*(1+til 10)%1+til 10
