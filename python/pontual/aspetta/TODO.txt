@@ -1,0 +1,4 @@
+when entering dates, automatically convert years "14" to integer 2014
+
+when creating loop interface, 'q' saves then quits
+

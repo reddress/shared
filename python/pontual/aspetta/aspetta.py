@@ -60,7 +60,7 @@ class Produto:
         descricao = strip_accents(descricao).lower()
         self.codigo = codigo
         self.descricao = descricao
-        self.quantidade_pac = quantidade_pac
+        self.quantidade_pac = int(quantidade_pac)
         self.containers = containers
         produtos[codigo] = self
 
@@ -70,7 +70,7 @@ class Produto:
 
 class Linha:
     def __init__(self, quantidade, codigo_produto):
-        self.quantidade = quantidade
+        self.quantidade = int(quantidade)
         self.codigo_produto = codigo_produto
 
     def __repr__(self):
@@ -132,18 +132,18 @@ class Venda:
     def recursive_summary(self, prefix=""):
         fmt = "\n{pre}({pp}) {estado}; {cliente}; [{data}] {data_atual}\n{pre}{linhas}\n{pre}Obs: {obs}\n{children}"
         newline_prefix = "\n" + prefix
-        if self.ativo:
-            return fmt.format(pre=prefix,
-                              pp=self.numero_pp,
-                              estado=self.estado,
-                              cliente=clientes[self.codigo_cliente],
-                              data=self.data_inicial.strftime(short_date),
-                              data_atual=self.data_atualizado.strftime(short_date),
-                              linhas=newline_prefix.join(map(str, self.linhas)),
-                              obs=self.observacoes,
-                              children="".join([vendas[cod].recursive_summary(prefix+"\t") for cod in self.pedidos_para_cobrar]))
-        else:
-            return ""
+        # if self.ativo:
+        return fmt.format(pre=prefix,
+                          pp=self.numero_pp,
+                          estado=self.estado,
+                          cliente=clientes[self.codigo_cliente],
+                          data=self.data_inicial.strftime(short_date),
+                          data_atual=self.data_atualizado.strftime(short_date),
+                          linhas=newline_prefix.join(map(str, self.linhas)),
+                          obs=self.observacoes,
+                          children="".join([vendas[cod].recursive_summary(prefix+"\t") for cod in self.pedidos_para_cobrar]))
+        #else:
+        #    return ""
 
 def load():
     global clientes, produtos, vendas
@@ -256,9 +256,12 @@ def cobrar(cobrador, pp_reserva):
 def nao_cobrar(cobrador, pp_reserva):
     vendas[cobrador].remover_cobrar(pp_reserva)
 
-def show(pp):
-    if vendas[pp].estado not in ["Cancelado", "Faturado"]:
+def show(pp, all=False):
+    if all:
         print(vendas[pp].recursive_summary())
+    else:
+        if vendas[pp].ativo:
+            print(vendas[pp].recursive_summary())
 
 def codigo_in_linhas(codigo, linhas):
     codigo = str(codigo).upper()
@@ -267,36 +270,132 @@ def codigo_in_linhas(codigo, linhas):
             return True
     return False
 
-def show_pps(pps):
+def show_pps(pps, all=False):
     # pp = numero do pre-pedido
     for pp in sorted(pps, key=lambda pp: vendas[pp].data_inicial):
         show(pp)
         
-def cod(c):
+def cod(c, all=False):
     pps = [pp for pp in vendas if codigo_in_linhas(c, vendas[pp].linhas)]
-    show_pps(pps)
+    show_pps(pps, all)
 
-def cli(c):
+def cli(c, all=False):
     pps = [pp for pp in vendas if c.lower() in clientes[vendas[pp].codigo_cliente].nome.lower()]
-    show_pps(pps)
+    show_pps(pps, all)
 
 def on(pp):
-    vendas[pp].ativo = True
+    vendas[int(pp)].ativo = True
 
 def off(pp):
-    vendas[pp].ativo = False
+    vendas[int(pp)].ativo = False
 
-def all():
+def all(all_flag=False):
     pps = [pp for pp in vendas if vendas[pp].ativo]
-    show_pps(pps)
+    show_pps(pps, all_flag)
 
-def des():
+def des(all=False):
     pps = [pp for pp in vendas if vendas[pp].estado == estados["d"]]
-    show_pps(pps)
+    show_pps(pps, all)
 
-def cont():
+def cont(all=False):
     pps = [pp for pp in vendas if vendas[pp].estado == estados["c"]]
-    show_pps(pps)
+    show_pps(pps, all)
+
+def cont_num(cn, all=False):
+    # procurar pedidos aguardando container especifico, cn = container number
+    # display vendas where str(cn) in produto.containers
+    pps = []
+    cn = str(cn)
+    for pp in vendas:
+        for linha in vendas[pp].linhas:
+            if cn in produtos[linha.codigo_produto].containers:
+                pps.append(pp)
+    show_pps(pps, all)
+
+def rest(codigo_produto):
+    # count quantidade_pac and subtract amounts from all active pedidos
+    # matching codigo_produto
+    codigo_produto = str(codigo_produto)
+    total = int(produtos[codigo_produto].quantidade_pac)
+
+    reservando = 0
+    for pp in vendas:
+        if vendas[pp].ativo:
+            for linha in vendas[pp].linhas:
+                if linha.codigo_produto == codigo_produto:
+                    reservando += int(linha.quantidade)
+    print("Sobram: " + str(total - reservando) + " pcs")
     
+def ref(pp_original, pp_novo):
+    # make a new reference to a venda, after pre-pedido number is assigned
+    # by faturamento
+    vendas[int(pp_novo)] = vendas[int(pp_original)]
+    
+def print_help():
+    print("""
+    q: quit
+    all: display all active vendas
+    d: desistencia
+    c: container
+
+    pp [numero pre-pedido]: display venda unconditionally
+    rest [codigo_produto]
+    cn [numero_container]
+    on [pp]
+    off [pp]
+    cod [codigo_produto]
+    """)
+
+def loop():
+    print("Enter 'h' for help")
+
+    show_all = False
+    
+    while True:
+        show_status = " show all" if show_all else " only ativo"
+        user_input = input("Aspetta{}) ".format(show_status))
+        if user_input.strip() == "":
+            continue
+
+        user_input_tokens = user_input.split()
+        command = user_input_tokens[0]
+            
+        if len(user_input_tokens) == 1:
+            if command == 'q':
+                print("Saving...")
+                save()
+                print("Bye!")
+                break
+            elif command == 'h':
+                print_help()
+            elif command == 'all':
+                all(show_all)
+            elif command == 'd':
+                des(show_all)
+            elif command == 'c':
+                cont(show_all)
+            elif command == 'show':
+                show_all = not show_all
+        else:
+            arguments = user_input_tokens[1:]
+            
+            if command == "rest":
+                rest(arguments[0])
+            elif command == "cn":
+                cont_num(arguments[0], show_all)
+            elif command == "on":
+                on(arguments[0])
+            elif command == "off":
+                off(arguments[0])
+            elif command == "cod":
+                cod(arguments[0], show_all)
+            elif command == "pp":
+                print(vendas[int(arguments[0])])
+            elif command == "ref":
+                ref(arguments[0], arguments[1])
+            elif command == "cli":
+                cli(" ".join(arguments), show_all)
+                
 # do not remove this line
 load()
+print("Run loop() for shortcut CLI")
