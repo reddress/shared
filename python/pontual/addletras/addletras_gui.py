@@ -27,19 +27,20 @@ print(orig_filename)
 dest_path = "/".join(orig_path_filename.split("/")[:-1]) + "/"
 print(dest_path)
 
-dest_path_filename = dest_path + orig_filename + "_letras.csv"
+# dest_path_filename = dest_path + orig_filename + "_letras.csv"
+dest_path_filename = dest_path + orig_filename + "_letras.ods"
 print(dest_path_filename)
 
-# with ods.writer(open(dest_path_filename, 'wb')) as fout:
-with open(dest_path_filename, 'w') as fout:
+with ods.writer(open(dest_path_filename, 'wb')) as fout:
+# with open(dest_path_filename, 'w') as fout:
     with open(orig_path_filename) as fin:
         for line in fin:
             codigo = line.strip()
             if len(codigo) > 6:
                 print('Warning: bypassing ' + codigo)
-                print(codigo, file=fout)
-                # fout.writerow([codigo.strip()])
+                # print(codigo, file=fout)
+                fout.writerow([codigo.strip()])
             else:
-                print(addletras(codigo), file=fout)
-                # for cod_with_letra in addletras(codigo).split():
-                #    fout.writerow([cod_with_letra.strip()])
+                # print(addletras(codigo), file=fout)
+                for cod_with_letra in addletras(codigo).split():
+                    fout.writerow([cod_with_letra.strip()])
