@@ -8,7 +8,7 @@
          (filename-number (substring original-filename (- filename-length 7)
                                      (- filename-length 4))))
 
-    (gimp-message original-filename)
+;;    (gimp-message original-filename)
     (gimp-edit-copy drawable)
 
     (let* (
