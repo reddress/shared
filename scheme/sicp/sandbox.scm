@@ -1,9 +1,3 @@
-(define (eva-definition exp env)
-  (deff (definition-varible exp)
-    (eval (definition-value exp) env)
-    env)
-  'eval-definition-ok)
-
 (define (eval-assignment exp env)
   (set-variable-value! (assignment-variable exp)
                        (eval (assignment-value exp) env)
