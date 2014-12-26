@@ -9,3 +9,9 @@ def dl(urlroot, start, end, zeros, tail, dest):
         num = str(start + i).zfill(zeros)
         print(urlroot + num + tail)
         opener.retrieve(urlroot + num + tail, dest + "_" + num + tail)
+
+def dlskip(urlroot, start, end, skip, zeros, tail, dest):
+    for i in range(0, end - start + 1, skip):
+        num = str(start + i).zfill(zeros)
+        print(urlroot + num + tail)
+        opener.retrieve(urlroot + num + tail, dest + "_" + num + tail)
