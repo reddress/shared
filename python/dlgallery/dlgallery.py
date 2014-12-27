@@ -15,3 +15,9 @@ def dlskip(urlroot, start, end, skip, zeros, tail, dest):
         num = str(start + i).zfill(zeros)
         print(urlroot + num + tail)
         opener.retrieve(urlroot + num + tail, dest + "_" + num + tail)
+
+def dllist(urlroot, indices, zeros, tail, dest):
+    for index in indices:
+        num = str(index).zfill(zeros)
+        print(urlroot + num + tail)
+        opener.retrieve(urlroot + num + tail, dest + "_" + num + tail)
