@@ -15,3 +15,5 @@ def estimate_pi(steps):
         
     result = "Estimate for pi in %d steps is %.14f"
     print(result % (steps, pow(2, steps + 1) * side))
+    
+    return pow(2, steps + 1) * side
