@@ -1,5 +1,8 @@
 // Look at FIXME
 
+// WHEN REARRANGING BUTTONS IN MARCH, MOVE ALL "VENDAS 2014" TO
+// "VENDAS ANTIGO" AND DISCARD VENDAS 2013 DATA
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.datatransfer.*;
@@ -135,10 +138,11 @@ class CardexPanel extends JPanel implements ActionListener {
         // addGB(new JLabel("Atualizado"), x = 2, y = curRow);
         // curRow += 1;
 
-        addGB(new JButton("Antigo"), x = 0, y = curRow);
-        addGB(new JButton("Atual"), x = 1, y = curRow);
+        addGB(new JButton("2013"), x = 0, y = curRow);
+        addGB(new JButton("2014"), x = 1, y = curRow);
         // addGB(lastModified, x = 2, y = curRow);
-        addGB(new JButton("2008"), x = 2, y = curRow);
+        // addGB(new JButton("2008"), x = 2, y = curRow);
+        addGB(new JButton("Atual"), x = 2, y = curRow);
         curRow += 1;
 
         colSpan(2);
@@ -192,8 +196,8 @@ class CardexPanel extends JPanel implements ActionListener {
         curRow += 1;
 
         colSpan(1);
-        addGB(new JLabel("Vendas antigo"), x = 0, y = curRow);
-        addGB(new JLabel("Vendas atual"), x = 1, y = curRow);
+        addGB(new JLabel("Vendas 2013"), x = 0, y = curRow);
+        addGB(new JLabel("Vendas 2014"), x = 1, y = curRow);
         addGB(new JLabel("Qtde por caixa"), x = 2, y = curRow);
         curRow += 1;
 
@@ -327,17 +331,17 @@ class CardexPanel extends JPanel implements ActionListener {
         codigoListModel.removeAllElements();
 
         /*
-        Charset charset = Charset.forName("US-ASCII");
-        Path configFile = Paths.get(sourcePathString);
-        try (BufferedReader reader = Files.newBufferedReader(configFile, charset)) {
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    codigoListModel.addElement(line);
-                }
-            }
-        catch (IOException x) {
-            System.err.println("IOException when setting codigo list");
-        }
+          Charset charset = Charset.forName("US-ASCII");
+          Path configFile = Paths.get(sourcePathString);
+          try (BufferedReader reader = Files.newBufferedReader(configFile, charset)) {
+          String line = null;
+          while ((line = reader.readLine()) != null) {
+          codigoListModel.addElement(line);
+          }
+          }
+          catch (IOException x) {
+          System.err.println("IOException when setting codigo list");
+          }
         */
 
         Sheet sheet = null;
@@ -493,7 +497,7 @@ class CardexPanel extends JPanel implements ActionListener {
         openCardex();
 
         try {
-            // click to set 01-01-2013 (year before)
+            // click to set 01-01-201X (year before)
             click(configCoords("InicialDia"));
             kb.type("01");
             click(configCoords("InicialMes"));
@@ -515,6 +519,36 @@ class CardexPanel extends JPanel implements ActionListener {
         }
         catch (Exception e) {
             System.err.println("Error in Cardex Antigo");
+        }
+    }
+
+    public void openCardexAntigoTwoYears() {
+        // click on Produto bar, Imprimir icon, and Cardex button
+        openCardex();
+
+        try {
+            // click to set 01-01-201X (year before)
+            click(configCoords("InicialDia"));
+            kb.type("01");
+            click(configCoords("InicialMes"));
+            kb.type("01");
+            click(configCoords("InicialAno"));
+            kb.type(String.valueOf(todayYear - 2));
+            Thread.sleep(350);
+            click(configCoords("FinalFlecha"));
+            Thread.sleep(300);
+            for (int i = 0; i <= (12 + todayMonth); i++) {
+                click(configCoords("CalendarioVoltar"));
+                Thread.sleep(50);
+            }
+            Thread.sleep(250);
+            click(configCoords("CalendarioDezembro31DoisAnos"));
+            
+            Coordinates ultimaPaginaCoords = new Coordinates(config.getProperty("UltimaPagina"));
+            bot.mouseMove(ultimaPaginaCoords.x, ultimaPaginaCoords.y);
+        }
+        catch (Exception e) {
+            System.err.println("Error in Cardex Antigo Two Years");
         }
     }
 
@@ -696,7 +730,8 @@ class CardexPanel extends JPanel implements ActionListener {
             bot.mouseMove(guiProximoCoords.x, guiProximoCoords.y);
             break;
 
-        case "Antigo":
+            // case "Antigo":
+        case "2014":
             if (codigoList.getSelectedIndex() != -1) {
                 openCardexAntigo();
             }
@@ -708,9 +743,11 @@ class CardexPanel extends JPanel implements ActionListener {
             }
             break;
 
-        case "2008":
+            // case "2008":
+        case "2013":
             if (codigoList.getSelectedIndex() != -1) {
-                openCardex2008();
+                // openCardex2008();
+                openCardexAntigoTwoYears();
             }
             break;
 
