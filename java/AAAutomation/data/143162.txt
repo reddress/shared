@@ -1,7 +1,7 @@
-26/05/14;0;0;30369;0;1000
+14/01/2015;0;0;30369;96793;1000
 PORTA CARTAO VISITA DE METAL
-Último container - 27/01/14 - CCTC/1404 - 50.000 pçs
+Último container - 03/10/14 - CCTC/1426 - 30.000 pçs
+10/12/14 - Naza - 30.000 pçs
 16/05/14 - Quality - 14.828 pçs
 21/03/14 - Quality - 14.600 pçs
-23/10/13 - Quality - 18.500 pçs
 

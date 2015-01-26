@@ -275,7 +275,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
         try { 
             chegando = new Chegando(config.getProperty("Chegando"));
-            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + config.getProperty("Chegando") + "\nPegou lista do Sr. Yeh?");
+            JOptionPane.showMessageDialog(dialogFrame, "ATENCAO: ALTERAR CAMPOS p/ 2014 e 2015, LIMPAR DADOS SALVOS\nPlanilha Chegando: " + config.getProperty("Chegando") + "\nPegou lista do Sr. Yeh?");
         }
         catch (Exception e) {
             e.printStackTrace();

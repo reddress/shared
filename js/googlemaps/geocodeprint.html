@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+      var map;
+      var geocoder;
+      var markers = new Array();
+      var addCity;
+
+      var state = 0;
+      var bounds;
+      var pt1, pt2;
+      var rect;
+
+      function toLatLng(lat, lng) {
+        return new google.maps.LatLng(lat, lng);
+      }
+
+      function toBounds(j,k) {
+        var pts = [];
+        var latMin, latMax, lngMin, lngMax;
+        var sw, ne;
+
+        latMin = Math.min(j.lat(), k.lat());
+        latMax = Math.max(j.lat(), k.lat());
+
+        lngMin = Math.min(j.lng(), k.lng());
+        lngMax = Math.max(j.lng(), k.lng());
+
+        sw = toLatLng(latMin, lngMin);
+        ne = toLatLng(latMax, lngMax);
+        return new google.maps.LatLngBounds(sw, ne);
+      }
+     
+      var mapOptions = {
+        center: new google.maps.LatLng(-23.58921280069567, -46.64036315239258),
+        zoom: 12,
+        disableDoubleClickZoom: true,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: [
+  {
+    featureType: "road.local",
+    elementType: "geometry",
+    stylers: [
+      { gamma: 0.01 },
+      { lightness: 12 }
+    ]
+  },{
+    featureType: "poi",
+    stylers: [
+      { visibility: "off" }
+    ]
+  },{
+    featureType: "administrative",
+    elementType: "geometry",
+    stylers: [
+      { visibility: "off" }
+    ]
+  },{
+    featureType: "water",
+    stylers: [
+      { visibility: "off" }
+    ]
+  },{
+    featureType: "landscape",
+    elementType: "geometry",
+    stylers: [
+      { lightness: 99 },
+      { saturation: -99 },
+      { gamma: 9.99 }
+    ]
+  },{
+    featureType: "road.highway",
+    stylers: [
+      { saturation: -99 },
+      { lightness: -30 }
+    ]
+  },{
+    featureType: "road.arterial",
+    stylers: [
+      { saturation: -99 },
+      { lightness: -30 }
+    ]
+  },{
+  }
+]
+      };
+
+      function initialize() {
+        geocoder = new google.maps.Geocoder();
+        map = new google.maps.Map(document.getElementById("map_canvas"),
+          mapOptions);
+
+        rect = new google.maps.Rectangle({
+          bounds: toBounds(toLatLng(0.0, 0.0), toLatLng(0.000001,0.000001)),
+          fillColor: "#FFFF00",
+          fillOpacity: 0.3,
+          strokeColor: "#0000FF",
+          strokeWeight: 2
+        });
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          getAddress(event.latLng);
+        });
+
+        google.maps.event.addListener(map, 'dblclick', function(event) {
+          if(state == 0) {
+            pt1 = event.latLng;
+            rect.setMap(map);
+            state = 1;
+          }
+        });
+
+        google.maps.event.addListener(map, 'mousemove', function(event) {
+          if(rect.getMap() == map) {
+            rect.setBounds(toBounds(pt1, event.latLng));
+          }
+        });
+
+        // Remove the zoom window and zoom in
+        google.maps.event.addListener(rect, 'click', function(event) {
+          rect.setMap(null);
+          rect.setBounds(toBounds(toLatLng(0.0, 0.0), toLatLng(0.000001,0.000001)));
+          pt2 = event.latLng;
+          map.fitBounds(toBounds(pt1, pt2));
+          state = 0;
+        });
+
+        // Allows shrinking the zoom window
+        google.maps.event.addListener(rect, 'mousemove', function(event) {
+          if(rect.getMap() == map) {
+            rect.setBounds(toBounds(pt1, event.latLng));
+          }
+        });
+
+        // Cancel the zoom window with a right click
+        google.maps.event.addListener(rect, 'rightclick', function(event) {
+          rect.setMap(null);
+          rect.setBounds(toBounds(toLatLng(0.0, 0.0), toLatLng(0.000001,0.000001)));
+          state = 0;
+        });
+
+        google.maps.event.addListener(map, 'rightclick', function(event) {
+          map.setZoom(map.getZoom() - 2);
+        }); 
+      }
+
+      function getAddress(latLng) {
+        geocoder.geocode( {'latLng': latLng}, function(results, status) {
+          if(status == google.maps.GeocoderStatus.OK) {
+            if(results[0]) {
+              document.getElementById("text_address").value = results[0].formatted_address;
+            } else {
+              document.getElementById("text_address").value = "No results";
+            }
+          } else {
+            document.getElementById("text_address").value = status;
+          }
+        });
+      }
+      
+      function setAddress() {
+        if (document.getElementById("check_sp").checked) {
+          addCity = " Sao Paulo - Sao Paulo, Brazil";
+        } else {
+          addCity = "";
+        }
+        geocoder.geocode( {'address': document.getElementById("text_address").value + addCity }, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+	    getAddress(results[0].geometry.location);
+            addMarker();
+          } 
+        });
+      }
+
+      function addMarker() {
+	geocoder.geocode( {'address': document.getElementById("text_address").value + addCity }, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+	    var marker = new google.maps.Marker({
+              map: map, 
+	      position: results[0].geometry.location
+            });
+            google.maps.event.addListener(marker, 'click', function(event) {
+              document.getElementById("text_address").value = results[0].formatted_address;
+              map.setCenter(results[0].geometry.location);
+              map.setZoom(16);
+            });
+	    markers.push(marker);
+          } 
+        });
+      }
+      
+      function clearMarkers() {
+	for(var i=0; i<markers.length; i++) {
+          markers[i].setMap(null);				      
+        }				   
+      }
+      
+      function checkReturn(e) {
+        if (e.keyCode == 13) {
+          setAddress();
+        } else if (e.keyCode == 27) {
+          document.getElementById("text_address").value = "";
+        }
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="menu">
+      <b>address:</b>
+      <input id="text_address" type="text" size="60" onkeyup="checkReturn(event)">
+      <input id="check_sp" type="checkbox" checked="checked">SP
+      <input type="button" value="clear" onclick="document.getElementById('text_address').value=''; document.getElementById('text_address').focus()">
+      <input id="button3" type="button" value="clear markers" onclick="clearMarkers()">
+    </div><div id="map_canvas" style="width:800px; height:1000px;">
+
+  </div>
+
+  </body>
+</html>
