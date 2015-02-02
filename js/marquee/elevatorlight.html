@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<title>Elevator light</title>
+  </head>
+  <body>
+	<!-- id: row, column -->
+	<img src="img/lightoff.png" id="x00">
+	<img src="img/lighton.png" id="x01">
+	<img src="img/lightoff.png" id="x02">
+	<img src="img/lighton.png" id="x03">
+	<img src="img/lighton.png" id="x04">
+	<br>
+
+	<img src="img/lightoff.png" id="x10">
+	<img src="img/lighton.png" id="x11">
+	<img src="img/lightoff.png" id="x12">
+	<img src="img/lighton.png" id="x13">
+	<img src="img/lighton.png" id="x14">
+	<br>
+
+	<img src="img/lightoff.png" id="x20">
+	<img src="img/lighton.png" id="x21">
+	<img src="img/lightoff.png" id="x22">
+	<img src="img/lighton.png" id="x23">
+	<img src="img/lighton.png" id="x24">
+	<br>
+
+	<img src="img/lightoff.png" id="x30">
+	<img src="img/lighton.png" id="x31">
+	<img src="img/lightoff.png" id="x32">
+	<img src="img/lighton.png" id="x33">
+	<img src="img/lighton.png" id="x34">
+	<br>
+
+	<img src="img/lightoff.png" id="x40">
+	<img src="img/lighton.png" id="x41">
+	<img src="img/lightoff.png" id="x42">
+	<img src="img/lighton.png" id="x43">
+	<img src="img/lighton.png" id="x44">
+	<br>
+
+
+	<button type="button" id="switch00">switch 00</button>
+	<button type="button" id="goingUp">go up</button>
+	<button type="button" id="goingDown">go down</button>
+
+	<script>
+  var lights = {};
+var lightsElem = {};
+
+for (var row = 0; row < 5; row++) {
+  for (var col = 0; col < 5; col++) {
+    var id = 'x' + row + col;
+    lights[id] = 0;
+	lightsElem[id] = document.getElementById(id);
+    set(id, 0);
+  }
+}
+
+function toggle(id) {
+  if (lights[id] === 0) {
+	lightsElem[id].src = "img/lighton.png";
+	lights[id] = 1;
+  } else {
+	lightsElem[id].src = "img/lightoff.png";
+	lights[id] = 0;
+	
+  }
+}
+
+function set(id, status) {
+  lights[id] = status;
+  if (status) {
+    lightsElem[id].src = "img/lighton.png";
+  } else {
+    lightsElem[id].src = "img/lightoff.png";
+  }
+}
+
+function setC() {
+  set('x01', 1);
+  set('x02', 1);
+
+  set('x13', 1);
+  
+  set('x22', 1);
+  
+  set('x31', 1);
+  
+  set('x41', 1);
+  set('x42', 1);
+  set('x43', 1);
+}
+
+function scrollUp() {
+  for (var row = 0; row < 4; row++) {
+    for (var col = 0; col < 5; col++) {
+      set('x' + row + col, lights['x' + (row + 1) + col]);
+    }
+  }
+  // row 5
+  for (var col = 0; col < 5; col++) {
+    set('x4' + col, 0);
+  }
+}
+
+function scrollDown() {
+  for (var row = 4; row > 0; row--) {
+    for (var col = 0; col < 5; col++) {
+      set('x' + row + col, lights['x' + (row - 1) + col]);
+    }
+  }
+  // row 0
+  for (var col = 0; col < 5; col++) {
+    set('x0' + col, 0);
+  }
+}
+
+var tapeIndex = 6;
+
+document.getElementById("switch00").addEventListener('click', function(event) {
+  toggle('x00');
+});
+
+function moveFloor(scrollFn) {
+  var row = 0;
+  var status = true;
+  animate(function() {
+    status = scrollFn(row);
+    row++;
+    return status;
+  });
+}
+
+document.getElementById("goingUp").addEventListener('click', function(event) {
+  moveFloor(scrollTapeDown);
+});
+
+document.getElementById("goingDown").addEventListener('click', function(event) {
+  moveFloor(scrollTapeUp);
+});
+
+setC();
+
+function animate(modifier) {
+  var start = new Date().getTime();
+  var fps = 6;
+  var currentFrame = 0;
+  var time;
+  var keepGoing = true;
+  
+  function draw() {
+    var req = requestAnimationFrame(draw);
+    var now = new Date().getTime();
+    var dt = now - (time || now);
+    time = now;
+
+    if (!keepGoing) {
+      return;
+    }
+
+    var framesSinceStart = Math.floor((time - start) / (1000 / fps));
+    if (framesSinceStart > currentFrame) {
+      keepGoing = modifier();
+      currentFrame = framesSinceStart;
+      //currentFrame++;
+      console.log(currentFrame);
+    }
+  }
+
+  var a = draw();
+}
+
+var tape = [
+  '01100',
+  '00010',
+  '01100',
+  '00010',
+  '01100',
+  '00000',
+  '01100',
+  '00010',
+  '00100',
+  '01000',
+  '01110',
+  '00000',
+  '00100',
+  '01100',
+  '00100',
+  '00100',
+  '01110',
+];
+
+function setMatrix(topRowIndex) {
+  for (var row = 0; row < 5; row++) {
+    for (var col = 0; col < 5; col++) {
+      var lightsStatus = tape[topRowIndex + row].split('');
+      set('x' + row + col, parseInt(lightsStatus[col]));
+    }
+  }
+}
+
+function scrollTapeUp(rows) {
+  //  if ((tapeIndex + 4) < tape.length - 1) {
+  if (rows < 6 && (tapeIndex + 4) < (tape.length - 1)) {
+    tapeIndex++;
+    setMatrix(tapeIndex);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function scrollTapeDown(rows) {
+  // if (tapeIndex > 0) {
+  if (rows < 6 && tapeIndex > 0) {
+    tapeIndex--;
+    setMatrix(tapeIndex);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+setMatrix(tapeIndex);
+
+// animate(scrollDown);
+
+</script>
+
+  </body>
+</html>
