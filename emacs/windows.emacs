@@ -6,7 +6,7 @@
  '(c-default-style "linux")
  '(column-number-mode t)
  '(default-tab-width 4 t)
- '(fill-column 79)
+ '(fill-column 72)
  '(global-visual-line-mode nil)
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
@@ -21,19 +21,27 @@
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 ;; globals
+(setq ring-bell-function 'ignore)
+
 (setq-default frame-title-format "%f")
 
-(add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d")
-(add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/auto-complete")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 (defun my-previous-window ()
   (interactive)
   (other-window -1))
+
+(defun my-indent-whole-buffer ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'indent-region)))
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
-
 (global-set-key (kbd "C-'") 'iswitchb-buffer)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
@@ -50,10 +58,8 @@
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
 
-(global-set-key (kbd "C-c j") 'javascript-mode)
-(global-set-key (kbd "C-c h") 'html-mode)
-
 (global-set-key (kbd "C-c C-e") 'electric-indent-mode)
+(global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
@@ -65,16 +71,18 @@
 (set-default 'cursor-type 'bar)
 (set-cursor-color "#338833")
 
-;; force regular font
+;; force regular font 
 (defun disable-bold ()
   (interactive)
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
 (electric-indent-mode t)
+(add-hook 'python-mode-hook
+          (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 80) (height . 62)))
 
 ;; custom functions
 ;; general
@@ -117,14 +125,19 @@
   (message "total %s" total))
 
 ;; Lisp
+(setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
 (defun hide-eol ()
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
+(defun my-lisp-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'lisp-eval-region)
+  (end-of-buffer))
 
 ;; Scheme
-(setq scheme-program-name "csi.exe -:c")  ;; Chicken
-;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
+(setq scheme-program-name "C:/chicken/bin/csi.exe -:c")
 (defun my-scheme-send-buffer ()
   (interactive)
   (mark-whole-buffer)
@@ -132,9 +145,6 @@
   (end-of-buffer))
 
 ;; Python
-(setq python-shell-interpreter "C:/Python33/python.exe")
-;;(setq python-shell-interpreter "C:/Python27/python.exe")
-
 (setenv "PYTHONUNBUFFERED" "x")
 
 (defun line-emptyp ()
@@ -142,14 +152,14 @@
 
 (defun my-python-send-statement ()
   (interactive)
-  (local-set-key [S-return] 'my-python-send-statement)
+  ;; (local-set-key [S-return] 'my-python-send-statement)
   (python-shell-send-string (thing-at-point 'line))
   (python-shell-send-string "\n")
   (move-end-of-line nil))
 
 (defun my-python-send-block ()
   (interactive)
-  (local-set-key [C-return] 'my-python-send-block)
+  ;; (local-set-key [C-return] 'my-python-send-block)
   (set-mark (line-end-position))
   ; (previous-line)
   (let ((lines-of-block 0))
@@ -174,6 +184,7 @@
 
 ;; javascript
 (require 'js-comint)
+;;;(setq inferior-js-program-command "java -jar c:/Users/heitor/Desktop/programming/js/rhino1_7R4/js.jar")
 (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
@@ -206,10 +217,14 @@
   (interactive)
   (comint-send-string inferior-js-buffer "module.exports.repl.ignoreUndefined = true;"))
 
+(global-set-key (kbd "C-c j") 'javascript-mode)
+(global-set-key (kbd "C-c h") 'html-mode)
+
 ;; auto-complete-mode
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/dict")
 (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(setq ac-disable-faces nil)
 
 (global-auto-complete-mode t)
 (setq ac-ignore-case nil)
@@ -219,7 +234,6 @@
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
 (setq ac-delay 0.001)
-(setq ac-disable-faces nil)
 
 ;; settings for not immediately completing
 ;(global-auto-complete-mode t)
@@ -227,6 +241,75 @@
 ;(setq ac-ignore-case nil)
 ;(setq ac-delay 1)
 ;(ac-set-trigger-key "TAB")
+
+;; set keys
+(global-set-key (kbd "RET") 'newline-and-indent)
+
+;; custom functions
+(global-set-key "\M-n" 'add-letters)
+;; (global-set-key "\M-p" 'add-nums-in-brackets)
+
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
+            ;; (local-set-key [return] 'newline-and-indent)))
+            (local-set-key [S-return] 'lisp-eval-last-sexp)
+            (local-set-key [C-return] 'my-lisp-send-buffer)))
+
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (local-set-key [tab] 'slime-indent-and-complete-symbol)
+            (local-set-key [S-return] 'slime-eval-last-expression)
+            (local-set-key [return] 'newline-and-indent)))
+
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [S-return] 'scheme-send-last-sexp)))
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key [S-return] 'my-python-send-statement)
+            (local-set-key [M-return] 'my-python-send-buffer)
+            (local-set-key [C-return] 'my-python-send-block)))
+
+(add-hook 'js-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c c") 'js-send-buffer)
+            (local-set-key (kbd "C-c n") 'node-suppress-undefined)
+            (local-set-key [S-return] 'my-js-send-line)
+            (local-set-key [C-return] 'my-js-send-block)
+            (call-interactively 'node-suppress-undefined)))
+            
+
+(add-hook 'sql-mode-hook
+          (lambda ()
+            (call-interactively 'auto-complete-mode)))
+
+;; Kivy customization
+(add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
+
+;; load java-mode for php
+(add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
+
+;; text mode
+(defun my-text-tabify ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'tabify)
+    (end-of-buffer))
+  (newline))
+
+(add-hook 'text-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            ;; (local-set-key [return] 'my-text-tabify)
+            (call-interactively 'auto-complete-mode)))
+
+(define-key text-mode-map (kbd "TAB") 'self-insert-command)
+(define-key text-mode-map [backtab] 'indent-for-tab-command)
+
 
 ;; isend-mode
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
@@ -261,73 +344,8 @@
   (call-interactively 'isend-send)
   (end-of-buffer))
 
-;; set keys
-(global-set-key (kbd "RET") 'newline-and-indent)
-
-;; custom functions
-(global-set-key "\M-n" 'add-letters)
-;; (global-set-key "\M-p" 'add-nums-in-brackets)
-
-(add-hook 'lisp-mode-hook
-          (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [return] 'newline-and-indent)))
-
-(add-hook 'clojure-mode-hook
-          (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [S-return] 'slime-eval-last-expression)
-            (local-set-key [return] 'newline-and-indent)))
-
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (local-set-key [C-return] 'my-scheme-send-buffer)
-            (local-set-key [S-return] 'scheme-send-last-sexp)))
-
-(add-hook 'python-mode-hook
-          (lambda ()
-            (local-set-key [S-return] 'my-python-send-statement)
-            (local-set-key [M-return] 'my-python-send-buffer)
-            (local-set-key [C-return] 'my-python-send-block)))
-
-(add-hook 'js-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c n") 'node-suppress-undefined)
-            (local-set-key (kbd "C-c c") 'js-send-buffer)
-            (local-set-key [S-return] 'my-js-send-line)
-            (local-set-key [C-return] 'my-js-send-block)
-            (call-interactively 'node-suppress-undefined)))
-
-(add-hook 'sql-mode-hook
-          (lambda ()
-            (call-interactively 'auto-complete-mode)))
-
-(add-hook 'fundamental-mode-hook
-          (lambda ()
-            (call-interactively 'auto-complete-mode)))
-
 (add-hook 'isend-mode-hook
           (lambda ()
             (local-set-key [S-return] 'my-isend-send-line)
             (local-set-key [C-return] 'my-isend-send-block)
             (local-set-key [M-return] 'my-isend-send-buffer)))
-
-;; change mode for Kivy files
-(add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
-
-;; text mode
-(defun my-text-tabify ()
-  (interactive)
-  (save-excursion
-    (mark-whole-buffer)
-    (call-interactively 'tabify)
-    (end-of-buffer))
-  (newline))
-
-(add-hook 'text-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode t)
-            (local-set-key [return] 'my-text-tabify)
-            (call-interactively 'auto-complete-mode)))
-(define-key text-mode-map (kbd "TAB") 'self-insert-command)
-(define-key text-mode-map [backtab] 'indent-for-tab-command)
