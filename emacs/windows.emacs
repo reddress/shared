@@ -30,6 +30,17 @@
 (defun my-previous-window ()
   (interactive)
   (other-window -1))
+
+(defun my-indent-whole-buffer ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'indent-region)))
+
+(defun my-insert-console-log ()
+  (interactive)
+  (insert "console.log("))
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
@@ -55,6 +66,9 @@
 
 (global-set-key (kbd "C-c C-e") 'electric-indent-mode)
 
+(global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
+(global-set-key (kbd "C-c l") 'my-insert-console-log)
+
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
@@ -74,7 +88,7 @@
 (electric-indent-mode t)
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
 
 ;; custom functions
 ;; general
@@ -121,6 +135,12 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
+(setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
+(defun my-lisp-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'lisp-eval-region)
+  (end-of-buffer))
 
 ;; Scheme
 (setq scheme-program-name "csi.exe -:c")  ;; Chicken
@@ -270,8 +290,10 @@
 
 (add-hook 'lisp-mode-hook
           (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [return] 'newline-and-indent)))
+            ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
+            ;; (local-set-key [return] 'newline-and-indent)))
+            (local-set-key [S-return] 'lisp-eval-last-sexp)
+            (local-set-key [C-return] 'my-lisp-send-buffer)))
 
 (add-hook 'clojure-mode-hook
           (lambda ()
@@ -297,6 +319,7 @@
             (local-set-key [S-return] 'my-js-send-line)
             (local-set-key [C-return] 'my-js-send-block)
             (call-interactively 'node-suppress-undefined)))
+            ;; ))
 
 (add-hook 'sql-mode-hook
           (lambda ()
@@ -327,7 +350,8 @@
 (add-hook 'text-mode-hook
           (lambda ()
             (setq indent-tabs-mode t)
-            (local-set-key [return] 'my-text-tabify)
+            ;; (local-set-key [return] 'my-text-tabify)
             (call-interactively 'auto-complete-mode)))
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
+(put 'upcase-region 'disabled nil)
