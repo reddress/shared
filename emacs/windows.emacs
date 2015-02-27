@@ -39,6 +39,10 @@
     (mark-whole-buffer)
     (call-interactively 'indent-region)))
 
+(defun my-insert-console-log ()
+  (interactive)
+  (insert "console.log("))
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
@@ -61,6 +65,9 @@
 (global-set-key (kbd "C-c C-e") 'electric-indent-mode)
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 
+(global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
+(global-set-key (kbd "C-c l") 'my-insert-console-log)
+
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
@@ -82,7 +89,7 @@
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 80) (height . 62)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
 
 ;; custom functions
 ;; general
@@ -130,6 +137,7 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
+
 (defun my-lisp-send-buffer ()
   (interactive)
   (mark-whole-buffer)
@@ -280,7 +288,6 @@
             (local-set-key [S-return] 'my-js-send-line)
             (local-set-key [C-return] 'my-js-send-block)
             (call-interactively 'node-suppress-undefined)))
-            
 
 (add-hook 'sql-mode-hook
           (lambda ()
@@ -349,3 +356,5 @@
             (local-set-key [S-return] 'my-isend-send-line)
             (local-set-key [C-return] 'my-isend-send-block)
             (local-set-key [M-return] 'my-isend-send-buffer)))
+
+(put 'upcase-region 'disabled nil)
