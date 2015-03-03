@@ -30,19 +30,44 @@
 (defun my-previous-window ()
   (interactive)
   (other-window -1))
+
+(defun my-indent-whole-buffer ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'indent-region)))
+
+(defun my-insert-console-log ()
+  (interactive)
+  (insert "console.log("))
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
 
 (global-set-key (kbd "C-'") 'iswitchb-buffer)
 
-(global-set-key (kbd "<f5>") 'eval-last-sexp)
+(global-set-key (kbd "<f3>") 'isearch-forward)
+(define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
+(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f6>") 'eval-print-last-sexp)
+(global-set-key (kbd "<f7>") 'make-directory)
+(global-set-key (kbd "<f8>") 'kill-this-buffer)
 (global-set-key (kbd "<f9>") 'find-file)
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
+(global-set-key (kbd "<f12>") 'split-window-below)
 
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
+
+(global-set-key (kbd "C-c j") 'javascript-mode)
+(global-set-key (kbd "C-c h") 'html-mode)
+
+(global-set-key (kbd "C-c C-e") 'electric-indent-mode)
+
+(global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
+(global-set-key (kbd "C-c l") 'my-insert-console-log)
 
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
@@ -61,11 +86,9 @@
 (call-interactively 'disable-bold)
 
 (electric-indent-mode t)
-(add-hook 'python-mode-hook
-          (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
 
 ;; custom functions
 ;; general
@@ -112,6 +135,12 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
+(setq inferior-lisp-program "C:/ccl/wx86cl.exe")
+(defun my-lisp-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'lisp-eval-region)
+  (end-of-buffer))
 
 ;; Scheme
 (setq scheme-program-name "csi.exe -:c")  ;; Chicken
@@ -124,7 +153,7 @@
 
 ;; Python
 (setq python-shell-interpreter "C:/Python33/python.exe")
-;;(setq python-shell-interpreter "C:/Python33/python.exe")
+;;(setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
 
@@ -155,6 +184,13 @@
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
+
+(defun my-python-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'python-shell-send-region)
+  (python-shell-send-string "\n")
+  (end-of-buffer))
 
 ;; javascript
 (require 'js-comint)
@@ -198,7 +234,7 @@
 (global-auto-complete-mode t)
 (setq ac-ignore-case nil)
 (define-key ac-completing-map "\r" nil)  ; remove completion with RET
-(setq ac-auto-start 2)
+(setq ac-auto-start 1)
 ;; prevent pop-up on arrow keys
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
@@ -250,12 +286,16 @@
 
 ;; custom functions
 (global-set-key "\M-n" 'add-letters)
-(global-set-key "\M-p" 'add-nums-in-brackets)
+;; (global-set-key "\M-p" 'add-nums-in-brackets)
 
 (add-hook 'lisp-mode-hook
           (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [return] 'newline-and-indent)))
+            ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
+            ;; (local-set-key [return] 'newline-and-indent)))
+            (set (make-local-variable lisp-indent-function)
+                 'common-lisp-indent-function)
+            (local-set-key [S-return] 'lisp-eval-last-sexp)
+            (local-set-key [C-return] 'my-lisp-send-buffer)))
 
 (add-hook 'clojure-mode-hook
           (lambda ()
@@ -271,6 +311,7 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (local-set-key [S-return] 'my-python-send-statement)
+            (local-set-key [M-return] 'my-python-send-buffer)
             (local-set-key [C-return] 'my-python-send-block)))
 
 (add-hook 'js-mode-hook
@@ -280,6 +321,7 @@
             (local-set-key [S-return] 'my-js-send-line)
             (local-set-key [C-return] 'my-js-send-block)
             (call-interactively 'node-suppress-undefined)))
+            ;; ))
 
 (add-hook 'sql-mode-hook
           (lambda ()
@@ -310,7 +352,8 @@
 (add-hook 'text-mode-hook
           (lambda ()
             (setq indent-tabs-mode t)
-            (local-set-key [return] 'my-text-tabify)
+            ;; (local-set-key [return] 'my-text-tabify)
             (call-interactively 'auto-complete-mode)))
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
+(put 'upcase-region 'disabled nil)

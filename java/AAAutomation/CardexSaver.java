@@ -1,8 +1,5 @@
 // Look at FIXME
 
-// WHEN REARRANGING BUTTONS IN MARCH, MOVE ALL "VENDAS 2014" TO
-// "VENDAS ANTIGO" AND DISCARD VENDAS 2013 DATA
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.datatransfer.*;
@@ -138,11 +135,11 @@ class CardexPanel extends JPanel implements ActionListener {
         // addGB(new JLabel("Atualizado"), x = 2, y = curRow);
         // curRow += 1;
 
-        addGB(new JButton("2013"), x = 0, y = curRow);
-        addGB(new JButton("2014"), x = 1, y = curRow);
+        addGB(new JButton("2014"), x = 0, y = curRow);
+        addGB(new JButton("Atual"), x = 1, y = curRow);
         // addGB(lastModified, x = 2, y = curRow);
         // addGB(new JButton("2008"), x = 2, y = curRow);
-        addGB(new JButton("Atual"), x = 2, y = curRow);
+        addGB(new JButton("2008"), x = 2, y = curRow);
         curRow += 1;
 
         colSpan(2);
@@ -196,8 +193,8 @@ class CardexPanel extends JPanel implements ActionListener {
         curRow += 1;
 
         colSpan(1);
-        addGB(new JLabel("Vendas 2013"), x = 0, y = curRow);
-        addGB(new JLabel("Vendas 2014"), x = 1, y = curRow);
+        addGB(new JLabel("Vendas 2014"), x = 0, y = curRow);
+        addGB(new JLabel("Vendas 2015"), x = 1, y = curRow);
         addGB(new JLabel("Qtde por caixa"), x = 2, y = curRow);
         curRow += 1;
 
@@ -275,7 +272,7 @@ class CardexPanel extends JPanel implements ActionListener {
 
         try { 
             chegando = new Chegando(config.getProperty("Chegando"));
-            JOptionPane.showMessageDialog(dialogFrame, "ATENCAO: ALTERAR CAMPOS p/ 2014 e 2015, LIMPAR DADOS SALVOS\nCOPIAR DATA PARA NOVA PASTA, TROCANDO 2013/14 PARA 0\nPlanilha Chegando: " + config.getProperty("Chegando") + "\nPegou lista do Sr. Yeh?");
+            JOptionPane.showMessageDialog(dialogFrame, "Planilha Chegando: " + config.getProperty("Chegando") + "\nPegou lista do Sr. Yeh?");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -748,6 +745,13 @@ class CardexPanel extends JPanel implements ActionListener {
             if (codigoList.getSelectedIndex() != -1) {
                 // openCardex2008();
                 openCardexAntigoTwoYears();
+            }
+            break;
+            // case "2008":
+
+        case "2008":
+            if (codigoList.getSelectedIndex() != -1) {
+                openCardex2008();
             }
             break;
 
