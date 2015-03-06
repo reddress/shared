@@ -130,7 +130,8 @@
   (message "total %s" total))
 
 ;; Lisp
-(setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
+;; (setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
+(setq inferior-lisp-program "C:/ccl/wx86cl64.exe")
 (defun hide-eol ()
   (interactive)
   (setq buffer-display-table (make-display-table))
