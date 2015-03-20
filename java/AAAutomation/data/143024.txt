@@ -1,7 +1,6 @@
-26/02/2015;0;0;0;0;480
+20/03/2015;1720;0;20037;9764;480
 CHAVEIRO DE METAL
-Último container - 09/08/13 - CCTC/1331 - 24.000 pçs
-17/03/14 - Ashtar - 2.000 pçs
-26/02/14 - Tatuape - 2.880 pçs
-03/12/13 - Tatuape - 3.360 pçs
-24/09/13 - Cebola - 4.800 pçs
+Último container - 06/10/14 - CCTC/1427 - 24.000 pçs
+12/03/15 - Tatuape - 4.800 pçs
+24/02/15 - Ashtar - 4.700 pçs
+13/10/15 - Cebola - 7.200 pçs

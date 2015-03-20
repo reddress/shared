@@ -1,7 +1,6 @@
-26/02/2015;0;0;0;0;200
+20/03/2015;17081;3;28042;11088;200
 LANTERNA ELETRICA DE PLASTICO
-Último container - 16/08/13 - CCTC/1332 - 20.000 pçs
-21/03/14 - Otica Francisco - 3.480 pçs
-17/01/14 - Otica Francisco - 2.780 pçs
-26/08/13 - Connection - 5.000 pçs
-16/01/13 - Aline Souza - 20.020 pçs
+Último container - 15/08/14 - CCTC/1422 - 9.200 pçs
+Último container - 05/08/14 - CCTC/1420 - 20.800 pçs
+17/03/15 - Otica Francisco - 3.480 pçs
+28/01/15 - Otica Francisco - 4.850 pçs
