@@ -41,3 +41,7 @@
     bill-map
     ;; while there are items in the bill list, increase the map's count
     (consolidate (rest bill-list) (assoc bill-map (first bill-list) (+ 1 (bill-map (first bill-list)))))))
+
+(defn report-bill-count
+  [amount-list]
+  (into (sorted-map) (consolidate (bills-for-group amount-list []) {50 0 20 0 10 0 5 0 2 0 1 0})))

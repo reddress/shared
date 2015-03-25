@@ -30,19 +30,19 @@ class Application(tk.Frame):
         self.multiplier.bind('<Button-1>', self.clearall)
         self.multiplier.bind('<F3>', self.clearall)
 
-        self.label2 = tk.Label(text="20%").grid(row=1, column=0)
+        self.label2 = tk.Label(text="10%").grid(row=1, column=0)
         self.twenty = tk.Entry(width=9)
         self.twenty.grid(row=1, column=1)
 
-        self.label3 = tk.Label(text="21%").grid(row=2, column=0)
+        self.label3 = tk.Label(text="11%").grid(row=2, column=0)
         self.twentyone = tk.Entry(width=9)
         self.twentyone.grid(row=2, column=1)
 
-        self.label4 = tk.Label(text="22%").grid(row=3, column=0)
+        self.label4 = tk.Label(text="12%").grid(row=3, column=0)
         self.twentytwo = tk.Entry(width=9)
         self.twentytwo.grid(row=3, column=1)
 
-        self.label5 = tk.Label(text="23%").grid(row=4, column=0)
+        self.label5 = tk.Label(text="13%").grid(row=4, column=0)
         self.twentythree = tk.Entry(width=9)
         self.twentythree.grid(row=4, column=1)
 
@@ -98,31 +98,31 @@ class Application(tk.Frame):
             m = '1'
 
         self.twenty.delete(0, len(self.twenty.get()))
-        self.twenty.insert(0, '{0:.3f}'.format(roundup(x, '24000')))
+        self.twenty.insert(0, '{0:.3f}'.format(roundup(x, '27000')))
 
         self.twentyone.delete(0, len(self.twentyone.get()))
-        self.twentyone.insert(0, '{0:.4f}'.format(roundup(x, '23700')))
+        self.twentyone.insert(0, '{0:.4f}'.format(roundup(x, '26700')))
 
         self.twentytwo.delete(0, len(self.twentytwo.get()))
-        self.twentytwo.insert(0, '{0:.4f}'.format(roundup(x, '23400')))
+        self.twentytwo.insert(0, '{0:.4f}'.format(roundup(x, '26400')))
 
         self.twentythree.delete(0, len(self.twentythree.get()))
-        self.twentythree.insert(0, '{0:.4f}'.format(roundup(x, '23100')))
+        self.twentythree.insert(0, '{0:.4f}'.format(roundup(x, '26100')))
 
         self.three.delete(0, len(self.three.get()))
         self.three.insert(0, '{0:.4f}'.format(roundup(x, '30000')))
 
         self.twentymult.delete(0, len(self.twentymult.get()))
-        self.twentymult.insert(0, '{0:.3f}'.format(roundupmult(x, m, '24000')))
+        self.twentymult.insert(0, '{0:.3f}'.format(roundupmult(x, m, '27000')))
 
         self.twentyonemult.delete(0, len(self.twentyonemult.get()))
-        self.twentyonemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '23700')))
+        self.twentyonemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '26700')))
 
         self.twentytwomult.delete(0, len(self.twentytwomult.get()))
-        self.twentytwomult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '23400')))
+        self.twentytwomult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '26400')))
 
         self.twentythreemult.delete(0, len(self.twentythreemult.get()))
-        self.twentythreemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '23100')))
+        self.twentythreemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '26100')))
 
         self.threemult.delete(0, len(self.threemult.get()))
         self.threemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '30000')))
@@ -135,7 +135,7 @@ class Application(tk.Frame):
 
 
 root = tk.Tk()
-root.wm_title("Calc TWENTY PERCENT")
+root.wm_title("Calc TEN PERCENT")
 root.geometry("192x112+162+585")
 # root.wm_attributes("-topmost", 1)
 app = Application(master=root)
