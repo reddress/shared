@@ -255,12 +255,20 @@
 (global-set-key "\M-n" 'add-letters)
 ;; (global-set-key "\M-p" 'add-nums-in-brackets)
 
-(add-hook 'lisp-mode-hook
-          (lambda ()
+;;(add-hook 'lisp-mode-hook
+;;           (lambda ()
             ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
             ;; (local-set-key [return] 'newline-and-indent)))
-            (local-set-key [S-return] 'lisp-eval-last-sexp)
-            (local-set-key [C-return] 'my-lisp-send-buffer)))
+  ;;          (local-set-key [S-return] 'lisp-eval-last-sexp)
+    ;;        (local-set-key [C-return] 'my-lisp-send-buffer)))
+
+;; racket
+(add-to-list 'auto-mode-alist '("\\.rkt\\'" . lisp-mode))
+
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (call-interactively 'auto-complete-mode)
+            (isend-associate "*shell*")))
 
 (add-hook 'clojure-mode-hook
           (lambda ()
@@ -352,6 +360,6 @@
 
 (add-hook 'isend-mode-hook
           (lambda ()
-            (local-set-key [S-return] 'my-isend-send-line)
-            (local-set-key [C-return] 'my-isend-send-block)
+            ;; (local-set-key [S-return] 'my-isend-send-line)
+            (local-set-key [S-return] 'my-isend-send-block)
             (local-set-key [M-return] 'my-isend-send-buffer)))
