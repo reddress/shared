@@ -20,8 +20,14 @@
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
+;; MELPA
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+
 ;; globals
-(setq-default frame-title-format "%f")
+;; (setq-default frame-title-format "%f")
 
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d")
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/auto-complete")
@@ -288,10 +294,21 @@
 (global-set-key "\M-n" 'add-letters)
 ;; (global-set-key "\M-p" 'add-nums-in-brackets)
 
+
+;; racket
+(add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
+
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            ;; (call-interactively 'auto-complete-mode)
+            (auto-complete-mode 1)
+            (isend-associate "*shell*")))
+
 (add-hook 'lisp-mode-hook
           (lambda ()
             ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
             ;; (local-set-key [return] 'newline-and-indent)))
+            (call-interactively 'auto-complete-mode)
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
             (local-set-key [S-return] 'lisp-eval-last-sexp)
@@ -299,14 +316,14 @@
 
 (add-hook 'clojure-mode-hook
           (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
+            ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
             (local-set-key [S-return] 'slime-eval-last-expression)
             (local-set-key [return] 'newline-and-indent)))
 
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (local-set-key [C-return] 'my-scheme-send-buffer)
-            (local-set-key [S-return] 'scheme-send-last-sexp)))
+;;(add-hook 'scheme-mode-hook
+;;          (lambda ()
+;;            (local-set-key [C-return] 'my-scheme-send-buffer)
+;;            (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
@@ -329,12 +346,14 @@
 
 (add-hook 'fundamental-mode-hook
           (lambda ()
-            (call-interactively 'auto-complete-mode)))
+            ;;(call-interactively 'auto-complete-mode)))
+            (auto-complete-mode 1)))
+
 
 (add-hook 'isend-mode-hook
           (lambda ()
-            (local-set-key [S-return] 'my-isend-send-line)
-            (local-set-key [C-return] 'my-isend-send-block)
+            ;;(local-set-key [S-return] 'my-isend-send-line)
+            (local-set-key [S-return] 'my-isend-send-block)
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
 ;; change mode for Kivy files
@@ -353,7 +372,8 @@
           (lambda ()
             (setq indent-tabs-mode t)
             ;; (local-set-key [return] 'my-text-tabify)
-            (call-interactively 'auto-complete-mode)))
+            ;; (call-interactively 'auto-complete-mode)))
+            (auto-complete-mode 1)))
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
 (put 'upcase-region 'disabled nil)

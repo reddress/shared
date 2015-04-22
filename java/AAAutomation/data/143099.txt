@@ -1,7 +1,7 @@
-26/02/2015;0;0;0;0;240
+08/04/2015;987;34;43988;41175;240
 SACA ROLHAS C/ ABRIDOR + CANIVETE
-Último container - 09/12/13 - CCTC/1346 - 40.800 pçs
-11/08/14 - C4 Mix - 2.200 pçs
-25/03/14 - Winers - 4.000 pçs
-17/02/14 - Winers - 5.000 pçs
-19/07/13 - Carlos Eduardo - 16.010 pçs
+Último container - 04/02/15 - CCTC/1502 - 24.000 pçs
+01/04/15 - Unity - 13.600 pçs
+23/03/15 - Unity - 10.000 pçs
+05/03/15 - Winers - 5.000 pçs
+27/01/15 - Winers - 1.000 pçs
