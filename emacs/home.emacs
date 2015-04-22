@@ -263,9 +263,9 @@
     ;;        (local-set-key [C-return] 'my-lisp-send-buffer)))
 
 ;; racket
-(add-to-list 'auto-mode-alist '("\\.rkt\\'" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
-(add-hook 'lisp-mode-hook
+(add-hook 'scheme-mode-hook
           (lambda ()
             (call-interactively 'auto-complete-mode)
             (isend-associate "*shell*")))
@@ -276,10 +276,10 @@
             (local-set-key [S-return] 'slime-eval-last-expression)
             (local-set-key [return] 'newline-and-indent)))
 
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (local-set-key [C-return] 'my-scheme-send-buffer)
-            (local-set-key [S-return] 'scheme-send-last-sexp)))
+;;(add-hook 'scheme-mode-hook
+;;          (lambda ()
+;;            (local-set-key [C-return] 'my-scheme-send-buffer)
+;;            (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
