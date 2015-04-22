@@ -267,7 +267,8 @@
 
 (add-hook 'scheme-mode-hook
           (lambda ()
-            (call-interactively 'auto-complete-mode)
+            ;; (call-interactively 'auto-complete-mode)
+            (auto-complete-mode 1)
             (isend-associate "*shell*")))
 
 (add-hook 'clojure-mode-hook
@@ -298,7 +299,8 @@
 
 (add-hook 'sql-mode-hook
           (lambda ()
-            (call-interactively 'auto-complete-mode)))
+            ;; (call-interactively 'auto-complete-mode)))
+            (auto-complete-mode 1)))
 
 ;; Kivy customization
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
@@ -319,7 +321,8 @@
           (lambda ()
             (setq indent-tabs-mode t)
             ;; (local-set-key [return] 'my-text-tabify)
-            (call-interactively 'auto-complete-mode)))
+            ;; (call-interactively 'auto-complete-mode)))
+            (auto-complete-mode 1)))
 
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
