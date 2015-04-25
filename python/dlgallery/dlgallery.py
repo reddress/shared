@@ -8,7 +8,10 @@ def dl(urlroot, start, end, zeros, tail, dest):
     for i in range(end - start + 1):
         num = str(start + i).zfill(zeros)
         print(urlroot + num + tail)
-        opener.retrieve(urlroot + num + tail, dest + "_" + num + tail)
+        try:
+            opener.retrieve(urlroot + num + tail, dest + "_" + num + tail)
+        except ValueError:
+            print("ERROR with " + num)
 
 def dlskip(urlroot, start, end, skip, zeros, tail, dest):
     for i in range(0, end - start + 1, skip):
