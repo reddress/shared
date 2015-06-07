@@ -102,7 +102,7 @@
 (electric-indent-mode t)
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 80) (height . 65)))
 
 ;; custom functions
 ;; general
