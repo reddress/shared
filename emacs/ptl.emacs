@@ -91,7 +91,7 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-(electric-indent-mode t)
+;; (electric-indent-mode t)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
@@ -327,9 +327,9 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key [S-return] 'my-python-send-statement)
-            (local-set-key [M-return] 'my-python-send-buffer)
-            (local-set-key [C-return] 'my-python-send-block)))
+            ;; (local-set-key [S-return] 'my-python-send-statement)
+            (local-set-key [C-return] 'my-python-send-buffer)
+            (local-set-key [S-return] 'my-python-send-block)))
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -368,12 +368,22 @@
     (end-of-buffer))
   (newline))
 
+(defun backspace-4x ()
+  (interactive)
+  (backward-delete-char-untabify 4))
+
 (add-hook 'text-mode-hook
           (lambda ()
-            (setq indent-tabs-mode t)
+            (setq indent-tabs-mode nil)
+            ;; (setq tab-always-indent nil)
+            (setq tab-width 4)
+            (setq tab-stop-list (number-sequence 4 120 4))
+            ;; (setq indent-line-function (quote insert-tab))
             ;; (local-set-key [return] 'my-text-tabify)
+            (local-set-key [backtab] 'backspace-4x)
             ;; (call-interactively 'auto-complete-mode)))
             (auto-complete-mode 1)))
-(define-key text-mode-map (kbd "TAB") 'self-insert-command)
-(define-key text-mode-map [backtab] 'indent-for-tab-command)
+(define-key text-mode-map (kbd "TAB") 'tab-to-tab-stop)
+;;; (define-key text-mode-map [backtab] 'indent-for-tab-command)
+
 (put 'upcase-region 'disabled nil)
