@@ -1,0 +1,24 @@
+languages explored: (1-5: superficial knowledge to deep)
+
+4 HTML
+4 JavaScript  
+
+3 Java
+3 Python
+
+2 Common Lisp
+2 Racket
+2 Scheme
+
+2 PHP
+2 SQL
+
+1 Ada
+1 APL
+1 Clojure
+1 Elixir
+1 Emacs Lisp
+1 Julia
+1 Q
+
+(16 languages)

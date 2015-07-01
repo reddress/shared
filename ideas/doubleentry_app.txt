@@ -1,0 +1,108 @@
+DESCRIPTION
+
+accounting mobile app
+
+NAME
+
+fast, quick, haste,
+tap an entry
+
+DATABASE TABLES
+
+account_group
+ - id PK auto_increment
+ - name String (length?)
+ - sign (+/- 1)
+
+account
+ - id PK auto_increment
+ - name String
+ - type (FK account_group_id)
+
+transaction
+ - id PK auto_increment
+ - amount Integer (assume cents, convert upon display)
+ - debit FK account_id
+ - credit FK account_id
+ - description String default ""
+ - date Integer (number of seconds %s)
+
+NAVIGATION - SCREENS
+
+home screen:
+
+Dropdowns
+
+ Add a Transaction
+
+ [ Select a transaction ]
+ [ New expense ]  (from asset to expense)
+ [ New income ]   (from income to asset)
+ [ New liability ]  (from liability to asset)
+ [ New asset ]  (from equity to asset)
+ [ Transfer assets ]  (from asset to asset)
+ [ Custom transaction ]  (from any to any, different screen with dropdown
+                          for account types)
+
+ Balances by Account Type
+
+ [ Select an account type ]
+ [ Asset ]
+ [ Expense ]
+ [ Income ]
+ [ Liability ]
+ [ Equity ]
+ 
+ Account Details
+
+ [ Select an account type ]
+ [ Asset ]
+ [ Expense ]
+ [ Income ]
+ [ Liability ]
+ [ Equity ]
+
+ [ Select a type above ]
+ [ < updates based on type selected above > ]
+
+NAVIGATION - MENU
+
+Maybe it's unnecessary
+research location of top bar menu in other apps. Left or right?
+
+Accounts
+Transactions
+Settings (maybe for languages)
+
+ADD TRANSACTION
+
+Amount (numeric keypad and dot)
+
+[ From which < ACCOUNT TYPE >? ]
+ [ New (asset) account ]
+ [ asset 1 ]
+ [ asset 2 ]
+[ To which < ACCOUNT TYPE >? ]
+ [ New (expense) account ]
+
+Description (optional)
+
+Date/time defaults to now
+ 
+ADD ACCOUNT
+
+Name (check for duplicates)
+
+[ Select an account type ]
+ [ Asset ]
+ [ Expense ]
+ [ Income ]
+ [ Liability ]
+ [ Equity ]
+ 
+TO DO
+
+internationalization
+
+Time period (start, end, shortcuts for today and all time) for details
+and balances
