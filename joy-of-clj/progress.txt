@@ -1,0 +1,14 @@
+Programming Clojure (Stuart Halloway)
+
+16 mar 2015 - p. 21
+18 mar 2015 - p. 28 maps
+19 mar 2015 - p. 70
+
+Joy of Clojure 2nd ed.
+
+11 mar 2015 - p. 3
+13 mar 2015 - p. 51
+23 mar 2015 - p. 67
+
+8 apr 2015 - restart, p.15
+17 apr 2015 - p. 101

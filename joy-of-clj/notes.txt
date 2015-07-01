@@ -1,0 +1,6 @@
+p. 8 (prn & more) prints to the *out* output stream, in a way that can
+be read by the reader.
+
+to get stack traces:
+1. (require 'clojure.stacktrace)
+2. (clojure.stacktrace/e)

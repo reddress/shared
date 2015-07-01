@@ -1,0 +1,21 @@
+https://common-lisp.net/project/parenscript/tutorial.html
+
+https://www.quicklisp.org/beta/#installation
+
+Save https://beta.quicklisp.org/quicklisp.lisp and load it in Lisp
+
+After restarting Lisp:
+
+(load "C:/users/heitor/quicklisp/setup.lisp")
+
+(ql:quickload :parenscript)
+(parenscript:ps (defun f () (alert "hi")))
+
+Hunchentoot:
+
+before quickloading:
+(push :hunchentoot-no-ssl *features*)
+(ql:quickload :hunchentoot)
+
+if it was previously loaded:
+(ql:uninstall :hunchentoot)

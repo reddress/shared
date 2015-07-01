@@ -1,0 +1,12 @@
+On Lisp _with figures_
+http://www.lurklurk.org/onlisp/onlisp.html
+
+(cd ".") checks if current folder is uncommonlisp, then run
+(load "util.lisp")
+
+1 jun 2015 - p. 28
+2 jun 2015 - p. 48
+5 jun 2015 - p. 106
+8 jun 2015 - p. 118
+12 jun 2015 - p. 133
+18 jun 2015 - p. 178

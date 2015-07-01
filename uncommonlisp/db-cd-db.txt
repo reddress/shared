@@ -1,0 +1,2 @@
+
+((:TITLE "Greatest Hits" :ARTIST "LP" :RATING 7 :RIPPED NIL) (:TITLE "Inedito" :ARTIST "Laura" :RATING 9 :RIPPED T)) 
