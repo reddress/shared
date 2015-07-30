@@ -55,7 +55,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -75,7 +75,7 @@
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
-;(color-theme-emacs-nw)
+                                        ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
 (menu-bar-mode -1)
@@ -91,10 +91,10 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-;; (electric-indent-mode t)
+(electric-indent-mode t)
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
 
 ;; custom functions
 ;; general
@@ -148,6 +148,22 @@
   (call-interactively 'lisp-eval-region)
   (end-of-buffer))
 
+;;; http://emacs.stackexchange.com/questions/777/closing-all-pending-parenthesis
+(defun close-all-parentheses ()
+  (interactive "*")
+  (let ((closing nil))
+    (save-excursion
+      (while (condition-case nil
+                 (progn
+                   (backward-up-list)
+                   (let ((syntax (syntax-after (point))))
+                     (case (car syntax)
+                       ((4) (setq closing (cons (cdr syntax) closing)))
+                       ((7 8) (setq closing (cons (char-after (point)) closing)))))
+                   t)
+               ((scan-error) nil))))
+    (apply #'insert (nreverse closing))))
+
 ;; Scheme
 (setq scheme-program-name "csi.exe -:c")  ;; Chicken
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
@@ -177,7 +193,7 @@
   (interactive)
   (local-set-key [C-return] 'my-python-send-block)
   (set-mark (line-end-position))
-  ; (previous-line)
+                                        ; (previous-line)
   (let ((lines-of-block 0))
     (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
       (previous-line)
@@ -186,7 +202,7 @@
     (beginning-of-line)
     (call-interactively 'python-shell-send-region)
     (python-shell-send-string "\n")
-;;    (python-shell-send-string "; print(end=\"\")")
+    ;;    (python-shell-send-string "; print(end=\"\")")
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
@@ -205,7 +221,7 @@
 (defun my-js-send-block ()
   (interactive)
   (set-mark (line-end-position))
-  ; (previous-line)
+                                        ; (previous-line)
   (let ((lines-of-block 0))
     (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
       (previous-line)
@@ -226,7 +242,7 @@
   (call-interactively 'js-send-region)
   (end-of-line))
 
-  ;; (js-send-last-sexp))
+;; (js-send-last-sexp))
 
 (defun node-suppress-undefined ()
   (interactive)
@@ -248,11 +264,11 @@
 (setq ac-disable-faces nil)
 
 ;; settings for not immediately completing
-;(global-auto-complete-mode t)
-;(setq ac-auto-start 2)
-;(setq ac-ignore-case nil)
-;(setq ac-delay 1)
-;(ac-set-trigger-key "TAB")
+                                        ;(global-auto-complete-mode t)
+                                        ;(setq ac-auto-start 2)
+                                        ;(setq ac-ignore-case nil)
+                                        ;(setq ac-delay 1)
+                                        ;(ac-set-trigger-key "TAB")
 
 ;; isend-mode
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
@@ -269,7 +285,7 @@
 (defun my-isend-send-block ()
   (interactive)
   (set-mark (line-end-position))
-  ; (previous-line)
+                                        ; (previous-line)
   (let ((lines-of-block 0))
     (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
       (previous-line)
@@ -311,6 +327,7 @@
             (call-interactively 'auto-complete-mode)
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
+            (local-set-key (kbd "C-]") 'close-all-parentheses)
             (local-set-key [S-return] 'lisp-eval-last-sexp)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
@@ -338,7 +355,7 @@
             (local-set-key [S-return] 'my-js-send-line)
             (local-set-key [C-return] 'my-js-send-block)
             (call-interactively 'node-suppress-undefined)))
-            ;; ))
+;; ))
 
 (add-hook 'sql-mode-hook
           (lambda ()

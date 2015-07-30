@@ -1,7 +1,6 @@
-26/02/2015;0;0;0;0;240
+22/07/2015;6273;115;3552;3213;240
 BLOCO P/ ANOTAÇAO
-Último container - 27/02/12 - CCTC/1207 - 12.000 pçs
-Sem estoque de 17/01/14 até agora
-27/11/13 - Riviane Maria - 1.000 pçs
-05/03/13 - Elvira Moreira - 820 pçs
-
+Último container - 03/10/14 - CCTC/1426 - 12.000 pçs
+13/07/15 - Equilibrio - 1.150 pçs
+26/06/15 - Riviane Maria - 720 pçs
+13/11/14 - Redd - 2.010 pçs

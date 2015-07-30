@@ -1,7 +1,6 @@
-26/02/2015;0;0;0;0;360
+22/07/2015;1876;1;7387;8145;360
 MINI LUMINARIA P/ LEITURA C/ CLIP
-Último container - 06/08/13 - CCTC/1330 - 10.800 pçs
-24/07/14 - Planeta - 720 pçs
-14/04/14 - Bras-Wu - 360 pçs
-21/03/14 - Bras-Wu - 360 pçs
-
+Último container - 26/11/14 - CCTC/1436 - 10.800 pçs
+15/07/15 - Planeta - 720 pçs
+16/07/15 - NTP - 1.100 pçs
+26/03/15 - Planeta - 720 pçs
