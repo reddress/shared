@@ -52,7 +52,7 @@
 (global-set-key (kbd "C->") 'next-buffer)
 
 (global-set-key (kbd "C-'") 'iswitchb-buffer)
-(global-set-key (kbd "C-]") 'close-all-parentheses)
+(global-set-key (kbd "M-)") 'close-all-parentheses)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
