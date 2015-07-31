@@ -52,10 +52,11 @@
 (global-set-key (kbd "C->") 'next-buffer)
 
 (global-set-key (kbd "C-'") 'iswitchb-buffer)
+(global-set-key (kbd "C-]") 'close-all-parentheses)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-scheme)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -314,11 +315,11 @@
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            ;; (call-interactively 'auto-complete-mode)
-            (auto-complete-mode 1)
-            (isend-associate "*shell*")))
+;; (add-hook 'scheme-mode-hook
+;;          (lambda ()
+;; (call-interactively 'auto-complete-mode)
+;;            (auto-complete-mode 1)))
+;;            (isend-associate "*shell*")))
 
 (add-hook 'lisp-mode-hook
           (lambda ()
@@ -327,7 +328,6 @@
             (call-interactively 'auto-complete-mode)
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
-            (local-set-key (kbd "C-]") 'close-all-parentheses)
             (local-set-key [S-return] 'lisp-eval-last-sexp)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
@@ -337,10 +337,11 @@
             (local-set-key [S-return] 'slime-eval-last-expression)
             (local-set-key [return] 'newline-and-indent)))
 
-;;(add-hook 'scheme-mode-hook
-;;          (lambda ()
-;;            (local-set-key [C-return] 'my-scheme-send-buffer)
-;;            (local-set-key [S-return] 'scheme-send-last-sexp)))
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
