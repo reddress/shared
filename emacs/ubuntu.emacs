@@ -173,8 +173,9 @@
     (apply #'insert (nreverse closing))))
 
 ;; Scheme
-(setq scheme-program-name "csi.exe -:c")  ;; Chicken
+(setq scheme-program-name "csi") ;; Chicken
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
+
 (defun my-scheme-send-buffer ()
   (interactive)
   (mark-whole-buffer)
@@ -316,16 +317,16 @@
 ;; custom functions
 (global-set-key "\M-n" 'add-letters)
 ;; (global-set-key "\M-p" 'add-nums-in-brackets)
-
+(global-set-key (kbd "M-)") 'close-all-parentheses)
 
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
-(add-hook 'scheme-mode-hook
-          (lambda ()
+;;; (add-hook 'scheme-mode-hook
+;;;          (lambda ()
             ;; (call-interactively 'auto-complete-mode)
-            (auto-complete-mode 1)
-            (isend-associate "*shell*")))
+;;;            (auto-complete-mode 1)
+;;;            (isend-associate "*shell*")))
 
 (add-hook 'lisp-mode-hook
           (lambda ()
@@ -334,7 +335,7 @@
             (call-interactively 'auto-complete-mode)
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
-            (local-set-key (kbd "C-]") 'close-all-parentheses)
+            ;; (local-set-key (kbd "C-]") 'close-all-parentheses)
             (local-set-key [S-return] 'lisp-eval-last-sexp)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
@@ -344,10 +345,10 @@
             (local-set-key [S-return] 'slime-eval-last-expression)
             (local-set-key [return] 'newline-and-indent)))
 
-;;(add-hook 'scheme-mode-hook
-;;          (lambda ()
-;;            (local-set-key [C-return] 'my-scheme-send-buffer)
-;;            (local-set-key [S-return] 'scheme-send-last-sexp)))
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
