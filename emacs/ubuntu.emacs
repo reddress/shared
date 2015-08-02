@@ -157,20 +157,9 @@
   (end-of-buffer))
 
 ;;; http://emacs.stackexchange.com/questions/777/closing-all-pending-parenthesis
-(defun close-all-parentheses ()
-  (interactive "*")
-  (let ((closing nil))
-    (save-excursion
-      (while (condition-case nil
-                 (progn
-                   (backward-up-list)
-                   (let ((syntax (syntax-after (point))))
-                     (case (car syntax)
-                           ((4) (setq closing (cons (cdr syntax) closing)))
-                           ((7 8) (setq closing (cons (char-after (point)) closing)))))
-                   t)
-               ((scan-error) nil))))
-    (apply #'insert (nreverse closing))))
+;;; (defun close-all-parentheses ()
+;;; BROKEN IN UBUNTU EMACS 24.5
+
 
 ;; Scheme
 (setq scheme-program-name "csi") ;; Chicken
@@ -311,13 +300,13 @@
   (call-interactively 'isend-send)
   (end-of-buffer))
 
-;; set keys
+;;; set keys
 (global-set-key (kbd "RET") 'newline-and-indent)
 
-;; custom functions
+;;; custom functions
 (global-set-key "\M-n" 'add-letters)
-;; (global-set-key "\M-p" 'add-nums-in-brackets)
-(global-set-key (kbd "M-)") 'close-all-parentheses)
+;;; (global-set-key "\M-p" 'add-nums-in-brackets)
+;;; (global-set-key (kbd "M-)") 'close-all-parentheses)
 
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
