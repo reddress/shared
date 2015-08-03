@@ -311,7 +311,6 @@
 (global-set-key "\M-n" 'add-letters)
 ;; (global-set-key "\M-p" 'add-nums-in-brackets)
 
-
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
@@ -328,6 +327,19 @@
             (call-interactively 'auto-complete-mode)
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
+
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\( ?\[)
+            (keyboard-translate ?\) ?\])
+
+            ;;; (local-set-key [C-up] 'backward-up-list)
+            ;;; (local-set-key [C-down] 'down-list)
+            (local-set-key [M-left] 'backward-sexp)
+            (local-set-key [M-right] 'forward-sexp)
+
+            (local-set-key (kbd "M-k") 'kill-sexp)
+
             (local-set-key [S-return] 'lisp-eval-last-sexp)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
@@ -343,6 +355,10 @@
 
             (keyboard-translate ?\[ ?\()
             (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\( ?\[)
+            (keyboard-translate ?\) ?\])
+
+            (local-set-key (kbd "M-k") 'kill-sexp)
             
             (local-set-key [C-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
