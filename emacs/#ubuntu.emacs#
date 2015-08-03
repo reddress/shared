@@ -157,9 +157,28 @@
   (end-of-buffer))
 
 ;;; http://emacs.stackexchange.com/questions/777/closing-all-pending-parenthesis
-;;; (defun close-all-parentheses ()
-;;; BROKEN IN UBUNTU EMACS 24.5
+(defun close-all-parentheses ()
+  (interactive "*")
+  (let ((closing nil))
+    (save-excursion
+      (while (condition-case nil
+                 (progn
+                   (backward-up-list)
+                   (let ((syntax (syntax-after (point))))
+;;;                     (case (car syntax)
+;;;                           ((4) (setq closing (cons (cdr syntax) closing)))
+;;;                           ((7 8) (setq closing (cons (char-after (point)) closing)))))
+   ;;;                  (cond ((= (car syntax) '(4))
+      ;;;                   (setq closing (cons (cdr syntax) closing)))
+         ;;;                  ((= (car syntax) '(7 8))
+            ;;;                (setq closing (cons (char-after (point)) closing)))))
+                     (car syntax)
+                   t)
+               ((scan-error) nil))))
+                   
+    (apply #'insert (nreverse closing))))
 
+(((
 
 ;; Scheme
 (setq scheme-program-name "csi") ;; Chicken
@@ -300,20 +319,20 @@
   (call-interactively 'isend-send)
   (end-of-buffer))
 
-;;; set keys
+;; set keys
 (global-set-key (kbd "RET") 'newline-and-indent)
 
-;;; custom functions
+;; custom functions
 (global-set-key "\M-n" 'add-letters)
-;;; (global-set-key "\M-p" 'add-nums-in-brackets)
-;;; (global-set-key (kbd "M-)") 'close-all-parentheses)
+;; (global-set-key "\M-p" 'add-nums-in-brackets)
+(global-set-key (kbd "M-)") 'close-all-parentheses)
 
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
 ;;; (add-hook 'scheme-mode-hook
 ;;;          (lambda ()
-;; (call-interactively 'auto-complete-mode)
+            ;; (call-interactively 'auto-complete-mode)
 ;;;            (auto-complete-mode 1)
 ;;;            (isend-associate "*shell*")))
 
@@ -325,19 +344,6 @@
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
             ;; (local-set-key (kbd "C-]") 'close-all-parentheses)
-
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\[)
-            (keyboard-translate ?\) ?\])
-
-            ;;; (local-set-key [C-up] 'backward-up-list)
-            ;;; (local-set-key [C-down] 'down-list)
-            (local-set-key [M-left] 'backward-sexp)
-            (local-set-key [M-right] 'forward-sexp)
-
-            (local-set-key (kbd "M-k") 'kill-sexp)
-            
             (local-set-key [S-return] 'lisp-eval-last-sexp)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
