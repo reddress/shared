@@ -56,7 +56,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-scheme)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -310,6 +310,13 @@
 ;; custom functions
 (global-set-key "\M-n" 'add-letters)
 ;; (global-set-key "\M-p" 'add-nums-in-brackets)
+
+(defun restore-parens ()
+  (interactive)
+  (keyboard-translate ?\[ ?\[)
+  (keyboard-translate ?\] ?\])
+  (keyboard-translate ?\( ?\()
+  (keyboard-translate ?\) ?\)))
 
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
