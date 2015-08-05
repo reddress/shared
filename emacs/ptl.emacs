@@ -56,7 +56,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -286,17 +286,18 @@
 (defun my-isend-send-block ()
   (interactive)
   (set-mark (line-end-position))
-                                        ; (previous-line)
-  (let ((lines-of-block 0))
-    (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
-      (previous-line)
+
+  (save-excursion
+    (let ((lines-of-block 0))
+      (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
+        (previous-line)
+        (beginning-of-line)
+        (set 'lines-of-block (+ 1 lines-of-block)))
       (beginning-of-line)
-      (set 'lines-of-block (+ 1 lines-of-block)))
-    (beginning-of-line)
-    (call-interactively 'isend-send)
-    ;;(dotimes (i lines-of-block)
-    ;;  (next-line))
-    (end-of-line)))
+      (call-interactively 'isend-send)
+      ;;(dotimes (i lines-of-block)
+      ;;  (next-line))
+      (end-of-line))))
 
 (defun my-isend-send-buffer ()
   (interactive)
@@ -335,10 +336,10 @@
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
 
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\[)
-            (keyboard-translate ?\) ?\])
+            ;;; (keyboard-translate ?\[ ?\()
+            ;;; (keyboard-translate ?\] ?\))
+            ;;; (keyboard-translate ?\( ?\[)
+            ;;; (keyboard-translate ?\) ?\])
 
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
@@ -352,18 +353,23 @@
 
 (add-hook 'clojure-mode-hook
           (lambda ()
-            ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [S-return] 'slime-eval-last-expression)
-            (local-set-key [return] 'newline-and-indent)))
+            (local-set-key [M-left] 'backward-sexp)
+            (local-set-key [M-right] 'forward-sexp)
+
+            (local-set-key (kbd "M-k") 'kill-sexp)
+
+            (local-set-key [S-return] 'my-isend-send-block)
+            (local-set-key [C-return] 'my-isend-send-buffer)
+            (local-set-key [M-return] 'my-isend-send-buffer)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
             (auto-complete-mode 1)
 
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\[)
-            (keyboard-translate ?\) ?\])
+            ;;; (keyboard-translate ?\[ ?\()
+            ;;; (keyboard-translate ?\] ?\))
+            ;;; (keyboard-translate ?\( ?\[)
+            ;;; (keyboard-translate ?\) ?\])
 
             (local-set-key (kbd "M-k") 'kill-sexp)
             
@@ -399,6 +405,7 @@
           (lambda ()
             ;;(local-set-key [S-return] 'my-isend-send-line)
             (local-set-key [S-return] 'my-isend-send-block)
+            (local-set-key [C-return] 'my-isend-send-buffer)
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
 ;; change mode for Kivy files
