@@ -299,11 +299,25 @@
       ;;  (next-line))
       (end-of-line))))
 
+(defun my-isend-send-paragraph ()
+  (interactive)
+  (save-excursion
+    (mark-paragraph)
+    (call-interactively 'isend-send)))
+
+;;; (defun my-isend-send-sexp ()
+;;;  (interactive)
+;;;   (save-excursion
+;;;    (backward-sexp)
+;;;    (mark-sexp)
+;;;    (call-interactively 'isend-send)))
+
 (defun my-isend-send-buffer ()
   (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'isend-send)
-  (end-of-buffer))
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'isend-send)
+    (end-of-buffer)))
 
 ;; set keys
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -361,7 +375,7 @@
 
             (local-set-key (kbd "M-k") 'kill-sexp)
 
-            (local-set-key [S-return] 'my-isend-send-block)
+            (local-set-key [S-return] 'my-isend-send-paragraph)
             (local-set-key [C-return] 'my-isend-send-buffer)
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
