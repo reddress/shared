@@ -83,6 +83,7 @@
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
+;;; (global-set-key [C-return] 'my-isend-send-buffer)
                                         ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
@@ -295,11 +296,18 @@
       ;;  (next-line))
       (end-of-line))))
 
+(defun my-isend-send-paragraph ()
+  (interactive)
+  (save-excursion
+    (mark-paragraph)
+    (call-interactively 'isend-send)))
+
 (defun my-isend-send-buffer ()
   (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'isend-send)
-  (end-of-buffer))
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'isend-send)
+    (end-of-buffer)))
 
 ;;; set keys
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -344,12 +352,14 @@
 
 (add-hook 'clojure-mode-hook
           (lambda ()
+            (isend-associate "*shell*")
+            
             (local-set-key [M-left] 'backward-sexp)
             (local-set-key [M-right] 'forward-sexp)
 
             (local-set-key (kbd "M-k") 'kill-sexp)
 
-            (local-set-key [S-return] 'my-isend-send-block)
+            (local-set-key [S-return] 'my-isend-send-paragraph)
             (local-set-key [C-return] 'my-isend-send-buffer)
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
@@ -386,7 +396,8 @@
 (add-hook 'isend-mode-hook
           (lambda ()
             ;;(local-set-key [S-return] 'my-isend-send-line)
-            (local-set-key [S-return] 'my-isend-send-block)
+            (local-set-key [S-return] 'my-isend-send-paragraph)
+            (local-set-key [C-return] 'my-isend-send-buffer)
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
 ;; change mode for Kivy files
