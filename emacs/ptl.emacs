@@ -353,6 +353,9 @@
 
 (add-hook 'clojure-mode-hook
           (lambda ()
+            ;; isend-associate with shell
+            (isend-associate "*shell*")
+            
             (local-set-key [M-left] 'backward-sexp)
             (local-set-key [M-right] 'forward-sexp)
 
