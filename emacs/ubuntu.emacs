@@ -273,6 +273,9 @@
 (add-to-list 'load-path "/home/heitor/.emacs.d/isend-mode/")
 (require 'isend)
 
+;;; Note: commented out line :keymap '(([C-return ...
+;;; because it could not be overridden
+
 ;;(defun my-isend-send-line ()
 ;;  (interactive)
 ;;  (set-mark (line-end-position))
