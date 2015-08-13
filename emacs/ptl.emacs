@@ -137,6 +137,11 @@
     (end-of-buffer))
   (message "total %s" total))
 
+(defun rand-str (n)
+  (if (= n 0)
+      ""
+    (concat (rand-str (- n 1)) (int-to-string (abs (random))))))
+
 ;; Lisp
 (defun hide-eol ()
   (interactive)
