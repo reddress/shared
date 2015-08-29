@@ -305,6 +305,13 @@
     (mark-paragraph)
     (call-interactively 'isend-send)))
 
+(defun my-isend-send-sexp ()
+  (interactive)
+  (save-excursion
+    (backward-sexp)
+    (mark-sexp)
+    (call-interactively 'isend-send)))
+
 (defun my-isend-send-buffer ()
   (interactive)
   (save-excursion
@@ -364,7 +371,7 @@
 
             (local-set-key [S-return] 'my-isend-send-paragraph)
             (local-set-key [C-return] 'my-isend-send-buffer)
-            (local-set-key [M-return] 'my-isend-send-buffer)))
+            (local-set-key [M-return] 'my-isend-send-sexp)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
@@ -405,6 +412,9 @@
 
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
+
+;; change mode for PHP files
+(add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
 
 ;; text mode
 (defun my-text-tabify ()
