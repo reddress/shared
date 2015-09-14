@@ -369,6 +369,7 @@
 
 (add-hook 'julia-mode-hook
           (lambda ()
+            (auto-complete-mode 1)
             ;; isend-associate with shell
             (isend-associate "*shell*")))
 
