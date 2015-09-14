@@ -458,7 +458,7 @@
 (add-hook 'isend-mode-hook
           (lambda ()
             ;;(local-set-key [S-return] 'my-isend-send-line)
-            (local-set-key [S-return] 'my-isend-send-block)
+            (local-set-key [S-return] 'my-isend-send-paragraph)
             (local-set-key [C-return] 'my-isend-send-buffer)
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
