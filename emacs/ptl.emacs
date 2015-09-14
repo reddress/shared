@@ -294,7 +294,10 @@
 
 ;; isend-mode
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/lisp")
 (require 'isend)
+
+(require 'julia-mode)
 
 (defun my-isend-send-line ()
   (interactive)
@@ -362,6 +365,12 @@
 ;; (call-interactively 'auto-complete-mode)
 ;;            (auto-complete-mode 1)))
 ;;            (isend-associate "*shell*")))
+
+
+(add-hook 'julia-mode-hook
+          (lambda ()
+            ;; isend-associate with shell
+            (isend-associate "*shell*")))
 
 ;;; web-mode
 (add-hook 'web-mode-hook
