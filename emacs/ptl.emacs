@@ -33,6 +33,21 @@
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/auto-complete")
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
+
+;;;; web-mode.el
+;;;; http://web-mode.org/
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+
+
+
 (defun my-previous-window ()
   (interactive)
   (other-window -1))
@@ -92,6 +107,7 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
+;;; (electric-indent-mode t)  ;; enabled
 (electric-indent-mode t)
 
 ;; window position
@@ -347,6 +363,13 @@
 ;;            (auto-complete-mode 1)))
 ;;            (isend-associate "*shell*")))
 
+;;; web-mode
+(add-hook 'web-mode-hook
+          (lambda ()
+            (setq web-mode-enable-auto-quoting nil)
+            (call-interactively 'auto-complete-mode)))
+
+
 (add-hook 'lisp-mode-hook
           (lambda ()
             ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
@@ -432,6 +455,9 @@
 
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
+
+;; change mode for PHP files
+;;; (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
 
 ;; text mode
 (defun my-text-tabify ()

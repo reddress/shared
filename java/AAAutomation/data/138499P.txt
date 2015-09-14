@@ -1,6 +1,5 @@
-26/02/2015;0;0;0;0;120
+24/08/2015;2752;580;22499;10673;120
 BLOCO P/ ANOTAÇAO (m)
-Último container - 06/10/14 - CCTC/1427 - 12.000 pçs
-16/10/14 - Joaquim Freitas - 2.000 pçs
-19/09/14 - A 7 - 1.555 pçs
-05/05/14 - Imagem - 1.000 pçs
+Último container - 15/06/15 - CCTC/1505 - 11.640 pçs
+18/08/15 - Cristiano Fabricio - 5.011 pçs
+31/07/15 - Thayse Prudencio - 1.050 pçs
