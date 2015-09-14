@@ -42,6 +42,8 @@
 ;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
+(require 'julia-mode)
+
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
@@ -424,6 +426,11 @@
             (local-set-key [S-return] 'my-isend-send-paragraph)
             (local-set-key [C-return] 'my-isend-send-buffer)
             (local-set-key [M-return] 'my-isend-send-buffer)))
+
+(add-hook 'julia-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (isend-associate "*shell*")))
 
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
