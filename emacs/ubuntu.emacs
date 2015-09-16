@@ -75,7 +75,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -112,7 +112,7 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-(electric-indent-mode t)
+;;; (electric-indent-mode t)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 80) (height . 60)))
@@ -200,6 +200,16 @@
   (python-shell-send-string "\n")
   (move-end-of-line nil))
 
+;;; send paragraph is the new hotness, send-block is old and busted
+(defun my-python-send-paragraph ()
+  (interactive)
+  (save-excursion
+    ;;; (mark-paragraph)
+    ;;; (call-interactively 'python-shell-send-region)))
+    (python-shell-send-string "print(\"--SENT--\")")
+    (python-shell-send-string (thing-at-point 'paragraph))
+    (python-shell-send-string "\n")))
+
 (defun my-python-send-block ()
   (interactive)
   (local-set-key [C-return] 'my-python-send-block)
@@ -220,10 +230,12 @@
 
 (defun my-python-send-buffer ()
   (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'python-shell-send-region)
-  (python-shell-send-string "\n")
-  (end-of-buffer))
+  (save-excursion
+    ;;; (end-of-buffer))
+    (python-shell-send-string "print(\"--SENT--\")")
+    (mark-whole-buffer)
+    (call-interactively 'python-shell-send-region)
+    (python-shell-send-string "\n")))
 
 ;; javascript
 ;; (require 'js-comint)
@@ -397,9 +409,9 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key [S-return] 'my-python-send-statement)
-            (local-set-key [M-return] 'my-python-send-buffer)
-            (local-set-key [C-return] 'my-python-send-block)))
+            (local-set-key [S-return] 'my-python-send-paragraph)
+            (local-set-key [C-return] 'my-python-send-buffer)))
+            ;;; (local-set-key [C-return] 'my-python-send-block)))
 
 (add-hook 'js-mode-hook
           (lambda ()
