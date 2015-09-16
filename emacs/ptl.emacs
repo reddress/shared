@@ -108,7 +108,7 @@
 (call-interactively 'disable-bold)
 
 ;;; (electric-indent-mode t)  ;; enabled
-(electric-indent-mode t)
+;;; (electric-indent-mode t)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
@@ -206,14 +206,14 @@
 
 (defun my-python-send-statement ()
   (interactive)
-  (local-set-key [S-return] 'my-python-send-statement)
+  ;;; (local-set-key [S-return] 'my-python-send-statement)
   (python-shell-send-string (thing-at-point 'line))
   (python-shell-send-string "\n")
   (move-end-of-line nil))
 
 (defun my-python-send-block ()
   (interactive)
-  (local-set-key [C-return] 'my-python-send-block)
+  ;;; (local-set-key [C-return] 'my-python-send-block)
   (set-mark (line-end-position))
                                         ; (previous-line)
   (let ((lines-of-block 0))
@@ -229,12 +229,23 @@
       (next-line))
     (end-of-line)))
 
+(defun my-python-send-paragraph ()
+  (interactive)
+  (save-excursion
+    ;;; (mark-paragraph)
+    ;;; (call-interactively 'python-shell-send-region)
+    (python-shell-send-string "print(\"--SENT--\")")
+    (python-shell-send-string (thing-at-point 'paragraph))
+    (python-shell-send-string "\n")))
+
 (defun my-python-send-buffer ()
   (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'python-shell-send-region)
-  (python-shell-send-string "\n")
-  (end-of-buffer))
+  (save-excursion
+    (python-shell-send-string "print(\"--SENT--\")")
+    (mark-whole-buffer)
+    (call-interactively 'python-shell-send-region)
+    (python-shell-send-string "\n")))
+    ;;; (end-of-buffer)))
 
 ;; javascript
 (require 'js-comint)
@@ -435,7 +446,7 @@
           (lambda ()
             ;; (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [C-return] 'my-python-send-buffer)
-            (local-set-key [S-return] 'my-python-send-block)))
+            (local-set-key [S-return] 'my-python-send-paragraph)))
 
 (add-hook 'js-mode-hook
           (lambda ()
