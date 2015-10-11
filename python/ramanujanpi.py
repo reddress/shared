@@ -1,3 +1,5 @@
+# see wikipedia
+
 from math import sqrt
 
 def fact(n):
