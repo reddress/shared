@@ -87,6 +87,7 @@
 (global-set-key (kbd "C-c h") 'html-mode)
 
 (global-set-key (kbd "C-c C-e") 'electric-indent-mode)
+(global-set-key (kbd "C-c e") 'electric-indent-mode)
 
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
@@ -108,7 +109,9 @@
 (call-interactively 'disable-bold)
 
 ;;; (electric-indent-mode t)  ;; enabled
-;;; (electric-indent-mode t)
+;;; (electric-indent-mode 0)  ;; disabled
+
+(electric-indent-mode 0)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
@@ -189,15 +192,17 @@
 ;; Scheme
 (setq scheme-program-name "csi.exe -:c")  ;; Chicken
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
+
 (defun my-scheme-send-buffer ()
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'scheme-send-region)
   (end-of-buffer))
 
-;; Python
-(setq python-shell-interpreter "C:/Python33/python.exe")
-;;(setq python-shell-interpreter "C:/Python27/python.exe")
+;;; Python
+(setq python-shell-interpreter "C:/Users/Heitor/AppData/Local/Programs/Python/Python35-32/python.exe")
+;;;(setq python-shell-interpreter "C:/Python33/python.exe")
+;;;(setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
 
