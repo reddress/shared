@@ -175,7 +175,8 @@
 
 
 ;; Scheme
-(setq scheme-program-name "csi") ;; Chicken
+;; (setq scheme-program-name "csi") ;; Chicken
+(setq scheme-program-name "guile") ;; Guile
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
