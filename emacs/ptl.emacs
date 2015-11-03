@@ -197,6 +197,7 @@
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'scheme-send-region)
+  (deactivate-mark)
   (end-of-buffer))
 
 ;;; Python
