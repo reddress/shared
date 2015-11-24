@@ -71,7 +71,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -167,11 +167,18 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 (setq inferior-lisp-program "C:/ccl/wx86cl.exe")
+
 (defun my-lisp-send-buffer ()
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'lisp-eval-region)
   (end-of-buffer))
+
+(defun my-lisp-send-paragraph ()
+  (interactive)
+  (save-excursion
+    (mark-paragraph)
+    (call-interactively 'lisp-eval-region)))
 
 ;;; http://emacs.stackexchange.com/questions/777/closing-all-pending-parenthesis
 (defun close-all-parentheses ()
@@ -418,6 +425,7 @@
             (local-set-key (kbd "M-k") 'kill-sexp)
 
             (local-set-key [S-return] 'lisp-eval-last-sexp)
+            (local-set-key [M-return] 'my-lisp-send-paragraph)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
 (add-hook 'clojure-mode-hook
