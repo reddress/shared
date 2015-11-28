@@ -373,6 +373,7 @@
 (add-hook 'web-mode-hook
           (lambda ()
             (setq web-mode-enable-auto-quoting nil)
+            (setq web-mode-enable-auto-pairing nil)
             (call-interactively 'auto-complete-mode)))
 
 (add-hook 'lisp-mode-hook
