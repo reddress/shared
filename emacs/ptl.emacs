@@ -71,7 +71,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-scheme)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -197,7 +197,8 @@
     (apply #'insert (nreverse closing))))
 
 ;; Scheme
-(setq scheme-program-name "csi.exe -:c")  ;; Chicken
+;;; (setq scheme-program-name "csi.exe -:c")  ;; Chicken
+(setq scheme-program-name "racket.exe")  ;; Racket
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
@@ -206,6 +207,12 @@
   (call-interactively 'scheme-send-region)
   (deactivate-mark)
   (end-of-buffer))
+
+(defun my-scheme-send-paragraph ()
+  (interactive)
+  (save-excursion
+    (mark-paragraph)
+    (call-interactively 'scheme-send-region)))
 
 ;;; Python
 (setq python-shell-interpreter "C:/Users/Heitor/AppData/Local/Programs/Python/Python35-32/python.exe")
@@ -454,6 +461,7 @@
             (local-set-key (kbd "M-k") 'kill-sexp)
             
             (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [M-return] 'my-scheme-send-paragraph)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
