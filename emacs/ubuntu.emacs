@@ -163,12 +163,14 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
-(setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")
+;;; (setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")  ;;Clozure
+(setq inferior-lisp-program "clisp")
 
 (defun my-lisp-send-buffer ()
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'lisp-eval-region)
+  (deactivate-mark)
   (end-of-buffer))
 
 (defun my-lisp-send-paragraph ()
