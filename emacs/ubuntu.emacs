@@ -295,8 +295,9 @@
 ;; prevent pop-up on arrow keys
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
-(setq ac-delay 0.001)
+(setq ac-delay 0.0001)
 (setq ac-disable-faces nil)
+(setq ac-auto-show-menu 0.0001)
 
 ;; settings for not immediately completing
                                         ;(global-auto-complete-mode t)
