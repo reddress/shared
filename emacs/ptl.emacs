@@ -71,7 +71,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-scheme)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -166,7 +166,17 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
-(setq inferior-lisp-program "C:/ccl/wx86cl.exe")
+;;; (setq inferior-lisp-program "C:/ccl/wx86cl.exe")  ;; Clozure Common Lisp
+(setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
+
+;;;; Allegro Express 10.0
+;;; (push "D:/allegro10/eli" load-path)
+;;; (load "fi-site-init.el")
+
+;;; (setq fi:common-lisp-image-name "D:/allegro10/allegro-express.exe")
+;;; (setq fi:common-lisp-image-file "D:/allegro10/allegro-express.dxl")
+;;; (setq fi:common-lisp-directory "D:/allegro10/")
+
 
 (defun my-lisp-send-buffer ()
   (interactive)
@@ -498,6 +508,9 @@
 
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
+
+;; change mode for Markdown files
+(add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
 
 ;; change mode for PHP files
 ;;; (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
