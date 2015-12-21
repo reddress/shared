@@ -163,12 +163,14 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
-(setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")
+;;; (setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")  ;;Clozure
+(setq inferior-lisp-program "clisp")
 
 (defun my-lisp-send-buffer ()
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'lisp-eval-region)
+  (deactivate-mark)
   (end-of-buffer))
 
 (defun my-lisp-send-paragraph ()
@@ -293,8 +295,9 @@
 ;; prevent pop-up on arrow keys
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
-(setq ac-delay 0.001)
+(setq ac-delay 0.0001)
 (setq ac-disable-faces nil)
+(setq ac-auto-show-menu 0.0001)
 
 ;; settings for not immediately completing
                                         ;(global-auto-complete-mode t)
