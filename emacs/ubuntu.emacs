@@ -42,6 +42,8 @@
 ;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
+(setq default-input-method "portuguese-prefix")
+
 (require 'julia-mode)
 
 (require 'web-mode)
@@ -75,7 +77,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
