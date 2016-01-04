@@ -34,6 +34,8 @@
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
+(setq default-input-method "portuguese-prefix")
+
 ;;;; web-mode.el
 ;;;; http://web-mode.org/
 
