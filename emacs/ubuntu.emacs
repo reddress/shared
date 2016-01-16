@@ -69,6 +69,8 @@
   (interactive)
   (insert "console.log("))
 
+(global-set-key (kbd "M-u") 'undo)
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
@@ -188,7 +190,8 @@
 
 ;; Scheme
 ;; (setq scheme-program-name "csi") ;; Chicken
-(setq scheme-program-name "guile") ;; Guile
+;; (setq scheme-program-name "guile") ;; Guile
+(setq scheme-program-name "mit-scheme") ;; MIT-Scheme
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
