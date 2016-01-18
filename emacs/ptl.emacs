@@ -64,6 +64,8 @@
   (interactive)
   (insert "console.log("))
 
+(global-set-key (kbd "M-u") 'undo)
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
@@ -113,7 +115,7 @@
 ;;; (electric-indent-mode t)  ;; enabled
 ;;; (electric-indent-mode 0)  ;; disabled
 
-(electric-indent-mode 0)
+(electric-indent-mode t)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
