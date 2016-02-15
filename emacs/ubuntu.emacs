@@ -28,6 +28,11 @@
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
+
+;;; Greek font
+(set-fontset-font "fontset-default" '(#x0370 . #x03ff)
+                  "-bitstream-bitstream charter-medium-r-normal--17-120-100-100-p-0-iso10646-1")
+
 ;; MELPA
 (when (>= emacs-major-version 24)
   (require 'package)
