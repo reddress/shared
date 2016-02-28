@@ -104,6 +104,20 @@
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
+;;; languages
+(global-set-key (kbd "C-c 0") (lambda () (interactive) (set-input-method 'british)))
+
+(global-set-key (kbd "C-c o") 'my-input-greek)
+(global-set-key (kbd "C-c p") 'my-input-portuguese)
+
+(defun my-input-greek ()
+  (interactive)
+  (set-input-method 'greek))
+
+(defun my-input-portuguese ()
+  (interactive)
+  (set-input-method 'portuguese-prefix))
+
 ;;; (global-set-key [C-return] 'my-isend-send-buffer)
                                         ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
