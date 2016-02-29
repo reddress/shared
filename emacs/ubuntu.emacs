@@ -28,6 +28,11 @@
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
+
+;;; Greek font
+(set-fontset-font "fontset-default" '(#x0370 . #x03ff)
+                  "-bitstream-bitstream charter-medium-r-normal--17-120-100-100-p-0-iso10646-1")
+
 ;; MELPA
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -42,7 +47,7 @@
 ;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
-(setq default-input-method "portuguese-prefix")
+(setq default-input-method "greek")
 
 (require 'julia-mode)
 
@@ -98,6 +103,20 @@
 
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
+
+;;; languages
+(global-set-key (kbd "C-c 0") (lambda () (interactive) (set-input-method 'british)))
+
+(global-set-key (kbd "C-c o") 'my-input-greek)
+(global-set-key (kbd "C-c p") 'my-input-portuguese)
+
+(defun my-input-greek ()
+  (interactive)
+  (set-input-method 'greek))
+
+(defun my-input-portuguese ()
+  (interactive)
+  (set-input-method 'portuguese-prefix))
 
 ;;; (global-set-key [C-return] 'my-isend-send-buffer)
                                         ;(color-theme-emacs-nw)
