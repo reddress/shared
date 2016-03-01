@@ -12,6 +12,7 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
         self.createWidgets()
+        self.entryx.focus_set()
 
     def createWidgets(self):
         self.label1 = tk.Label(text="orig").grid(row=0, column=0)
