@@ -108,6 +108,7 @@
 (global-set-key (kbd "C-c 0") (lambda () (interactive) (set-input-method 'british)))
 
 (global-set-key (kbd "C-c o") 'my-input-greek)
+(global-set-key (kbd "C-c g") 'my-input-greek)
 (global-set-key (kbd "C-c p") 'my-input-portuguese)
 
 (defun my-input-greek ()
