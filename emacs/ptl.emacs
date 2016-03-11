@@ -115,7 +115,7 @@
 ;;; (electric-indent-mode t)  ;; enabled
 ;;; (electric-indent-mode 0)  ;; disabled
 
-(electric-indent-mode t)
+(electric-indent-mode 0)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 55)))
