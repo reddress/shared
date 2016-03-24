@@ -6,16 +6,14 @@
   </head>
   <body>
     <script src="../jquery-1.11.0.min.js"></script>
+    <script src="../firebase-config.js"></script>
     <script>
-     // CONFIG     
-     var firebaseTopURL = "https://hcp-alexie.firebaseio.com/bralexie/";
-     
      function sendRequest(type, endpoint, data, success) {
        $.ajax({
          type: type,
          contentType: "application/json; charset=UTF-8",
          dataType: "json",
-         url: firebaseTopURL + endpoint + ".json",
+         url: firebaseURL + endpoint + ".json",
          data: JSON.stringify(data),
          success: success,
        });
@@ -40,7 +38,7 @@
      // addTransaction({ "name": "lunch", "value": 1500 });
      // addTransaction({ "account": "wal", "value": 1000 });
 
-     // addTransaction({ "name": "cake", "value": 2200 });
+     addTransaction({ "name": "cake", "value": 2200 });
 
      var currentTransactions = sendRequest("GET", "transactions", "", function(data) { console.log(data); } );
 
