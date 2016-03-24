@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Firebase REST</title>
+  </head>
+  <body>
+    <script src="../jquery-1.11.0.min.js"></script>
+    <script>
+     // CONFIG     
+     var firebaseTopURL = "https://hcp-alexie.firebaseio.com/bralexie/";
+     
+     function sendRequest(type, endpoint, data, success) {
+       $.ajax({
+         type: type,
+         contentType: "application/json; charset=UTF-8",
+         dataType: "json",
+         url: firebaseTopURL + endpoint + ".json",
+         data: JSON.stringify(data),
+         success: success,
+       });
+     }
+
+     /* sample hard coded
+     var data = { "name": "bralexie", "date": "2016-03-24" };        
+
+     $.ajax({
+       type: "PUT",
+       contentType: "application/json; charset=UTF-8",
+       dataType: "json",
+       url: "https://hcp-alexie.firebaseio.com/test-rest/samplename/app.json",
+       data: JSON.stringify(data),
+     });
+     */
+
+     function addTransaction(data) {
+       sendRequest("POST", "transactions", data);
+     }
+     
+     // addTransaction({ "name": "lunch", "value": 1500 });
+     // addTransaction({ "account": "wal", "value": 1000 });
+
+     // addTransaction({ "name": "cake", "value": 2200 });
+
+     var currentTransactions = sendRequest("GET", "transactions", "", function(data) { console.log(data); } );
+
+    </script>
+  </body>
+</html>
