@@ -210,8 +210,8 @@
 
 ;; Scheme
 ;; (setq scheme-program-name "petite") ;; Petite Chez
-;; (setq scheme-program-name "csi") ;; Chicken
-(setq scheme-program-name "guile") ;; Guile
+(setq scheme-program-name "csi") ;; Chicken
+;; (setq scheme-program-name "guile") ;; Guile
 ;; (setq scheme-program-name "mit-scheme") ;; MIT-Scheme
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
