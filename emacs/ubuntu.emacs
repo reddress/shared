@@ -84,7 +84,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-scheme)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -209,9 +209,9 @@
 
 
 ;; Scheme
-;; (setq scheme-program-name "csi") ;; Chicken
+(setq scheme-program-name "csi") ;; Chicken
 ;; (setq scheme-program-name "guile") ;; Guile
-(setq scheme-program-name "mit-scheme") ;; MIT-Scheme
+;; (setq scheme-program-name "mit-scheme") ;; MIT-Scheme
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
@@ -440,9 +440,9 @@
 
             (local-set-key (kbd "M-k") 'kill-sexp)
 
-            (local-set-key [S-return] 'my-isend-send-paragraph)
-            (local-set-key [C-return] 'my-isend-send-buffer)
-            (local-set-key [M-return] 'my-isend-send-sexp)))
+            (local-set-key [S-return] 'my-isend-send-sexp)
+            (local-set-key [M-return] 'my-isend-send-paragraph)
+            (local-set-key [C-return] 'my-isend-send-buffer)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
