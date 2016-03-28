@@ -75,7 +75,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-scheme)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -211,8 +211,8 @@
     (apply #'insert (nreverse closing))))
 
 ;; Scheme
-;;; (setq scheme-program-name "csi.exe -:c")  ;; Chicken
-(setq scheme-program-name "racket.exe")  ;; Racket
+(setq scheme-program-name "csi.exe -:c")  ;; Chicken
+;; (setq scheme-program-name "racket.exe")  ;; Racket
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
