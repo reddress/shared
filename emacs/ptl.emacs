@@ -211,7 +211,8 @@
     (apply #'insert (nreverse closing))))
 
 ;; Scheme
-(setq scheme-program-name "csi.exe -:c")  ;; Chicken
+;; (setq scheme-program-name "csi.exe -:c")  ;; Chicken
+(setq scheme-program-name "C:/cygwin/bin/guile.exe")  ;; Guile
 ;; (setq scheme-program-name "racket.exe")  ;; Racket
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
