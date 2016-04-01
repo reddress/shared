@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Backbone Todo</title>
+  </head>
+  <body>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/backbone-min.js"></script>
+
+    <script>
+     var button1 = $("<button>button 1</button>");
+     var button2 = $("<button>button 2</button>");
+     
+     var View = Backbone.View.extend({
+       events: {
+         click: function(e) {
+           console.log(view.el === e.target);
+         }
+       }
+     });
+
+     var view = new View({ el: button1 });
+     view.setElement(button2);
+
+    </script>
+  </body>
+</html>

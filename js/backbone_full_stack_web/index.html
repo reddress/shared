@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Munich Cinema</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <!--
+    <section id="movies">
+      
+      <article class="movie selected">
+        <h1>The Artist</h1>
+      </article>
+      <article class="movie">
+        <h1>Taxi Driver</h1>
+      </article>
+      <article class="movie">
+        <h1>Dolce Vita</h1>
+      </article>
+      
+    </section>
+    -->
+    <!-- movies -->
+
+    <nav id="controls">
+      <a href="#" class="previous" data-action="previous">Previous</a>
+      |
+      <a href="#" class="next" data-action="next">Next</a>
+    </nav>
+
+    <!-- Frameworks and Libraries -->
+    <script src="js/jquery.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/backbone.localStorage.js"></script>
+
+    <!-- Models -->
+    <script src="app/models/movie.js"></script>
+    <script src="app/collections/movies.js"></script>
+    <script src="app/monitor.js"></script>
+
+    <!-- Views -->
+    <script src="app/views/movie.js"></script>
+    <script src="app/views/moviesList.js"></script>
+    
+    <script src="app/main.js"></script>
+  </body>
+</html>
