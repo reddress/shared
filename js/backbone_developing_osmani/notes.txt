@@ -1,0 +1,38 @@
+* Ch. 2 Model validation
+
+The attributes object passed to validate function is distinct from the current attributes of the model. It is created by shallow copy, so it is possible to change attributes in nested objects.
+
+* Ch. 2 Views
+
+A view's render() method can be bound to a model's change() event, enabling the view to instantly reflect model changes.
+
+* Ch. 2 Views > What is el?
+
+el is the central property of a view. It is a reference to a DOM element, and all views must have one.
+
+Two ways to associate a DOM element with a view:
+
+A new element can be created, then added (using tagName, id, and className. If nothing is given, tagName defaults to div)
+
+A reference can be made to an existing element when creating the view: var todosView = new TodosView({ el: $('#footer') });
+
+options, el, tagName, id and className may be defined as functions.
+
+$el is $(view.el) and view.$(selector) is $(view.el).find(selector)
+
+* Ch. 2 Collections
+
+Using Collection.reset() does not fire any add or remove events. Instead, it fires a reset event.
+
+* Ch. 2 RESTful persistence
+
+While Backbone can retrieve an entire collection from the server, updates are performed individually.
+
+Collections.create() will create a new model, add it to the collection, and send it to the server. Validation is done automatically by save().
+
+* Ch. 2 Events
+
+Every 'on' called requires an 'off' to be called for the garbage collector. If a view is removed, but no 'off' is called or the model remains, it becomes a memory leak and the view becomes a "ghost view."
+
+listenTo() changes that, allowing Views to bind to Model notifications and unbind from all with stopListening().
+

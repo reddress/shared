@@ -1,3 +1,8 @@
 Developing Backbone Apps - Osmani
 
+Also: see notes.txt 
+
 01 apr 2016 Begin to p. 60
+02 apr 2016 Begin HTML version
+02 apr 2016 7pm Exercise 1: Todos
+
