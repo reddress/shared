@@ -112,13 +112,13 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-;;; (electric-indent-mode t)  ;; enabled
+(electric-indent-mode t)  ;; enabled
 ;;; (electric-indent-mode 0)  ;; disabled
 
 (electric-indent-mode 0)
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 68)))
 
 ;; custom functions
 ;; general
