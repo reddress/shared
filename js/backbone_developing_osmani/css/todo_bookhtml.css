@@ -1,3 +1,5 @@
+/* Todo example #1 */
+
 html,
 body {
 	margin: 0;
@@ -132,7 +134,7 @@ label[for='toggle-all'] {
 }
 
 .toggle-all:before {
-	content: 'â¯';
+	content: '❯';
 	font-size: 22px;
 	color: #e6e6e6;
 	padding: 10px 27px 10px 27px;
@@ -231,7 +233,7 @@ label[for='toggle-all'] {
 }
 
 .todo-list li .destroy:after {
-	content: 'Ã—';
+	content: '×';
 }
 
 .todo-list li:hover .destroy {

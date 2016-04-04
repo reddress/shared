@@ -6,3 +6,4 @@ Also: see notes.txt
 02 apr 2016 Begin HTML version
 02 apr 2016 7pm Exercise 1: Todos
 03 apr 2016 Exercise 1 - Application View: todo_example.html
+03 apr 2016 Abandon, copy from todomvc.com,read book as reference
