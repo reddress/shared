@@ -483,6 +483,13 @@
             (local-set-key [M-return] 'my-scheme-send-paragraph)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
 
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+
+            (local-set-key (kbd "M-k") 'kill-sexp)
+            (local-set-key [S-return] 'eval-last-sexp)))
+
 (add-hook 'python-mode-hook
           (lambda ()
             ;; (local-set-key [S-return] 'my-python-send-statement)
