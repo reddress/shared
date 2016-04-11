@@ -210,8 +210,8 @@
 
 ;; Scheme
 ;; (setq scheme-program-name "petite") ;; Petite Chez
-(setq scheme-program-name "csi") ;; Chicken
-;; (setq scheme-program-name "guile") ;; Guile
+;; (setq scheme-program-name "csi") ;; Chicken
+(setq scheme-program-name "guile") ;; Guile
 ;; (setq scheme-program-name "mit-scheme") ;; MIT-Scheme
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
@@ -449,6 +449,14 @@
           (lambda ()
             (local-set-key [C-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
+
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+
+            (local-set-key (kbd "M-k") 'kill-sexp)
+            (local-set-key [C-return] 'eval-buffer)
+            (local-set-key [S-return] 'eval-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
