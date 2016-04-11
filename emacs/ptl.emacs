@@ -488,6 +488,7 @@
             (auto-complete-mode 1)
 
             (local-set-key (kbd "M-k") 'kill-sexp)
+            (local-set-key [C-return] 'eval-buffer)
             (local-set-key [S-return] 'eval-last-sexp)))
 
 (add-hook 'python-mode-hook
