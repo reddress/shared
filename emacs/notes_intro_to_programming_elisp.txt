@@ -1,0 +1,42 @@
+Notes for "An Introduction to Programming in Emacs Lisp"
+by Robert Chassell
+
+
+Sec. 1.9.2 Using setq
+=====================
+
+(setq cats '(lion tiger leopard))
+
+is the same as
+
+(set 'cats '(lion tiger leopard))
+
+setq automatically quotes the first argument.
+
+
+Sec. 3.6 let
+============
+
+Scoping in Emacs Lisp is dynamic, not lexical (lexical scoping looks at enclosing blocks in the source code, while dynamic scoping looks up the calling stack for a definition)
+
+
+Sec. 3.9 Truth and Falsehood
+============================
+
+The only false value is the empty list (), which is the same as nil.
+
+Humans tend to use 'nil' for 'false' and () for the empty list.
+
+t is the symbol used for 'true'.
+
+
+Sec. 4.1 Finding more information
+=================================
+
+C-h f <name of a function>  To get the full documentation of a function
+C-h v <name of a variable>  To get the full documentation of a variable
+
+M-x describe-function  Tells you the location of the function definition
+find-tag  To see a function in its original source file
+
+
