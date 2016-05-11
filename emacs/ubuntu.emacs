@@ -47,7 +47,7 @@
 ;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
-(setq default-input-method "greek")
+(setq default-input-method "portuguese-prefix")
 
 (require 'julia-mode)
 
@@ -495,8 +495,15 @@
             (auto-complete-mode 1)
             (isend-associate "*shell*")))
 
+(add-hook 'inferior-scheme-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
+
+;; change mode for TypeScript files
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . js-mode))
 
 ;; change mode for PHP files
 ;;; (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
