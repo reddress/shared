@@ -34,7 +34,7 @@
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
-(setq default-input-method "greek")
+(setq default-input-method "portuguese-prefix")
 
 ;;;; web-mode.el
 ;;;; http://web-mode.org/
@@ -114,8 +114,6 @@
 
 (electric-indent-mode t)  ;; enabled
 ;;; (electric-indent-mode 0)  ;; disabled
-
-(electric-indent-mode 0)
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 68)))
@@ -483,6 +481,10 @@
             (local-set-key [M-return] 'my-scheme-send-paragraph)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
 
+(add-hook 'inferior-scheme-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (auto-complete-mode 1)
@@ -529,6 +531,9 @@
 ;; change mode for Markdown files
 (add-to-list 'auto-mode-alist '("\\.md\\'" . text-mode))
 
+;; change mode for TypeScript files
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . js-mode))
+
 ;; change mode for PHP files
 ;;; (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
 
@@ -560,3 +565,11 @@
 ;;; (define-key text-mode-map [backtab] 'indent-for-tab-command)
 
 (put 'upcase-region 'disabled nil)
+
+;;;; my functions
+
+(defun my-insert-to-other (s)
+  (other-window 1)
+  (end-of-buffer)
+  (insert s)
+  (other-window 1))
