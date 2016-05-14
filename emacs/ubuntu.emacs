@@ -447,6 +447,15 @@
 
 (add-hook 'scheme-mode-hook
           (lambda ()
+
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+
+            ;; (keyboard-translate ?\( ?\[)
+            ;; (keyboard-translate ?\) ?\])
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
+
             (local-set-key [C-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
 
