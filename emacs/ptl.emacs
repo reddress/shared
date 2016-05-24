@@ -20,6 +20,9 @@
 (custom-set-faces
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
+;; Beep/flash
+(setq ring-bell-function 'ignore)
+
 ;; MELPA
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -64,6 +67,8 @@
   (interactive)
   (insert "console.log("))
 
+(global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
+
 (global-set-key (kbd "M-u") 'undo)
 
 (global-set-key (kbd "C-x p") 'my-previous-window)
@@ -75,7 +80,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-scheme)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -112,11 +117,11 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-(electric-indent-mode t)  ;; enabled
-;;; (electric-indent-mode 0)  ;; disabled
+;;; (electric-indent-mode t)  ;; enabled
+(electric-indent-mode 0)  ;; disabled
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 68)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 66)))
 
 ;; custom functions
 ;; general
@@ -209,9 +214,15 @@
     (apply #'insert (nreverse closing))))
 
 ;; Scheme
-;; (setq scheme-program-name "csi.exe -:c")  ;; Chicken
-(setq scheme-program-name "C:/cygwin/bin/guile.exe")  ;; Guile
-;; (setq scheme-program-name "racket.exe")  ;; Racket
+;; Chicken
+;; (setq scheme-program-name "csi.exe -:c")
+
+;; Guile
+;; (setq scheme-program-name "C:/cygwin/bin/guile.exe")
+
+;; Racket
+(setq scheme-program-name "racket.exe -I \"web-server/insta/insta\"")
+
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
@@ -423,7 +434,7 @@
             (setq web-mode-enable-auto-quoting nil)
             (setq web-mode-enable-auto-pairing nil)
             (setq web-mode-markup-indent-offset 2)
-            (setq web-mode-code-indent-offset 2)
+            (setq web-mode-code-indent-offset 4)
             (call-interactively 'auto-complete-mode)))
 
 
@@ -470,10 +481,10 @@
           (lambda ()
             (auto-complete-mode 1)
 
-            ;;; (keyboard-translate ?\[ ?\()
-            ;;; (keyboard-translate ?\] ?\))
-            ;;; (keyboard-translate ?\( ?\[)
-            ;;; (keyboard-translate ?\) ?\])
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
 
             (local-set-key (kbd "M-k") 'kill-sexp)
             
@@ -483,6 +494,10 @@
 
 (add-hook 'inferior-scheme-mode-hook
           (lambda ()
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
             (auto-complete-mode 1)))
 
 (add-hook 'emacs-lisp-mode-hook
