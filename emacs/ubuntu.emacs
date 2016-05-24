@@ -74,6 +74,8 @@
   (interactive)
   (insert "console.log("))
 
+(global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
+
 (global-set-key (kbd "M-u") 'undo)
 
 (global-set-key (kbd "C-x p") 'my-previous-window)
