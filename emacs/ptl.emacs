@@ -67,7 +67,7 @@
   (interactive)
   (insert "console.log("))
 
-(global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
+;;; (global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
 
 (global-set-key (kbd "M-u") 'undo)
 
@@ -80,7 +80,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -117,8 +117,8 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-;;; (electric-indent-mode t)  ;; enabled
-(electric-indent-mode 0)  ;; disabled
+(electric-indent-mode t)  ;; enabled
+;;; (electric-indent-mode 0)  ;; disabled
 
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 66)))
@@ -434,7 +434,7 @@
             (setq web-mode-enable-auto-quoting nil)
             (setq web-mode-enable-auto-pairing nil)
             (setq web-mode-markup-indent-offset 2)
-            (setq web-mode-code-indent-offset 4)
+            (setq web-mode-code-indent-offset 2)
             (call-interactively 'auto-complete-mode)))
 
 
@@ -446,10 +446,12 @@
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
 
-            ;;; (keyboard-translate ?\[ ?\()
-            ;;; (keyboard-translate ?\] ?\))
-            ;;; (keyboard-translate ?\( ?\[)
-            ;;; (keyboard-translate ?\) ?\])
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\( ?\{)
+            (keyboard-translate ?\) ?\})
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
 
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
@@ -496,6 +498,16 @@
           (lambda ()
             (keyboard-translate ?\[ ?\()
             (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
+            (auto-complete-mode 1)))
+
+(add-hook 'inferior-lisp-mode-hook
+          (lambda ()
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\( ?\{)
+            (keyboard-translate ?\) ?\})
             (keyboard-translate ?\{ ?\()
             (keyboard-translate ?\} ?\))
             (auto-complete-mode 1)))
