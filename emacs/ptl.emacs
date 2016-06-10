@@ -416,6 +416,15 @@
   (keyboard-translate ?\( ?\()
   (keyboard-translate ?\) ?\)))
 
+(defun convert-parens ()
+  (interactive)
+  (keyboard-translate ?\[ ?\()
+  (keyboard-translate ?\] ?\))
+  (keyboard-translate ?\{ ?\()
+  (keyboard-translate ?\} ?\))
+  (keyboard-translate ?\( ?\()
+  (keyboard-translate ?\) ?\)))
+
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
@@ -450,13 +459,8 @@
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
 
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\{)
-            (keyboard-translate ?\) ?\})
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
-
+            (call-interactively 'convert-parens)
+            
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
             (local-set-key [M-left] 'backward-sexp)
@@ -508,12 +512,7 @@
 
 (add-hook 'inferior-lisp-mode-hook
           (lambda ()
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\{)
-            (keyboard-translate ?\) ?\})
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
+            (call-interactively 'convert-parens)
             (auto-complete-mode 1)))
 
 (add-hook 'emacs-lisp-mode-hook
