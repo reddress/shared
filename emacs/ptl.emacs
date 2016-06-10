@@ -121,7 +121,7 @@
 ;;; (electric-indent-mode 0)  ;; disabled
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 66)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 55)))
 
 ;; custom functions
 ;; general
@@ -173,8 +173,10 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
-;;; (setq inferior-lisp-program "C:/ccl/wx86cl.exe")  ;; Clozure Common Lisp
-(setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
+
+;; Clozure Common Lisp
+(setq inferior-lisp-program "C:/ccl/wx86cl.exe")
+;;; (setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
 
 ;;;; Allegro Express 10.0
 ;;; (push "D:/allegro10/eli" load-path)
@@ -409,6 +411,8 @@
   (interactive)
   (keyboard-translate ?\[ ?\[)
   (keyboard-translate ?\] ?\])
+  (keyboard-translate ?\{ ?\{)
+  (keyboard-translate ?\} ?\})
   (keyboard-translate ?\( ?\()
   (keyboard-translate ?\) ?\)))
 
