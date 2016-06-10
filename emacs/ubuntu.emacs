@@ -74,7 +74,7 @@
   (interactive)
   (insert "console.log("))
 
-(global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
+;; (global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
 
 (global-set-key (kbd "M-u") 'undo)
 
@@ -86,7 +86,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-scheme)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -189,8 +189,9 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
-;;; (setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")  ;;Clozure
-(setq inferior-lisp-program "clisp")
+;; Clozure
+(setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")
+;;; (setq inferior-lisp-program "clisp")
 
 (defun my-lisp-send-buffer ()
   (interactive)
@@ -418,10 +419,12 @@
                  'common-lisp-indent-function)
             ;; (local-set-key (kbd "C-]") 'close-all-parentheses)
 
-            ;; (keyboard-translate ?\[ ?\()
-            ;; (keyboard-translate ?\] ?\))
-            ;; (keyboard-translate ?\( ?\[)
-            ;; (keyboard-translate ?\) ?\])
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\( ?\{)
+            (keyboard-translate ?\) ?\})
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
 
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
@@ -508,6 +511,16 @@
 
 (add-hook 'inferior-scheme-mode-hook
           (lambda ()
+            (auto-complete-mode 1)))
+
+(add-hook 'inferior-lisp-mode-hook
+          (lambda ()
+            (keyboard-translate ?\[ ?\()
+            (keyboard-translate ?\] ?\))
+            (keyboard-translate ?\( ?\{)
+            (keyboard-translate ?\) ?\})
+            (keyboard-translate ?\{ ?\()
+            (keyboard-translate ?\} ?\))
             (auto-complete-mode 1)))
 
 ;; change mode for Kivy files
