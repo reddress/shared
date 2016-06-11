@@ -409,6 +409,8 @@
   (interactive)
   (keyboard-translate ?\[ ?\[)
   (keyboard-translate ?\] ?\])
+  (keyboard-translate ?\{ ?\{)
+  (keyboard-translate ?\} ?\})
   (keyboard-translate ?\( ?\()
   (keyboard-translate ?\) ?\)))
 

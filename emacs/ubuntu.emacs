@@ -149,6 +149,15 @@
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
 
+(defun restore-parens ()
+  (interactive)
+  (keyboard-translate ?\[ ?\[)
+  (keyboard-translate ?\] ?\])
+  (keyboard-translate ?\{ ?\{)
+  (keyboard-translate ?\} ?\})
+  (keyboard-translate ?\( ?\()
+  (keyboard-translate ?\) ?\)))
+
 (defun add-letters (letters)
   (interactive "sEnter letters:")
   (move-end-of-line nil)
