@@ -121,7 +121,7 @@
 ;;; (electric-indent-mode 0)  ;; disabled
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 66)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 55)))
 
 ;; custom functions
 ;; general
@@ -173,8 +173,10 @@
   (interactive)
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
-;;; (setq inferior-lisp-program "C:/ccl/wx86cl.exe")  ;; Clozure Common Lisp
-(setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
+
+;; Clozure Common Lisp
+(setq inferior-lisp-program "C:/ccl/wx86cl.exe")
+;;; (setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
 
 ;;;; Allegro Express 10.0
 ;;; (push "D:/allegro10/eli" load-path)
@@ -414,6 +416,15 @@
   (keyboard-translate ?\( ?\()
   (keyboard-translate ?\) ?\)))
 
+(defun convert-parens ()
+  (interactive)
+  (keyboard-translate ?\[ ?\()
+  (keyboard-translate ?\] ?\))
+  (keyboard-translate ?\{ ?\()
+  (keyboard-translate ?\} ?\))
+  (keyboard-translate ?\( ?\()
+  (keyboard-translate ?\) ?\)))
+
 ;; racket
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . scheme-mode))
 
@@ -448,13 +459,8 @@
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
 
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\{)
-            (keyboard-translate ?\) ?\})
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
-
+            (call-interactively 'convert-parens)
+            
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
             (local-set-key [M-left] 'backward-sexp)
@@ -506,12 +512,7 @@
 
 (add-hook 'inferior-lisp-mode-hook
           (lambda ()
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\{)
-            (keyboard-translate ?\) ?\})
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
+            (call-interactively 'convert-parens)
             (auto-complete-mode 1)))
 
 (add-hook 'emacs-lisp-mode-hook
