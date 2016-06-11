@@ -158,6 +158,15 @@
   (keyboard-translate ?\( ?\()
   (keyboard-translate ?\) ?\)))
 
+(defun convert-parens ()
+  (interactive)
+  (keyboard-translate ?\[ ?\()
+  (keyboard-translate ?\] ?\))
+  (keyboard-translate ?\{ ?\()
+  (keyboard-translate ?\} ?\))
+  (keyboard-translate ?\( ?\()
+  (keyboard-translate ?\) ?\)))
+
 (defun add-letters (letters)
   (interactive "sEnter letters:")
   (move-end-of-line nil)
