@@ -178,10 +178,10 @@
 ;; (setq inferior-lisp-program "C:/ccl/wx86cl.exe")
 
 ;;; CLISP
-;; (setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
+(setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
 
 ;;; SBCL
-(setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
+;; (setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
 
 
 ;;;; Allegro Express 10.0
@@ -195,9 +195,10 @@
 
 (defun my-lisp-send-buffer ()
   (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'lisp-eval-region)
-  (end-of-buffer))
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'lisp-eval-region)))
+;;    (end-of-buffer)))
 
 (defun my-lisp-send-paragraph ()
   (interactive)
