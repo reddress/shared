@@ -24,10 +24,17 @@
 (setq ring-bell-function 'ignore)
 
 ;; MELPA
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+;; (when (>= emacs-major-version 24)
+;;   (require 'package)
+;;   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;;   (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;;  (package-initialize))
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
 
 ;; globals
 ;; (setq-default frame-title-format "%f")
@@ -178,19 +185,21 @@
 ;; (setq inferior-lisp-program "C:/ccl/wx86cl.exe")
 
 ;;; CLISP
-(setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe")
+(setq inferior-lisp-program "c:/progra~1/clisp-2.49/clisp.exe -p HC")
 
 ;;; SBCL
 ;; (setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
 
+;;; Allegro Common Lisp
+;; (setq inferior-lisp-program "C:/acl10/allegro-express.exe")
 
 ;;;; Allegro Express 10.0
-;;; (push "D:/allegro10/eli" load-path)
-;;; (load "fi-site-init.el")
+;; (push "D:/allegro10/eli" load-path)
+;; (load "fi-site-init.el")
 
-;;; (setq fi:common-lisp-image-name "D:/allegro10/allegro-express.exe")
-;;; (setq fi:common-lisp-image-file "D:/allegro10/allegro-express.dxl")
-;;; (setq fi:common-lisp-directory "D:/allegro10/")
+;; (setq fi:common-lisp-image-name "D:/allegro10/allegro-express.exe")
+;; (setq fi:common-lisp-image-file "D:/allegro10/allegro-express.dxl")
+;; (setq fi:common-lisp-directory "D:/allegro10/")
 
 
 (defun my-lisp-send-buffer ()
@@ -224,13 +233,13 @@
 
 ;; Scheme
 ;; Chicken
-;; (setq scheme-program-name "csi.exe -:c")
+(setq scheme-program-name "csi.exe -:c")
 
 ;; Guile
 ;; (setq scheme-program-name "C:/cygwin/bin/guile.exe")
 
 ;; Racket
-(setq scheme-program-name "racket.exe -I \"web-server/insta/insta\"")
+;; (setq scheme-program-name "racket.exe -I \"web-server/insta/insta\"")
 
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
