@@ -567,3 +567,7 @@
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
 (put 'upcase-region 'disabled nil)
+
+(defun datetime ()
+  (interactive)
+  (insert (current-time-string)))
