@@ -208,15 +208,24 @@
   (aset buffer-display-table ?\^M []))
 
 ;; Clozure
-(setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")
-;;; (setq inferior-lisp-program "clisp")
+;; (setq inferior-lisp-program "/home/heitor/Downloads/ccl/lx86cl")
+
+;; CLISP
+(setq inferior-lisp-program "clisp -p HC")
+
+;; SBCL
+;; (setq inferior-lisp-program "sbcl")
+
+;; Allegro
+;; (setq inferior-lisp-program "/home/heitor/Downloads/acl100express/alisp")
 
 (defun my-lisp-send-buffer ()
   (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'lisp-eval-region)
-  (deactivate-mark)
-  (end-of-buffer))
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'lisp-eval-region)
+    (deactivate-mark)
+    (end-of-buffer)))
 
 (defun my-lisp-send-paragraph ()
   (interactive)
@@ -437,13 +446,8 @@
                  'common-lisp-indent-function)
             ;; (local-set-key (kbd "C-]") 'close-all-parentheses)
 
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\{)
-            (keyboard-translate ?\) ?\})
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
-
+            (call-interactively 'convert-parens)
+            
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
             (local-set-key [M-left] 'backward-sexp)
@@ -471,13 +475,13 @@
 (add-hook 'scheme-mode-hook
           (lambda ()
 
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
+            ;; (keyboard-translate ?\[ ?\()
+            ;; (keyboard-translate ?\] ?\))
 
             ;; (keyboard-translate ?\( ?\[)
             ;; (keyboard-translate ?\) ?\])
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
+            ;; (keyboard-translate ?\{ ?\()
+            ;; (keyboard-translate ?\} ?\))
 
             (local-set-key [C-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
@@ -533,12 +537,7 @@
 
 (add-hook 'inferior-lisp-mode-hook
           (lambda ()
-            (keyboard-translate ?\[ ?\()
-            (keyboard-translate ?\] ?\))
-            (keyboard-translate ?\( ?\{)
-            (keyboard-translate ?\) ?\})
-            (keyboard-translate ?\{ ?\()
-            (keyboard-translate ?\} ?\))
+            (call-interactively 'convert-parens)
             (auto-complete-mode 1)))
 
 ;; change mode for Kivy files
