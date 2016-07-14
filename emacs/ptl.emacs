@@ -128,7 +128,7 @@
 ;;; (electric-indent-mode 0)  ;; disabled
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 92)))
 
 ;; custom functions
 ;; general
@@ -311,7 +311,7 @@
 
 ;; javascript
 (require 'js-comint)
-(setq inferior-js-program-command "node.exe -i")
+;; (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
   (interactive)
@@ -475,7 +475,7 @@
             (set (make-local-variable lisp-indent-function)
                  'common-lisp-indent-function)
 
-            (call-interactively 'convert-parens)
+            ;; (call-interactively 'convert-parens)
             
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
@@ -528,7 +528,7 @@
 
 (add-hook 'inferior-lisp-mode-hook
           (lambda ()
-            (call-interactively 'convert-parens)
+            ;; (call-interactively 'convert-parens)
             (auto-complete-mode 1)))
 
 (add-hook 'emacs-lisp-mode-hook
@@ -619,3 +619,7 @@
   (end-of-buffer)
   (insert s)
   (other-window 1))
+
+(defun datetime ()
+  (interactive)
+  (insert (current-time-string)))
