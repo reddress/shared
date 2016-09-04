@@ -86,7 +86,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -139,9 +139,10 @@
 (call-interactively 'disable-bold)
 
 ;;; (electric-indent-mode t)
+(electric-indent-mode 0)
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 68) (height . 60)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 77) (height . 63)))
 
 ;; custom functions
 ;; general
@@ -433,8 +434,8 @@
           (lambda ()
             (setq web-mode-enable-auto-quoting nil)
             (setq web-mode-enable-auto-pairing nil)
-            (setq web-mode-markup-indent-offset 2)
-            (setq web-mode-code-indent-offset 2)
+            (setq web-mode-markup-indent-offset 4)
+            (setq web-mode-code-indent-offset 4)
             (call-interactively 'auto-complete-mode)))
 
 (add-hook 'lisp-mode-hook
@@ -571,3 +572,13 @@
 (defun datetime ()
   (interactive)
   (insert (current-time-string)))
+
+
+;;;; New generation of custom functions
+
+(defun cut-line ()
+  (interactive)
+  (beginning-of-line)
+  (kill-line))
+
+(global-set-key (kbd "C-x x") 'cut-line)
