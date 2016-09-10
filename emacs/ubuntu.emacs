@@ -586,3 +586,7 @@
   (kill-line))
 
 (global-set-key (kbd "C-x x") 'cut-line)
+
+;;;; Python
+;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
+(setenv "PYTHONPATH" "/home/heitor/reading-list/foundations-of-cs")
