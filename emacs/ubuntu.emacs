@@ -86,7 +86,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -539,6 +539,10 @@
 (add-hook 'inferior-lisp-mode-hook
           (lambda ()
             (call-interactively 'convert-parens)
+            (auto-complete-mode 1)))
+
+(add-hook 'inferior-python-mode-hook
+          (lambda ()
             (auto-complete-mode 1)))
 
 ;; change mode for Kivy files
