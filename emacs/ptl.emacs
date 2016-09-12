@@ -87,7 +87,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-python)
+(global-set-key (kbd "<f5>") 'run-lisp)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -632,3 +632,7 @@
   (kill-line))
 
 (global-set-key (kbd "C-x x") 'cut-line)
+
+;;;; Python
+;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
+(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/emacs-24.3/bin/reading-list/foundations-of-cs")
