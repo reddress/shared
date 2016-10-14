@@ -47,9 +47,13 @@ class Application(tk.Frame):
         self.twentythree = tk.Entry(width=9)
         self.twentythree.grid(row=4, column=1)
 
-        self.label6 = tk.Label(text="1.0").grid(row=5, column=0)
+        self.label5_2 = tk.Label(text="4%").grid(row=5, column=0)
+        self.twentyfour = tk.Entry(width=9)
+        self.twentyfour.grid(row=5, column=1)
+
+        self.label6 = tk.Label(text="1.0").grid(row=6, column=0)
         self.three = tk.Entry(width=9)
-        self.three.grid(row=5, column=1)
+        self.three.grid(row=6, column=1)
 
         # second column
 
@@ -66,8 +70,11 @@ class Application(tk.Frame):
         self.twentythreemult = tk.Entry(width=9)
         self.twentythreemult.grid(row=4, column=3)
 
+        self.twentyfourmult = tk.Entry(width=9)
+        self.twentyfourmult.grid(row=5, column=3)
+
         self.threemult = tk.Entry(width=9)
-        self.threemult.grid(row=5, column=3)
+        self.threemult.grid(row=6, column=3)
 
 
     def clearall(self, event):
@@ -75,12 +82,14 @@ class Application(tk.Frame):
         self.twentyone.delete(0, len(self.twentyone.get()))
         self.twentytwo.delete(0, len(self.twentytwo.get()))
         self.twentythree.delete(0, len(self.twentythree.get()))
+        self.twentyfour.delete(0, len(self.twentyfour.get()))
         self.three.delete(0, len(self.three.get()))
 
         self.twentymult.delete(0, len(self.twentymult.get()))
         self.twentyonemult.delete(0, len(self.twentyonemult.get()))
         self.twentytwomult.delete(0, len(self.twentytwomult.get()))
         self.twentythreemult.delete(0, len(self.twentythreemult.get()))
+        self.twentyfourmult.delete(0, len(self.twentyfourmult.get()))
         self.threemult.delete(0, len(self.threemult.get()))
 
         self.multiplier.delete(0, len(self.multiplier.get()))
@@ -112,6 +121,9 @@ class Application(tk.Frame):
         self.twentythree.delete(0, len(self.twentythree.get()))
         self.twentythree.insert(0, '{0:.4f}'.format(roundup(x, '29100')))
 
+        self.twentyfour.delete(0, len(self.twentyfour.get()))
+        self.twentyfour.insert(0, '{0:.4f}'.format(roundup(x, '28800')))
+
         self.three.delete(0, len(self.three.get()))
         self.three.insert(0, '{0:.4f}'.format(roundup(x, '10000')))
 
@@ -127,6 +139,9 @@ class Application(tk.Frame):
         self.twentythreemult.delete(0, len(self.twentythreemult.get()))
         self.twentythreemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '29100')))
 
+        self.twentyfourmult.delete(0, len(self.twentyfourmult.get()))
+        self.twentyfourmult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '28800')))
+
         self.threemult.delete(0, len(self.threemult.get()))
         self.threemult.insert(0, '{0:.4f}'.format(roundupmult(x, m, '10000')))
 
@@ -139,7 +154,7 @@ class Application(tk.Frame):
 
 root = tk.Tk()
 root.wm_title("Calc ZERO")
-root.geometry("192x85+245+840")
+root.geometry("192x152+245+773")
 # root.wm_attributes("-topmost", 1)
 app = Application(master=root)
 app.mainloop()
