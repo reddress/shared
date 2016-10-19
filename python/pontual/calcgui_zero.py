@@ -154,7 +154,10 @@ class Application(tk.Frame):
 
 root = tk.Tk()
 root.wm_title("Calc ZERO")
-root.geometry("192x152+245+773")
+
+# show all: 192x152+245+773")
+root.geometry("192x105+245+820")
+
 # root.wm_attributes("-topmost", 1)
 app = Application(master=root)
 app.mainloop()
