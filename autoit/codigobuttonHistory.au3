@@ -5,7 +5,7 @@
 #include <GuiListView.au3>
 
 Opt("GUIOnEventMode", 1)
-$mainwindow = GUICreate("Codigo History", 120, 120, 360, 580)
+$mainwindow = GUICreate("Codigo History", 90, 120, 360, 580)
 WinSetOnTop("Codigo History", "", 1)
 
 GUISetOnEvent($GUI_EVENT_CLOSE, "CLOSEClicked")
