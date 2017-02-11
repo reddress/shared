@@ -447,7 +447,7 @@
                  'common-lisp-indent-function)
             ;; (local-set-key (kbd "C-]") 'close-all-parentheses)
 
-            (call-interactively 'convert-parens)
+            ;; (call-interactively 'convert-parens)
             
             ;;; (local-set-key [C-up] 'backward-up-list)
             ;;; (local-set-key [C-down] 'down-list)
@@ -538,7 +538,7 @@
 
 (add-hook 'inferior-lisp-mode-hook
           (lambda ()
-            (call-interactively 'convert-parens)
+            ;; (call-interactively 'convert-parens)
             (auto-complete-mode 1)))
 
 (add-hook 'inferior-python-mode-hook
@@ -590,3 +590,15 @@
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
 (setenv "PYTHONPATH" "/home/heitor/reading-list/foundations-of-cs")
+
+;;; https://www.emacswiki.org/emacs/IswitchBuffers
+;; (require 'edmacro)
+(defun iswitchb-local-keys ()
+  (mapc (lambda (K) 
+	      (let* ((key (car K)) (fun (cdr K)))
+            (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
+	    '(("<right>" . iswitchb-next-match)
+	      ("<left>"  . iswitchb-prev-match)
+	      ("<up>"    . ignore             )
+	      ("<down>"  . ignore             ))))
+(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
