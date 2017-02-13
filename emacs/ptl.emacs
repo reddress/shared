@@ -37,7 +37,7 @@
 
 
 ;; globals
-;; (setq-default frame-title-format "%f")
+(setq-default frame-title-format "%f")
 
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d")
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/auto-complete")
@@ -124,11 +124,11 @@
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
 (call-interactively 'disable-bold)
 
-;;; (electric-indent-mode t)  ;; enabled
+;; (electric-indent-mode t)  ;; enabled
 (electric-indent-mode 0)  ;; disabled
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 58)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 72) (height . 88)))
 
 ;; custom functions
 ;; general
@@ -636,3 +636,15 @@
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
 (setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/emacs-24.3/bin/reading-list/foundations-of-cs")
+
+;;; https://www.emacswiki.org/emacs/IswitchBuffers
+;; (require 'edmacro)
+(defun iswitchb-local-keys ()
+  (mapc (lambda (K) 
+	      (let* ((key (car K)) (fun (cdr K)))
+            (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
+	    '(("<right>" . iswitchb-next-match)
+	      ("<left>"  . iswitchb-prev-match)
+	      ("<up>"    . ignore             )
+	      ("<down>"  . ignore             ))))
+(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
