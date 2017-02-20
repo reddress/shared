@@ -87,7 +87,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -544,6 +544,10 @@
             ;; (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [C-return] 'my-python-send-buffer)
             (local-set-key [S-return] 'my-python-send-paragraph)))
+
+(add-hook 'inferior-python-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
 
 (add-hook 'js-mode-hook
           (lambda ()
