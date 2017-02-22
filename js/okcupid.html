@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Visited items</title>
+        <title>OKCupid visited names</title>
         <link href="lib/jquery-ui-1.12.1.autocomplete/jquery-ui.min.css" rel="stylesheet">
     </head>
 
@@ -12,7 +12,7 @@
         
         <!-- List of visited items/names, -->
         OKCupid visited log<br><br>
-        Username (press Enter to save) <input id="autocomplete" autofocus><br>
+        Username and comment (press Enter to save) <input id="autocomplete" autofocus><br>
         <textarea id="itemlist" rows="20" cols="52" readonly></textarea>
 
         <br>Raw localStorage data<br>
@@ -39,7 +39,7 @@
              itemsList = items.split("|");
            }
            itemsList.push(item + ";" + d.toLocaleString());
-           itemsList.sort();
+           itemsList.sort(function (a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()); });
            localStorage["visiteditems"] = itemsList.join("|");
            refresh();
          }
