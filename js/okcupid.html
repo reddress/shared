@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Visited items</title>
+        <link href="lib/jquery-ui-1.12.1.autocomplete/jquery-ui.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- TODO List tabs -->
+        <!-- TODO Sort by date -->
+        
+        <!-- List of visited items/names, -->
+        OKCupid visited log<br><br>
+        Username (press Enter to save) <input id="autocomplete" autofocus><br>
+        <textarea id="itemlist" rows="20" cols="52" readonly></textarea>
+
+        <br>Raw localStorage data<br>
+        <textarea id="raw" rows="10" cols="92"></textarea>
+        <br>
+        <button id="import">Import</button>
+        To clear: Delete the raw data and click on Import
+        <!-- auto filter by typing partial name -->
+        
+        <!-- Export/import repopulates list -->
+
+        <script src="lib/jquery-1.12.4.min.js"></script>
+        <script src="lib/jquery-ui-1.12.1.autocomplete/jquery-ui.min.js"></script>
+        <script>
+         var items;
+         var acItems;
+         
+         function saveItem(item) {
+           var d = new Date();
+           var itemsList;
+           if (items === "") {
+             itemsList = [];
+           } else {
+             itemsList = items.split("|");
+           }
+           itemsList.push(item + ";" + d.toLocaleString());
+           itemsList.sort();
+           localStorage["visiteditems"] = itemsList.join("|");
+           refresh();
+         }
+
+         function clear() {
+           localStorage["visiteditems"] = "";
+           refresh();
+         }
+
+         function refresh() {
+           items = localStorage["visiteditems"] || "";
+           acItems = items.split("|").map(function(item) {
+             return item.split(";")[0];
+           });             
+
+           $("#autocomplete").autocomplete({
+             source: acItems
+           });
+
+           $("#itemlist").val(items.split("|").join("\n").replace(/;/g, "\t"));
+           $("#raw").val(localStorage["visiteditems"]);
+         }
+
+         refresh();
+
+         $("#autocomplete").keyup(function(event){
+           if(event.keyCode == 13){
+             saveItem($("#autocomplete").val());
+             $("#autocomplete").val("");
+           }
+         });
+
+         $("#import").click(function(e) {
+           localStorage["visiteditems"] = $("#raw").val();
+           refresh();
+         });
+        </script>
+    </body>
+</html>
