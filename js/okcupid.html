@@ -12,11 +12,18 @@
         
         <!-- List of visited items/names, -->
         OKCupid visited log<br><br>
-        Username and comment (press Enter to save) <input id="autocomplete" autofocus><br>
-        <textarea id="itemlist" rows="20" cols="52" readonly></textarea>
+        Username and comment (press Enter to save) <input id="autocomplete" autofocus>
+        <button id="clearname">Clear</button>
+        
+        <br>
+        <textarea id="itemlist" rows="2" cols="92" readonly></textarea>
 
+        <table border="1" id="itemtable"></table>
+        
         <br>Raw localStorage data<br>
-        <textarea id="raw" rows="10" cols="92"></textarea>
+        
+        <textarea id="raw" rows="6" cols="92"></textarea>
+        
         <br>
         <button id="import">Import</button>
         To clear: Delete the raw data and click on Import
@@ -40,42 +47,66 @@
            }
            itemsList.push(item + ";" + d.toLocaleString());
            itemsList.sort(function (a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()); });
-           localStorage["visiteditems"] = itemsList.join("|");
+           localStorage["visiteditems_okcupid"] = itemsList.join("|");
            refresh();
          }
 
          function clear() {
-           localStorage["visiteditems"] = "";
+           localStorage["visiteditems_okcupid"] = "";
            refresh();
          }
 
          function refresh() {
-           items = localStorage["visiteditems"] || "";
-           acItems = items.split("|").map(function(item) {
-             return item.split(";")[0];
-           });             
+           items = localStorage["visiteditems_okcupid"] || "";
+           acItems = items.split("|");
+
+           // retrieve name only
+           // .map(function(item) { 
+           //    return item.split(";")[0];
+           //  });             
 
            $("#autocomplete").autocomplete({
              source: acItems
            });
 
            $("#itemlist").val(items.split("|").join("\n").replace(/;/g, "\t"));
-           $("#raw").val(localStorage["visiteditems"]);
+           var tablecontents = "";
+
+           items.split("|").forEach(function (item, inx, arr) {
+             var itemcontents = item.split(";");
+             var name = itemcontents[0];
+             var date = itemcontents[1];
+
+             tablecontents += "<tr><td>" + name + "</td><td>" + date + "</td></tr>";
+           });
+
+           $("#itemtable").html(tablecontents);
+           
+           $("#raw").val(localStorage["visiteditems_okcupid"]);
          }
 
          refresh();
 
          $("#autocomplete").keyup(function(event){
            if(event.keyCode == 13){
-             saveItem($("#autocomplete").val());
-             $("#autocomplete").val("");
+             var newname = $("#autocomplete").val();
+             if (newname.trim() !== "") {
+               saveItem($("#autocomplete").val());
+               $("#autocomplete").val("");
+             }
            }
          });
 
          $("#import").click(function(e) {
-           localStorage["visiteditems"] = $("#raw").val();
+           localStorage["visiteditems_okcupid"] = $("#raw").val();
            refresh();
          });
+
+         $("#clearname").click(function(e) {
+           $("#autocomplete").val("");
+           $("#autocomplete").focus();
+         });
+         
         </script>
     </body>
 </html>
