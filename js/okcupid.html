@@ -13,6 +13,7 @@
         <!-- List of visited items/names, -->
         OKCupid visited log<br><br>
         Username and comment (press Enter to save) <input id="autocomplete" autofocus>
+        <button id="submitbutton">Submit</button>
         <button id="clearname">Clear</button>
         
         <br>
@@ -102,6 +103,15 @@
            refresh();
          });
 
+         $("#submitbutton").click(function(e) {
+           var newname = $("#autocomplete").val();
+           if (newname.trim() !== "") {
+             saveItem($("#autocomplete").val());
+             $("#autocomplete").val("");
+             $("#autocomplete").focus();
+           }
+         });
+         
          $("#clearname").click(function(e) {
            $("#autocomplete").val("");
            $("#autocomplete").focus();
