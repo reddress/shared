@@ -19,6 +19,10 @@
         <br>
         <textarea id="itemlist" rows="2" cols="92" readonly></textarea>
 
+        <p>
+            <span id="count"></span>
+        </p>
+        
         <table border="1" id="itemtable"></table>
         
         <br>Raw localStorage data<br>
@@ -84,6 +88,9 @@
            $("#itemtable").html(tablecontents);
            
            $("#raw").val(localStorage["visiteditems_okcupid"]);
+
+           // count rows
+           $("#count").html(acItems.length + " names");
          }
 
          refresh();
