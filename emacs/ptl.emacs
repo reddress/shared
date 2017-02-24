@@ -652,3 +652,7 @@
 	      ("<up>"    . ignore             )
 	      ("<down>"  . ignore             ))))
 (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
+
+;;; Quail Gwoyeu Romatzyh
+(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-24.3/bin/gwoyeu-romatzyh-studies/")
+(require 'gwoyeu-romatzyh-input)
