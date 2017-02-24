@@ -86,7 +86,7 @@
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
-(global-set-key (kbd "<f5>") 'run-lisp)
+(global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
@@ -602,3 +602,7 @@
 	      ("<up>"    . ignore             )
 	      ("<down>"  . ignore             ))))
 (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
+
+;;; Quail Gwoyeu Romatzyh
+(add-to-list 'load-path "/home/heitor/chinese/gwoyeu-romatzyh-studies/")
+(require 'gwoyeu-romatzyh-input)
