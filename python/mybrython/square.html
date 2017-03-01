@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello Brython</title>
+    </head>
+    <body onload="brython(1)">
+
+        <textarea id="result" rows="5" cols="80"></textarea>
+
+        <br>
+        
+        Input: <input id="inpt">
+        <button id="compute">Compute square</button>
+        
+        <script src="lib/brython.js"></script>
+        <script src="lib/brython_stdlib.js"></script>
+        <script type="text/python" src="py/square.py"></script>
+    </body>
+</html>
