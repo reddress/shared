@@ -589,7 +589,9 @@
 
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
-(setenv "PYTHONPATH" "/home/heitor/reading-list/foundations-of-cs")
+(setenv "PYTHONPATH" "/home/heitor/my-python-modules")
+
+(setenv "PYTHONSTARTUP" "/home/heitor/my-python-modules/my-startup.py")
 
 ;;; https://www.emacswiki.org/emacs/IswitchBuffers
 ;; (require 'edmacro)
