@@ -639,7 +639,10 @@
 
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
-(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/emacs-24.3/bin/reading-list/foundations-of-cs")
+(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/emacs-24.3/bin/reading-list/algoritmos-cormen/;C:/Users/Heitor/Desktop/emacs-24.3/bin/shared/python/my-modules/")
+
+(setenv "PYTHONSTARTUP" "C:/Users/Heitor/Desktop/emacs-24.3/bin/shared/python/my-startup.py")
+
 
 ;;; https://www.emacswiki.org/emacs/IswitchBuffers
 ;; (require 'edmacro)
