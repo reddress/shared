@@ -25,7 +25,7 @@ class Application(tk.Frame):
 
         # multiplier
         self.label7 = tk.Label(text="mult").grid(row=0, column=2)
-        self.multiplier = tk.Entry(width=9)
+        self.multiplier = tk.Entry(width=12)
         self.multiplier.grid(row=0, column=3)
         self.multiplier.bind('<Key-Return>', self.update_values)
         self.multiplier.bind('<Button-1>', self.clearall)
@@ -43,7 +43,7 @@ class Application(tk.Frame):
         self.twentytwo = tk.Entry(width=9)
         self.twentytwo.grid(row=3, column=1)
 
-        self.label5 = tk.Label(text="Redd Pepp Alry 8%").grid(row=4, column=0)
+        self.label5 = tk.Label(text="RdPepAlrySGPri 8%").grid(row=4, column=0)
         self.twentythree = tk.Entry(width=9)
         self.twentythree.grid(row=4, column=1)
 
@@ -58,22 +58,22 @@ class Application(tk.Frame):
         # second column
 
         # self.label8 = tk.Label(text="3.0").grid(row=1, column=0)
-        self.twentymult = tk.Entry(width=9)
+        self.twentymult = tk.Entry(width=12)
         self.twentymult.grid(row=1, column=3)
 
-        self.twentyonemult = tk.Entry(width=9)
+        self.twentyonemult = tk.Entry(width=12)
         self.twentyonemult.grid(row=2, column=3)
         
-        self.twentytwomult = tk.Entry(width=9)
+        self.twentytwomult = tk.Entry(width=12)
         self.twentytwomult.grid(row=3, column=3)
 
-        self.twentythreemult = tk.Entry(width=9)
+        self.twentythreemult = tk.Entry(width=12)
         self.twentythreemult.grid(row=4, column=3)
 
-        self.twentyfourmult = tk.Entry(width=9)
+        self.twentyfourmult = tk.Entry(width=12)
         self.twentyfourmult.grid(row=5, column=3)
 
-        self.threemult = tk.Entry(width=9)
+        self.threemult = tk.Entry(width=12)
         self.threemult.grid(row=6, column=3)
 
 
@@ -156,7 +156,7 @@ root = tk.Tk()
 root.wm_title("Calc ZERO")
 
 # show all: 192x152+245+773")
-root.geometry("260x105+75+820")
+root.geometry("276x105+75+820")
 
 # root.wm_attributes("-topmost", 1)
 app = Application(master=root)
