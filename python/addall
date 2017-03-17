@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+
+from os import chdir
+from subprocess import call
+from gitall import GIT_REPOS    
+
+HOME_DIR = '/home/heitor/'
+
+for repo in GIT_REPOS:
+    repo_dir = "{}{}".format(HOME_DIR, repo)
+    print("In repo", repo_dir)
+    chdir(repo_dir)
+    call(["git", "add", "."])
