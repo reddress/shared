@@ -1,0 +1,61 @@
+<!doctype html>
+<html> 
+    <head>
+        <meta charset="utf-8">
+        <title>PRECO VERIF</title>
+    </head>
+    
+    <body>
+        <h1>
+            precos_desc_2017_03_17.json
+        </h1>
+        <table>
+            <tr>
+                <td style="text-align: right;">Query:</td>
+                <td><input id="query" autofocus></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Codigo</td>
+                <td><input id="cod_repeat"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Nome</td>
+                <td><input id="nome" size="40"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Padrão -6%</td>
+                <td><input id="desc6"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">-7%</td>
+                <td><input id="desc7"></td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">RdPepAlrySGPri -8%</td>
+                <td><input id="desc8"></td>
+            </tr>
+        </table>
+        
+        <script src="precos_desc_2017_03_17.json"></script>
+        <script>
+         function search(code) {
+           precos_data = precos[code.toUpperCase().substring(0, 6)];
+           document.getElementById("cod_repeat").value = precos_data["COD"];
+           document.getElementById("nome").value = precos_data["NOME"];
+           document.getElementById("desc6").value = precos_data["-6%"];
+           document.getElementById("desc7").value = precos_data["-7%"];
+           document.getElementById("desc8").value = precos_data["-8%"];
+         }
+         
+         var q = document.getElementById("query");
+         q.addEventListener("keyup", function (e) {
+           e.preventDefault();
+           if (e.keyCode == 13) {
+             search(q.value);
+             q.value = "";
+           }
+         });
+        </script>
+    </body>
+
+</html>
