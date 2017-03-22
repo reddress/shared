@@ -16,9 +16,13 @@ def process():
     reader = csv.DictReader(csv_file, field_names)
 
     print('var precos={', end="", file=json_file)
+
     for row in reader:
-        print('"{}":'.format(row['COD'][:6]), end="", file=json_file)
-        json.dump(row, json_file)
-        print(',', file=json_file)
+        # Exclude codigos with 2 letters (8 chars) because price may
+        # be lower
+        if len(row['COD']) < 8:
+            print('"{}":'.format(row['COD'][:6]), end="", file=json_file)
+            json.dump(row, json_file)
+            print(',', file=json_file)
 
     print('"END":{}};', file=json_file)  # to avoid trailing comma
