@@ -1,0 +1,24 @@
+Folder structure
+
+private/  : config files, secret information
+public/   : accessible through web server
+
+In public/ :
+
+  SPECIAL
+
+currency - prepopulate with common currencies
+
+  CRUD
+
+user
+account_type
+account
+account_group
+transaction
+
+  ASSOC
+
+currency_assoc
+account_group_assoc
+budget

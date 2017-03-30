@@ -1,0 +1,30 @@
+GUIDELINES
+
+- use $dbh->beginTransaction(); and $dbh->commit(); for loops and multiple inserts
+
+CRUD
+                    C R U D
+               user     
+       account_type
+            account
+      account_group
+        transaction
+account_group_assoc
+             budget
+     currency_assoc
+
+ADMIN PAGE
+
+           currency
+ 
+TODO
+
+[  ] CSRF tokens on forms
+
+[  ] Escape user input
+
+[OK] Monthly budget table
+
+[  ] Clicking on "Demo" link creates a new user each time
+
+[  ] Check insertion of accented characters in data and password
