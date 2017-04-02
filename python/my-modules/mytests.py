@@ -1,16 +1,16 @@
-def mytests(*tests):
+def testequal(*tests):
     """
     Test whether a function call equals a given value.
 
     typical usage: define tests inside a list, each
-    individual test is an argument to mytests
-    (mytests expects varargs)
+    individual test is an argument to testequal
+    (testequal expects varargs)
     
     def test():
         argument = 3
         expected = 9
-        mytests([mysquare(argument), expected],
-                [mysquare(argument + argument), 36])
+        testequal([mysquare(argument), expected],
+                  [mysquare(argument + argument), 36])
 
     test()
     """
