@@ -1,36 +1,12 @@
-def testequal(*tests):
-    """
-    Test whether a function call equals a given value.
+def testequal(expression, expected):
+    print("testing", expression, "expecting", expected)
 
-    typical usage: define tests inside a list, each
-    individual test is an argument to testequal
-    (testequal expects varargs)
-    
-    def test():
-        argument = 3
-        expected = 9
-        testequal([mysquare(argument), expected],
-                  [mysquare(argument + argument), 36])
-
-    test()
-    """
-
-    all_pass = True
-    i = 1
-    tests_failed = []
-    for test in tests:
-        if test[0] != test[1]:
-            print("test #" + str(i), "FAIL", end=" ")
-            tests_failed.append(i)
-            all_pass = False
-        else:
-            print("test #" + str(i), "ok  ", end=" ")
-        print("evaluated", test[0], "expected", test[1])
-        i += 1
-    print()
-    if all_pass:
-        print("All tests Passed")
+    # special case: floats, check up to 6 decimal places
+    if isinstance(expression, float):
+        test_passed = abs(expression - expected) < 1e-6
     else:
-        print("Test(s)", ", ".join(map(str, tests_failed)), "did not Pass")
-
-
+        test_passed = expression == expected
+    if test_passed:
+        print("... PASS")
+    else:
+        print("*** FAIL")
