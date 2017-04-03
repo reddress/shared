@@ -44,6 +44,9 @@
 
 (add-to-list 'load-path "/home/heitor/.emacs.d/lisp")
 (add-to-list 'load-path "/home/heitor/.emacs.d/auto-complete")
+(add-to-list 'load-path "/home/heitor/.emacs.d/s")
+(add-to-list 'load-path "/home/heitor/.emacs.d/virtualenvwrapper")
+
 ;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
 
@@ -75,6 +78,10 @@
   (insert "console.log("))
 
 ;; (global-set-key (kbd "<S-backspace>") 'move-beginning-of-line)
+
+;; copy and paste
+;; M-w saves region
+(global-set-key (kbd "M-e") 'yank)
 
 (global-set-key (kbd "M-u") 'undo)
 
@@ -254,7 +261,8 @@
   (end-of-buffer))
 
 ;; Python
-(setq python-shell-interpreter "python3")
+;; (setq python-shell-interpreter "python3")
+(setq python-shell-interpreter "/home/heitor/envs/py3mysql/bin/python")
 ;;(setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
@@ -269,15 +277,31 @@
   (python-shell-send-string "\n")
   (move-end-of-line nil))
 
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
+
 ;;; send paragraph is the new hotness, send-block is old and busted
 (defun my-python-send-paragraph ()
   (interactive)
   (save-excursion
     ;;; (mark-paragraph)
     ;;; (call-interactively 'python-shell-send-region)))
-    (python-shell-send-string "print(\"--SENT--\")")
-    (python-shell-send-string (thing-at-point 'paragraph))
-    (python-shell-send-string "\n")))
+    ;; (python-shell-send-string "print(\"--SENT--\")")
+    (python-shell-send-string (concat "print(\"\"\"\n"
+                                      (trim-string (thing-at-point 'paragraph)) "\"\"\")"))
+    (python-shell-send-string (concat "print(\"\"\"\"\"\")\n" (trim-string (thing-at-point 'paragraph))))))
+
+(defun my-python-send-buffer ()
+  (interactive)
+  (save-excursion
+    ;;; (end-of-buffer))
+    ;; (python-shell-send-string "print(\"--SENT--\")")
+    (python-shell-send-string (concat "print(\"\"\"" (trim-string (buffer-string)) "\"\"\")"))
+    ;; (mark-whole-buffer)
+    ;; (call-interactively 'python-shell-send-region)))
+    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))))
 
 (defun my-python-send-block ()
   (interactive)
@@ -296,15 +320,6 @@
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
-
-(defun my-python-send-buffer ()
-  (interactive)
-  (save-excursion
-    ;;; (end-of-buffer))
-    (python-shell-send-string "print(\"--SENT--\")")
-    (mark-whole-buffer)
-    (call-interactively 'python-shell-send-region)
-    (python-shell-send-string "\n")))
 
 ;; javascript
 ;; (require 'js-comint)
@@ -417,7 +432,7 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 ;;; custom functions
-(global-set-key "\M-n" 'add-letters)
+;;; (global-set-key "\M-n" 'add-letters)
 ;;; (global-set-key "\M-p" 'add-nums-in-brackets)
 ;;; (global-set-key (kbd "M-)") 'close-all-parentheses)
 
@@ -589,7 +604,7 @@
 
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
-(setenv "PYTHONPATH" "/home/heitor/my-python-modules")
+(setenv "PYTHONPATH" "/home/heitor/shared/python/my-modules/")
 
 (setenv "PYTHONSTARTUP" "/home/heitor/shared/python/my-startup.py")
 
@@ -608,3 +623,26 @@
 ;;; Quail Gwoyeu Romatzyh
 (add-to-list 'load-path "/home/heitor/chinese/gwoyeu-romatzyh-studies/")
 (require 'gwoyeu-romatzyh-input)
+
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+
+;; virtualenvwrapper
+(require 'virtualenvwrapper)
+(setq venv-location "/home/heitor/envs/")
+
+;; escape html
+;; http://shallowsky.com/blog/linux/editors/emacs-escape-html.html
+
+(defun escape-html (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (replace-string "&" "&amp;")
+      (goto-char (point-min))
+      (replace-string "<" "&lt;")
+      (goto-char (point-min))
+      (replace-string ">" "&gt;"))))
