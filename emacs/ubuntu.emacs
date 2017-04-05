@@ -289,16 +289,16 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     ;;; (mark-paragraph)
     ;;; (call-interactively 'python-shell-send-region)))
     ;; (python-shell-send-string "print(\"--SENT--\")")
-    (python-shell-send-string (concat "print(\"\"\"\n"
-                                      (trim-string (thing-at-point 'paragraph)) "\"\"\")"))
-    (python-shell-send-string (concat "print(\"\"\"\"\"\")\n" (trim-string (thing-at-point 'paragraph))))))
+    (python-shell-send-string (concat "print('''\n"
+                                      (trim-string (thing-at-point 'paragraph)) "''')"))
+    (python-shell-send-string (concat "print()\n" (trim-string (thing-at-point 'paragraph))))))
 
 (defun my-python-send-buffer ()
   (interactive)
   (save-excursion
     ;;; (end-of-buffer))
     ;; (python-shell-send-string "print(\"--SENT--\")")
-    (python-shell-send-string (concat "print(\"\"\"" (trim-string (buffer-string)) "\"\"\")"))
+    (python-shell-send-string (concat "print('''" (trim-string (buffer-string)) "''')"))
     ;; (mark-whole-buffer)
     ;; (call-interactively 'python-shell-send-region)))
     (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))))
@@ -316,14 +316,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (beginning-of-line)
     (call-interactively 'python-shell-send-region)
     (python-shell-send-string "\n")
-    ;;    (python-shell-send-string "; print(end=\"\")")
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
-
-;; javascript
-;; (require 'js-comint)
-;; (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
   (interactive)
@@ -336,8 +331,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (set 'lines-of-block (+ 1 lines-of-block)))
     (beginning-of-line)
     (call-interactively 'js-send-region)
-    ;; (python-shell-send-string "\n")
-    ;; (python-shell-send-string "; print(end=\"\")")
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))

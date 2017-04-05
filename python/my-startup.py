@@ -5,4 +5,4 @@ from mytests import testequal
 
 # add common strings to include in autocomplete
 
-print("testequal combinations permutations")
+print("testequal testeql combinations permutations")

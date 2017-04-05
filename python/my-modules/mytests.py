@@ -10,3 +10,6 @@ def testequal(expression, expected):
         print("... PASS")
     else:
         print("*** FAIL")
+
+# alias
+testeql = testequal
