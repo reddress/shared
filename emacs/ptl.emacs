@@ -291,23 +291,32 @@
       (next-line))
     (end-of-line)))
 
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
+
+;;; send paragraph is the new hotness, send-block is old and busted
 (defun my-python-send-paragraph ()
   (interactive)
   (save-excursion
     ;;; (mark-paragraph)
-    ;;; (call-interactively 'python-shell-send-region)
-    (python-shell-send-string "print(\"--SENT--\")")
-    (python-shell-send-string (thing-at-point 'paragraph))
-    (python-shell-send-string "\n")))
+    ;;; (call-interactively 'python-shell-send-region)))
+    ;; (python-shell-send-string "print(\"--SENT--\")")
+    (python-shell-send-string (concat "print(\"\"\"\n"
+                                      (trim-string (thing-at-point 'paragraph)) "\"\"\")"))
+    (python-shell-send-string (concat "print(\"\"\"\"\"\")\n" (trim-string (thing-at-point 'paragraph))))))
 
 (defun my-python-send-buffer ()
   (interactive)
   (save-excursion
-    (python-shell-send-string "print(\"--SENT--\")")
-    (mark-whole-buffer)
-    (call-interactively 'python-shell-send-region)
-    (python-shell-send-string "\n")))
-    ;;; (end-of-buffer)))
+    ;;; (end-of-buffer))
+    ;; (python-shell-send-string "print(\"--SENT--\")")
+    (python-shell-send-string (concat "print(\"\"\"" (trim-string (buffer-string)) "\"\"\")"))
+    ;; (mark-whole-buffer)
+    ;; (call-interactively 'python-shell-send-region)))
+    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))))
+
 
 ;; javascript
 (require 'js-comint)
@@ -463,7 +472,7 @@
             (setq web-mode-enable-auto-quoting nil)
             (setq web-mode-enable-auto-pairing nil)
             (setq web-mode-markup-indent-offset 4)
-            (setq web-mode-code-indent-offset 2)
+            (setq web-mode-code-indent-offset 4)
             (call-interactively 'auto-complete-mode)))
 
 
@@ -657,5 +666,5 @@
 (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
 
 ;;; Quail Gwoyeu Romatzyh
-(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-24.3/bin/gwoyeu-romatzyh-studies/")
+(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-24.3/bin/chinese/gwoyeu-romatzyh-studies/")
 (require 'gwoyeu-romatzyh-input)
