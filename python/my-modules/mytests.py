@@ -1,5 +1,5 @@
 def testequal(expression, expected):
-    print("\ntesting", expression, "expecting", expected)
+    print("testing", expression, "expecting", expected)
 
     # special case: floats, check up to 6 decimal places
     if isinstance(expression, float):
