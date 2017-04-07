@@ -7,7 +7,7 @@ def testequal(expression, expected):
     else:
         test_passed = expression == expected
     if test_passed:
-        print("... PASS\n")
+        print("... Pass\n")
     else:
         print("*** FAIL\n")
 
