@@ -6,6 +6,8 @@
    t)
   (package-initialize))
 
+(setq inhibit-startup-screen t)
+
 ;; Custom
 (custom-set-variables
  '(ansi-color-names-vector ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
