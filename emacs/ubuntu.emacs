@@ -513,7 +513,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c C-d") 'my-python-test-buffer)
+            (local-set-key [M-return] 'my-python-test-buffer)
             (local-set-key [S-return] 'my-python-send-paragraph)
             (local-set-key [C-return] 'my-python-send-buffer)))
 
