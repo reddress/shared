@@ -305,6 +305,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     ;; (call-interactively 'python-shell-send-region)))
     (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))))
 
+(defun my-python-test-buffer ()
+  (interactive)
+  (save-excursion
+    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))
+    (python-shell-send-string (concat "print('')\n" "test()"))))
+
 (defun my-python-send-block ()
   (interactive)
   (local-set-key [C-return] 'my-python-send-block)
@@ -507,9 +513,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'python-mode-hook
           (lambda ()
+            (local-set-key (kbd "C-c C-d") 'my-python-test-buffer)
             (local-set-key [S-return] 'my-python-send-paragraph)
             (local-set-key [C-return] 'my-python-send-buffer)))
-            ;;; (local-set-key [C-return] 'my-python-send-block)))
 
 (add-hook 'js-mode-hook
           (lambda ()
