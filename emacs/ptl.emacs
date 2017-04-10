@@ -23,6 +23,8 @@
 ;; Beep/flash
 (setq ring-bell-function 'ignore)
 
+(setq inhibit-startup-screen t)
+
 ;; MELPA
 ;; (when (>= emacs-major-version 24)
 ;;   (require 'package)
@@ -95,6 +97,7 @@
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
 (global-set-key (kbd "<f12>") 'split-window-below)
+(global-set-key (kbd "S-<f12>") 'split-window-right)
 
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
@@ -303,20 +306,25 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     ;;; (mark-paragraph)
     ;;; (call-interactively 'python-shell-send-region)))
     ;; (python-shell-send-string "print(\"--SENT--\")")
-    (python-shell-send-string (concat "print(\"\"\"\n"
-                                      (trim-string (thing-at-point 'paragraph)) "\"\"\")"))
-    (python-shell-send-string (concat "print(\"\"\"\"\"\")\n" (trim-string (thing-at-point 'paragraph))))))
+    (python-shell-send-string (concat "print('''\n"
+                                      (trim-string (thing-at-point 'paragraph)) "''')"))
+    (python-shell-send-string (concat "print('')\n" (trim-string (thing-at-point 'paragraph))))))
 
 (defun my-python-send-buffer ()
   (interactive)
   (save-excursion
     ;;; (end-of-buffer))
     ;; (python-shell-send-string "print(\"--SENT--\")")
-    (python-shell-send-string (concat "print(\"\"\"" (trim-string (buffer-string)) "\"\"\")"))
+    (python-shell-send-string (concat "print('''" (trim-string (buffer-string)) "''')"))
     ;; (mark-whole-buffer)
     ;; (call-interactively 'python-shell-send-region)))
     (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))))
 
+(defun my-python-test-buffer ()
+  (interactive)
+  (save-excursion
+    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))
+    (python-shell-send-string (concat "print('')\n" "test()"))))
 
 ;; javascript
 (require 'js-comint)
@@ -550,7 +558,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'python-mode-hook
           (lambda ()
-            ;; (local-set-key [S-return] 'my-python-send-statement)
+            (local-set-key [M-return] 'my-python-test-buffer)
             (local-set-key [C-return] 'my-python-send-buffer)
             (local-set-key [S-return] 'my-python-send-paragraph)))
 
@@ -668,3 +676,5 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;;; Quail Gwoyeu Romatzyh
 (add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-24.3/bin/chinese/gwoyeu-romatzyh-studies/")
 (require 'gwoyeu-romatzyh-input)
+
+(setq truncate-partial-width-windows nil)
