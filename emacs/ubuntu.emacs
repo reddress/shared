@@ -103,6 +103,7 @@
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
 (global-set-key (kbd "<f12>") 'split-window-below)
+(global-set-key (kbd "S-<f12>") 'split-window-right)
 
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
@@ -151,7 +152,8 @@
 (electric-indent-mode 0)
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 77) (height . 63)))
+;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 77) (height . 63)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 62) (height . 63)))
 
 ;; custom functions
 ;; general
@@ -308,7 +310,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-python-test-buffer ()
   (interactive)
   (save-excursion
-    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))
+    ;; (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))
+    (python-shell-send-string (trim-string (buffer-string)))
     (python-shell-send-string (concat "print('')\n" "test()"))))
 
 (defun my-python-send-block ()
@@ -647,3 +650,5 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (replace-string "<" "&lt;")
       (goto-char (point-min))
       (replace-string ">" "&gt;"))))
+
+(setq truncate-partial-width-windows nil)
