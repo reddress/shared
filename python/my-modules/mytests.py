@@ -9,9 +9,9 @@ def testequal(expression, expected):
     else:
         test_passed = expression == expected
     if test_passed:
-        print("... Pass\n")
+        print("(^o^) PASS\n")
     else:
-        print("*** FAIL\n")
+        print("(>_<) FAIL\n")
 
 # alias
 testeql = testequal
