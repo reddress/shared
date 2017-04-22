@@ -18,9 +18,9 @@ testeql = testequal
 
 # http://stackoverflow.com/questions/32000934/python-print-a-variables-name-and-value
 
-def pr_(expression):
-    frame = sys._getframe(1)
-    print(expression, '=', repr(eval(expression, frame.f_globals, frame.f_locals)))
+# def pr_(expression):
+#     frame = sys._getframe(1)
+#     print(expression, '=', repr(eval(expression, frame.f_globals, frame.f_locals)))
 
 def pr(s):
     """prs('a b c') calls pr_endnone, pr for each of the names"""
