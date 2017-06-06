@@ -24,6 +24,8 @@ testeql = testequal
 
 def pr(s):
     """prs('a b c') calls pr_endnone, pr for each of the names"""
+    if type(s) != str:
+        raise ValueError("Argument to pr() must be a string")
     frame = sys._getframe(1)
     names = s.split()
     for name in names:
