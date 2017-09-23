@@ -42,7 +42,10 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
 
 ;; globals
-;; (setq-default frame-title-format "%f")
+(setq-default frame-title-format
+              '((:eval (if (buffer-file-name)
+                           (abbreviate-file-name (buffer-file-name))
+                         "%b"))))
 
 (add-to-list 'load-path "/home/heitor/.emacs.d/lisp")
 (add-to-list 'load-path "/home/heitor/.emacs.d/auto-complete")
@@ -116,6 +119,8 @@
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
+(global-unset-key (kbd "C-t"))
+
 ;;; languages
 (global-set-key (kbd "C-c 0") (lambda () (interactive) (set-input-method 'british)))
 
@@ -153,7 +158,7 @@
 
 ;; window position
 ;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 77) (height . 63)))
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 62) (height . 63)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 76) (height . 63)))
 
 ;; custom functions
 ;; general
@@ -253,8 +258,8 @@
 ;; Scheme
 ;; (setq scheme-program-name "petite") ;; Petite Chez
 ;; (setq scheme-program-name "csi") ;; Chicken
-(setq scheme-program-name "guile") ;; Guile
-;; (setq scheme-program-name "mit-scheme") ;; MIT-Scheme
+;; (setq scheme-program-name "guile") ;; Guile
+(setq scheme-program-name "mit-scheme") ;; MIT-Scheme
 ;; (setq scheme-program-name "\"C:/Program Files/MIT-GNU Scheme/bin/mit-scheme.exe\" --library \"C:/Program Files/MIT-GNU Scheme/lib\" --emacs")
 
 (defun my-scheme-send-buffer ()
@@ -504,6 +509,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             ;; (keyboard-translate ?\} ?\))
 
             (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [M-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'emacs-lisp-mode-hook
@@ -584,7 +590,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'text-mode-hook
           (lambda ()
-            (setq indent-tabs-mode t)
+            (setq indent-tabs-mode nil)
             ;; (local-set-key [return] 'my-text-tabify)
             ;; (call-interactively 'auto-complete-mode)))
             (auto-complete-mode 1)))
