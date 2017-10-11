@@ -111,6 +111,7 @@
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
+(global-unset-key (kbd "C-t"))
                                         ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
 (delete-selection-mode t)
@@ -323,7 +324,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-python-test-buffer ()
   (interactive)
   (save-excursion
-    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))
+    (python-shell-send-string (trim-string (buffer-string)))
     (python-shell-send-string (concat "print('')\n" "test()"))))
 
 ;; javascript
@@ -647,12 +648,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;;;; New generation of custom functions
 
-(defun cut-line ()
+(defun copy-line ()
   (interactive)
   (beginning-of-line)
-  (kill-line))
+  (kill-line)
+  (yank))
 
-(global-set-key (kbd "C-x x") 'cut-line)
+(global-set-key (kbd "C-x x") 'copy-line)
 
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
