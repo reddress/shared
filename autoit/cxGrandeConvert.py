@@ -1,7 +1,10 @@
 import csv
 
-infile = "d:/pontual/produtos/peso_medida_site_parcial_2017_04_11csv.csv"
-outfile = "C:/Users/Heitor/Desktop/install Autoit/Scripts/cxGrande_20170411.au3"
+# infile format
+# Codigo ; kg ; LxCxA
+
+infile = "d:/pontual/produtos/peso_medida_site_parcial_2017_10_11.csv"
+outfile = "C:/Users/Heitor/Desktop/install Autoit/Scripts/cxGrande_20171011.au3"
 
 with open(infile) as csvfile, open(outfile, 'w') as autoitfile:
     print("""; cx Grande
