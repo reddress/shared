@@ -271,7 +271,7 @@
 
 ;; Python
 ;; (setq python-shell-interpreter "python3")
-(setq python-shell-interpreter "/home/heitor/envs/py3mysql/bin/python")
+(setq python-shell-interpreter "/usr/bin/python3")
 ;;(setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
@@ -522,9 +522,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key [M-return] 'my-python-test-buffer)
+            (local-set-key [C-return] 'my-python-test-buffer)
             (local-set-key [S-return] 'my-python-send-paragraph)
-            (local-set-key [C-return] 'my-python-send-buffer)))
+            (local-set-key [M-return] 'my-python-send-buffer)))
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -610,7 +610,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (beginning-of-line)
   (kill-line))
 
-(global-set-key (kbd "C-x x") 'cut-line)
+(defun copy-line ()
+  (interactive)
+  (beginning-of-line)
+  (kill-line)
+  (yank))
+
+(global-set-key (kbd "C-x x") 'copy-line)
 
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
