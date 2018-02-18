@@ -10,8 +10,12 @@
 
 ;; Custom
 (custom-set-variables
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
- '(js-indent-level 2)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
@@ -20,14 +24,21 @@
  '(global-visual-line-mode nil)
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
- '(iswitchb-mode t)
+ '(js-indent-level 2)
+ '(package-selected-packages (quote (rjsx-mode clojure-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
  '(tool-bar-mode nil)
- '(yas/prompt-functions (quote (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
+ '(yas/prompt-functions
+   (quote
+    (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 
@@ -94,7 +105,7 @@
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
 
-(global-set-key (kbd "C-'") 'iswitchb-buffer)
+(global-set-key (kbd "C-'") 'switch-to-buffer)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
@@ -528,12 +539,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'js-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c n") 'node-suppress-undefined)
             (local-set-key (kbd "C-c c") 'js-send-buffer)
             (local-set-key [S-return] 'my-js-send-line)
-            (local-set-key [C-return] 'my-js-send-block)
-            (call-interactively 'node-suppress-undefined)))
-;; ))
+            (local-set-key [C-return] 'my-js-send-block)))
 
 (add-hook 'sql-mode-hook
           (lambda ()
@@ -573,8 +581,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
 
-;; change mode for TypeScript files
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . js-mode))
+;; change mode for JS files to RJSX
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 
 ;; change mode for PHP files
 ;;; (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
@@ -623,18 +631,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setenv "PYTHONPATH" "/home/heitor/shared/python/my-modules/")
 
 (setenv "PYTHONSTARTUP" "/home/heitor/shared/python/my-startup.py")
-
-;;; https://www.emacswiki.org/emacs/IswitchBuffers
-;; (require 'edmacro)
-(defun iswitchb-local-keys ()
-  (mapc (lambda (K) 
-	      (let* ((key (car K)) (fun (cdr K)))
-            (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
-	    '(("<right>" . iswitchb-next-match)
-	      ("<left>"  . iswitchb-prev-match)
-	      ("<up>"    . ignore             )
-	      ("<down>"  . ignore             ))))
-(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
 
 ;;; Quail Gwoyeu Romatzyh
 (add-to-list 'load-path "/home/heitor/chinese/gwoyeu-romatzyh-studies/")
