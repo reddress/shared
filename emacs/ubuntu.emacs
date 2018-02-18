@@ -547,6 +547,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda ()
             (call-interactively 'auto-complete-mode)))
 
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+            (call-interactively 'electric-indent-mode)
+            (call-interactively 'auto-complete-mode)))
+
 (add-hook 'fundamental-mode-hook
           (lambda ()
             ;;(call-interactively 'auto-complete-mode)))
@@ -660,3 +665,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (replace-string ">" "&gt;"))))
 
 (setq truncate-partial-width-windows nil)
+
+(with-eval-after-load 'rjsx-mode
+  (define-key rjsx-mode-map "<" nil)
+  (define-key rjsx-mode-map ">" nil))
