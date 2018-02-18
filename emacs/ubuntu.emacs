@@ -125,7 +125,7 @@
 (global-set-key (kbd "C-c j") 'javascript-mode)
 (global-set-key (kbd "C-c h") 'html-mode)
 
-(global-set-key (kbd "C-c C-e") 'electric-indent-mode)
+(global-set-key (kbd "C-c C-l") 'electric-indent-mode)
 
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
