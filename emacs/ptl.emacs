@@ -1,7 +1,11 @@
 ;; Custom
 (custom-set-variables
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
- '(js-indent-level 2)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
@@ -11,13 +15,21 @@
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
+ '(js-indent-level 2)
+ '(package-selected-packages (quote (slime cider)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
  '(tool-bar-mode nil)
- '(yas/prompt-functions (quote (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
+ '(yas/prompt-functions
+   (quote
+    (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 ;; Beep/flash
@@ -44,6 +56,10 @@
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d")
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/auto-complete")
 (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/rjsx")
+(add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/wc-mode")
+(load "wc-mode")
+
 (set-language-environment "UTF-8")
 
 (setq default-input-method "latin-1-postfix")
@@ -328,7 +344,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (python-shell-send-string (concat "print('')\n" "test()"))))
 
 ;; javascript
-(require 'js-comint)
+;; (require 'js-comint)
 ;; (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
@@ -357,9 +373,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; (js-send-last-sexp))
 
-(defun node-suppress-undefined ()
-  (interactive)
-  (comint-send-string inferior-js-buffer "module.exports.repl.ignoreUndefined = true;"))
+;; (defun node-suppress-undefined ()
+;;   (interactive)
+;;   (comint-send-string inferior-js-buffer "module.exports.repl.ignoreUndefined = true;"))
 
 ;; auto-complete-mode
 (require 'auto-complete-config)
@@ -559,8 +575,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key [M-return] 'my-python-test-buffer)
-            (local-set-key [C-return] 'my-python-send-buffer)
+            (local-set-key [C-return] 'my-python-test-buffer)
+            (local-set-key [M-return] 'my-python-send-buffer)
             (local-set-key [S-return] 'my-python-send-paragraph)))
 
 (add-hook 'inferior-python-mode-hook
@@ -569,11 +585,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'js-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c n") 'node-suppress-undefined)
+            ;; (local-set-key (kbd "C-c n") 'node-suppress-undefined)
             (local-set-key (kbd "C-c c") 'js-send-buffer)
             (local-set-key [S-return] 'my-js-send-line)
-            (local-set-key [C-return] 'my-js-send-block)
-            (call-interactively 'node-suppress-undefined)))
+            (local-set-key [C-return] 'my-js-send-block)))
+            ;; (call-interactively 'node-suppress-undefined)))
 ;; ))
 
 (add-hook 'sql-mode-hook
@@ -680,3 +696,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (require 'gwoyeu-romatzyh-input)
 
 (setq truncate-partial-width-windows nil)
+
+;; This must be last because it generates an error
+(require 'rjsx-mode)
