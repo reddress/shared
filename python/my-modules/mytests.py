@@ -1,5 +1,9 @@
 import sys
 
+def asst(value, expected, message=""):
+    print("assert", value, "equals", expected, "({})".format(message))
+    assert value == expected, message
+    
 def testequal(expression, expected):
     print("testing", expression, "expecting", expected)
 

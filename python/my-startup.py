@@ -3,7 +3,7 @@ import math
 import bond
 import re
 from myformat import printrow
-from mytests import testeql, pr
+from mytests import testeql, pr, asst
 
 # add common strings to include in autocomplete
 
