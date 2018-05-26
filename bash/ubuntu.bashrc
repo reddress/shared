@@ -54,7 +54,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
+    # Yellow?
+    #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;96m\]\u@\h\[\033[00m\]:\[\033[01;96m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -107,7 +109,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 ### Added by the Heroku Toolbelt
-export PATH="/home/heitor/build/bin:/home/heitor/build/node-v8.9.2/bin:$PATH"
+export PATH="/home/heitor/build/go/bin:/home/heitor/go/bin:/home/heitor/build/bin:/home/heitor/build/node-v8.9.2/bin:$PATH"
 
 # Add PHP Composer to path
 export PATH="/home/heitor/.composer/vendor/bin:$PATH"
@@ -116,8 +118,12 @@ export PATH="/home/heitor/.composer/vendor/bin:$PATH"
 alias phpserve="php7 -S 127.0.0.1:8901"
 
 # Python startup script
-export PYTHONSTARTUP="/home/heitor/pygmalion/my_startup.py"
+# export PYTHONSTARTUP="/home/heitor/pygmalion/my_startup.py"
 
-export PYTHONPATH="/home/heitor/reading-list/foundations-of-cs"
+export PYTHONPATH="/home/heitor/reading-list/foundations-of-cs:/home/heitor/holygrail/"
 
 export WORKON_HOME=~/envs
+
+export GOROOT=/home/heitor/build/go
+export GOPATH=/home/heitor/go
+export GOBIN=/home/heitor/go/bin
