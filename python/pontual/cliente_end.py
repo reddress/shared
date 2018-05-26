@@ -40,6 +40,10 @@ def parseall():
             print("PTL:", ptl[id])
             print("UNI:", uni[id])
             print()
+    print(len(ptl))
+    print(len(uni))
+
+    return {'p': ptl, 'u': uni}
 
 def test():
     testeql(normalize("a, b, c"), "a.b.c")
