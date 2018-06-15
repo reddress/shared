@@ -1,9 +1,9 @@
 import unittest
 
 description = """
-# Suppose there is a function square(x)
+# Suppose there is a function sq(x) that squares numbers
 
-def square(x):
+def sq(x):
     return x * x
 
 # We alternate good and bad tests
