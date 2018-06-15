@@ -16,7 +16,7 @@ def testequal(expression, expected):
         print("(^o^) PASS\n")
         return 0
     else:
-        print("(>_<) FAIL\n")
+        print("(._.) FAIL\n")
         return 1
 
 # alias
