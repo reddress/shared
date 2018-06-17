@@ -25,7 +25,7 @@
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(js-indent-level 2)
- '(package-selected-packages (quote (rjsx-mode clojure-mode auto-complete)))
+ '(package-selected-packages (quote (go-mode rjsx-mode clojure-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
@@ -65,8 +65,6 @@
 
 ;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
 (set-language-environment "UTF-8")
-
-(setq default-input-method "latin-1-postfix")
 
 (require 'julia-mode)
 
@@ -125,7 +123,7 @@
 (global-set-key (kbd "C-c j") 'javascript-mode)
 (global-set-key (kbd "C-c h") 'html-mode)
 
-(global-set-key (kbd "C-c C-l") 'electric-indent-mode)
+(global-set-key (kbd "C-c e") 'electric-indent-mode)
 
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
@@ -326,9 +324,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-python-test-buffer ()
   (interactive)
   (save-excursion
-    ;; (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))
-    (python-shell-send-string (trim-string (buffer-string)))
-    (python-shell-send-string (concat "print('')\n" "test()"))))
+    (python-shell-send-string (trim-string (buffer-string)))))
+;;(python-shell-send-string (concat "print('')\n" "test()"))))
 
 (defun my-python-send-block ()
   (interactive)
@@ -586,8 +583,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; change mode for Kivy files
 (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
 
+;; change mode for Go files
+(add-to-list 'auto-mode-alist '("\\.go\\'" . text-mode))
+
 ;; change mode for JS files to RJSX
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 
 ;; change mode for PHP files
 ;;; (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
@@ -633,14 +633,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;;;; Python
 ;; http://stackoverflow.com/questions/243060/how-to-set-the-pythonpath-in-emacs
-(setenv "PYTHONPATH" "/home/heitor/shared/python/my-modules/")
+(setenv "PYTHONPATH" "/home/heitor/shared/python/my-modules/:/home/heitor/holygrail/")
 
 (setenv "PYTHONSTARTUP" "/home/heitor/shared/python/my-startup.py")
 
 ;;; Quail Gwoyeu Romatzyh
+(add-to-list 'load-path "/home/heitor/build/emacs-25.3/lisp/leim/quail")
+
 (add-to-list 'load-path "/home/heitor/chinese/gwoyeu-romatzyh-studies/")
 (require 'gwoyeu-romatzyh-input)
+;; (require 'grsimp)
 
+(add-to-list 'load-path "/home/heitor/build/myleim")
+(require 'my-latin-1)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -669,3 +674,5 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (with-eval-after-load 'rjsx-mode
   (define-key rjsx-mode-map "<" nil)
   (define-key rjsx-mode-map ">" nil))
+
+(setq default-input-method "my-latin-1")
