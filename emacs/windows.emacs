@@ -277,9 +277,10 @@
     (call-interactively 'scheme-send-region)))
 
 ;;; Python
-(setq python-shell-interpreter "C:/Users/Heitor/AppData/Local/Programs/Python/Python35-32/python.exe")
-;;;(setq python-shell-interpreter "C:/Python33/python.exe")
-;;;(setq python-shell-interpreter "C:/Python27/python.exe")
+;; (setq python-shell-interpreter "C:/Users/Heitor/AppData/Local/Programs/Python/Python35-32/python.exe")
+(setq python-shell-interpreter "D:/Python_3.7.0rc1/python.exe")
+;; (setq python-shell-interpreter "C:/Python33/python.exe")
+;; (setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
 (setenv "PYTHONWARNINGS" "all")
