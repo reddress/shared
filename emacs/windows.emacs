@@ -282,6 +282,7 @@
 ;;;(setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
+(setenv "PYTHONWARNINGS" "all")
 
 (defun line-emptyp ()
   (= (line-beginning-position) (line-end-position)))
@@ -340,9 +341,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-python-test-buffer ()
   (interactive)
   (save-excursion
-    (python-shell-send-string (trim-string (buffer-string)))
+    (python-shell-send-string (trim-string (buffer-string)))))
     ;; (python-shell-send-string (concat "print('')\n" "test()"))))
-    (python-shell-send-string "test()")))
+    ;; (python-shell-send-string "test()")))
 
 ;; javascript
 ;; (require 'js-comint)
