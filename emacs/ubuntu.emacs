@@ -280,10 +280,13 @@
 
 ;; Python
 ;; (setq python-shell-interpreter "python3")
-(setq python-shell-interpreter "/usr/bin/python3")
+;; (setq python-shell-interpreter "/usr/bin/python3")
+(setq python-shell-interpreter "/home/heitor/bin/python3.7")
 ;;(setq python-shell-interpreter "C:/Python27/python.exe")
 
 (setenv "PYTHONUNBUFFERED" "x")
+(setenv "PYTHONWARNINGS" "all")
+
 
 (defun line-emptyp ()
   (= (line-beginning-position) (line-end-position)))
