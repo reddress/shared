@@ -3,6 +3,31 @@
 (setq inhibit-startup-message t)
 (setq default-directory "C:/Users/Heitor/Desktop/code/")
 
+;; Inferior Python and testing
+;; https://github.com/heitorchang/code-practice/tree/master/codefights
+(setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
+
+(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/")
+(setenv "PYTHONSTARTUP" "C:/Users/Heitor/Desktop/code/shared/python/mystartup.py")
+
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
+
+(defun my-python-test-buffer ()
+  (interactive)
+  (save-excursion
+    (python-shell-send-string (trim-string (buffer-string)))
+    (python-shell-send-string (concat "print('')\n" "test()"))))
+
+(defun my-python-send-buffer ()
+  (interactive)
+  (save-excursion
+    (python-shell-send-string (concat "print('''" (trim-string (buffer-string)) "''')"))
+    (python-shell-send-string (concat "print('')\n" (trim-string (buffer-string))))))
+
+
 ;; Custom
 
 ;; Added by Package.el.  This must come before configurations of
@@ -86,6 +111,7 @@
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
 (global-set-key (kbd "M-e") 'kill-ring-save)
+(global-set-key (kbd "M-c") 'kill-ring-save)
 
 ;; WASD cursor movement
 (global-set-key (kbd "M-w") 'previous-line)
@@ -210,12 +236,12 @@
       (next-line))
     (end-of-line)))
 
-(defun my-python-send-buffer ()
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'python-shell-send-region)
-  (python-shell-send-string "\n")
-  (end-of-buffer))
+;; (defun my-python-send-buffer ()
+;;  (interactive)
+;;  (mark-whole-buffer)
+;;  (call-interactively 'python-shell-send-region)
+;;  (python-shell-send-string "\n")
+;;  (end-of-buffer))
 
 ;; javascript
 ;; (require 'js-comint)
