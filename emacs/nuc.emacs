@@ -93,6 +93,7 @@
 (global-set-key (kbd "M-s") 'next-line)
 (global-set-key (kbd "M-d") 'forward-char)
 
+(global-set-key (kbd "C-p") 'scroll-down-command)
 
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
