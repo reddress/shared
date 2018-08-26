@@ -58,7 +58,7 @@
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
-(global-set-key (kbd "C-'") 'iswitchb-buffer)
+(global-set-key (kbd "C-'") 'switch-to-buffer)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
@@ -79,6 +79,15 @@
 
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
+
+(global-set-key (kbd "M-w") 'kill-ring-save)
+
+;; WASD cursor movement
+(global-set-key (kbd "M-w") 'previous-line)
+(global-set-key (kbd "M-a") 'backward-char)
+(global-set-key (kbd "M-s") 'next-line)
+(global-set-key (kbd "M-d") 'forward-char)
+
 
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
@@ -101,7 +110,7 @@
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 55)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 66)))
 
 ;; custom functions
 ;; general
@@ -266,7 +275,7 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; custom functions
-(global-set-key "\M-n" 'add-letters)
+;; (global-set-key "\M-n" 'add-letters)
 ;; (global-set-key "\M-p" 'add-nums-in-brackets)
 
 (add-hook 'lisp-mode-hook
@@ -289,6 +298,9 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
+            (local-set-key (kbd "C-c c") 'comment-region)
+            (local-set-key (kbd "C-c u") 'uncomment-region)
+            
             (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [M-return] 'my-python-send-buffer)
             (local-set-key [C-return] 'my-python-send-buffer)))
@@ -374,4 +386,12 @@
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
-(setq default-directory "C:/Users/Heitor/Desktop/emacs-25.3/bin/")
+(setq default-directory "C:/Users/Heitor/")
+
+(defun copy-line ()
+  (interactive)
+  (beginning-of-line)
+  (kill-line)
+  (yank))
+
+(global-set-key (kbd "C-x x") 'copy-line)
