@@ -1,5 +1,8 @@
 ;; dot emacs
 
+(setq inhibit-startup-message t)
+(setq default-directory "C:/Users/Heitor/Desktop/code/")
+
 ;; Custom
 
 ;; Added by Package.el.  This must come before configurations of
@@ -386,7 +389,6 @@
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
-(setq default-directory "C:/Users/Heitor/")
 
 (defun copy-line ()
   (interactive)
