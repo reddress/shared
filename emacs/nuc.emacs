@@ -85,7 +85,7 @@
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
-(global-set-key (kbd "M-w") 'kill-ring-save)
+(global-set-key (kbd "M-e") 'kill-ring-save)
 
 ;; WASD cursor movement
 (global-set-key (kbd "M-w") 'previous-line)
