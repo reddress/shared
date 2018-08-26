@@ -283,7 +283,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; auto-complete-mode
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/dict")
+;; (add-to-list 'ac-dictionary-directories "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/dict")
 (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
 (setq ac-disable-faces nil)
 
@@ -294,7 +294,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; prevent pop-up on arrow keys
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
-(setq ac-delay 0.01)
+(setq ac-delay 0.0001)
+(setq ac-disable-faces nil)
+(setq ac-auto-show-menu 0.0001)
 
 ;; settings for not immediately completing
 ;(global-auto-complete-mode t)
