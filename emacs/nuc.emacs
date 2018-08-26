@@ -77,6 +77,8 @@
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
 
+(global-set-key (kbd "M-p") 'other-window)
+
 (global-set-key (kbd "C-c C-e") 'electric-indent-mode)
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 
