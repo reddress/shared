@@ -18,8 +18,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-python-test-buffer ()
   (interactive)
   (save-excursion
-    (python-shell-send-string (trim-string (buffer-string)))
-    (python-shell-send-string (concat "print('')\n" "test()"))))
+    (python-shell-send-string (trim-string (buffer-string)))))
+
+;;    (python-shell-send-string (concat "print('')\n" "test()"))))
 
 (defun my-python-send-buffer ()
   (interactive)
@@ -110,14 +111,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-c l") 'my-insert-console-log)
 
-(global-set-key (kbd "M-e") 'kill-ring-save)
+(global-set-key (kbd "M-w") 'kill-ring-save)
 (global-set-key (kbd "M-c") 'kill-ring-save)
 
 ;; WASD cursor movement
-(global-set-key (kbd "M-w") 'previous-line)
-(global-set-key (kbd "M-a") 'backward-char)
-(global-set-key (kbd "M-s") 'next-line)
-(global-set-key (kbd "M-d") 'forward-char)
+;;(global-set-key (kbd "M-w") 'previous-line)
+;;(global-set-key (kbd "M-a") 'backward-char)
+;;(global-set-key (kbd "M-s") 'next-line)
+;;(global-set-key (kbd "M-d") 'forward-char)
 
 (global-set-key (kbd "C-p") 'scroll-down-command)
 
@@ -142,7 +143,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 66)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 80) (height . 66)))
 
 ;; custom functions
 ;; general
@@ -337,7 +338,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             
             (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [M-return] 'my-python-send-buffer)
-            (local-set-key [C-return] 'my-python-send-buffer)))
+            (local-set-key [C-return] 'my-python-test-buffer)))
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -414,6 +415,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             (local-set-key [S-return] 'my-isend-send-line)
             (local-set-key [C-return] 'my-isend-send-block)
             (local-set-key [M-return] 'my-isend-send-buffer)))
+
+(add-hook 'inferior-python-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
 
 (put 'upcase-region 'disabled nil)
 (global-set-key (kbd "M-u") 'undo)
