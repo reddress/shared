@@ -1,0 +1,49 @@
+<body>
+    <p>
+        Compute the needed amount to adjust a balance. Use EXP as the balancing account.
+    </p>
+
+    New balance: <input id="newBal" autofocus>
+    <br>
+    Old balance: <input id="oldBal">
+
+    <br><br>
+    <b>Adjustment:</b> <input id="adj" readonly>
+    <br>
+    <span id="debitWho"></span>
+    <br>
+    <button id="sel">Copy to Clipboard</button>
+    
+    <script>
+     var oldBal = document.getElementById("oldBal");
+     var newBal = document.getElementById("newBal");
+     var adj = document.getElementById("adj");
+     var debitWho = document.getElementById("debitWho");
+
+     function replaceComma(s) {
+       return s.replace(",", ".");  // assume only one comma
+     }
+     
+     function adjust() {
+         var diff = (parseFloat(replaceComma(newBal.value)) - parseFloat(replaceComma(oldBal.value))).toFixed(2);
+         if (isNaN(diff)) {
+             adj.value = "";
+         } else {
+             adj.value = Math.abs(diff);
+         }
+         if (diff <= 0) {
+             debitWho.innerText = "Debit EXP";
+         } else {
+             debitWho.innerText = "Credit EXP";
+         }
+     }
+
+     oldBal.onkeyup = adjust;
+     newBal.onkeyup = adjust;
+
+     document.getElementById("sel").onclick = function () {
+         adj.select();
+         document.execCommand("copy");
+     };
+    </script>
+</body>
