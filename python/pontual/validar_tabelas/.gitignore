@@ -1,0 +1,8 @@
+*.xls
+*.XLS
+*.pdf
+*.PDF
+cv*
+listageral*
+/data/
+/listas_para_validar/
