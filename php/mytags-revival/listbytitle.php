@@ -35,7 +35,7 @@ if ($page < 0 || !is_int($page)) {
   $page = 0;
 }
 
-$numperpage = 7;
+$numperpage = 14;
 $start = $page * $numperpage;
 
 echo "<h3>$tagname_get</h3>";
@@ -187,12 +187,13 @@ foreach($getPosts_result as $row) {
 </a>
 &nbsp;
     $tagLinks
-<br><br>
+<br>
   </div>
 EOD;
 
 }
 
+echo "<br>";
 echo $pagination;
 
 ?>

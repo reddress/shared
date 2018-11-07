@@ -13,7 +13,7 @@
              text-decoration: none;
          }
 
-         .taglink { font-family: Tahoma, sans-serif; font-size: 14px; background-color: #ff9; padding: 8px;
+         .taglink { font-family: Tahoma, sans-serif; font-size: 14px; background-color: #ff9; padding: 5px; margin: 6px;
              display: inline-block;
              text-decoration: none;
              margin-right: 4px;
