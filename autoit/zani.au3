@@ -7,7 +7,7 @@ While 1
 WEnd
    
 Func SummonDiz()
-   WinActivate("Zani")
+   WinActivate("(2) lo Zingarelli")
    Send("{CTRLDOWN}r{CTRLUP}")
 
    Send("{CTRLDOWN}h{CTRLUP}")
