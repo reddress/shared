@@ -1,0 +1,40 @@
+Opt("WinWaitDelay", 50)
+
+HotKeySet("{PAUSE}", "SummonDiz")
+
+While 1
+   Sleep(100)
+WEnd
+   
+Func SummonDiz()
+   WinActivate("Zani")
+   Send("^R")
+
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+   Send("^H")
+EndFunc
