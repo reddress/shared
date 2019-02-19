@@ -10,6 +10,7 @@ Func SummonDiz()
    WinActivate("(2) lo Zingarelli")
    Send("{CTRLDOWN}r{CTRLUP}")
 
+   Send("{END}")
    Send("{SHIFTDOWN}{HOME}{SHIFTUP}")
    Send("{DELETE}")
 EndFunc
