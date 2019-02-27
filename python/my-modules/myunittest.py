@@ -17,7 +17,8 @@ test(
 
 """
 
-def test(*pair_args):
+# previously it was called just 'test'
+def pairtest(*pair_args):
     """https://stackoverflow.com/questions/18084476/is-there-a-way-to-use-python-unit-test-assertions-outside-of-a-testcase"""
     
     tc = unittest.TestCase('__init__')
