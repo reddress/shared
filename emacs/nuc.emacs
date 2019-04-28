@@ -5,9 +5,10 @@
 
 ;; Inferior Python and testing
 ;; https://github.com/heitorchang/code-practice/tree/master/codefights
-(setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
+;; (setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
+(setq python-shell-interpreter "c:/Users/Heitor/AppData/Local/Programs/Python/Python37-32/python.exe")
 
-(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/")
+(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/;C:/Users/Heitor/Desktop/code/reading-list/interactive-python-ds/oct2018/")
 (setenv "PYTHONSTARTUP" "C:/Users/Heitor/Desktop/code/shared/python/mystartup.py")
 
 (defun trim-string (string)
@@ -143,7 +144,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 80) (height . 66)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 66)))
 
 ;; custom functions
 ;; general
@@ -186,7 +187,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (message "total %s" total))
 
 ;; Lisp
-; (setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
+(setq inferior-lisp-program "c:/Progra~1/SteelB~1/1.4.2/sbcl.exe")
 (defun hide-eol ()
   (interactive)
   (setq buffer-display-table (make-display-table))
@@ -208,6 +209,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; Python
 (setenv "PYTHONUNBUFFERED" "x")
+(setenv "PYTHONIOENCODING" "utf8")
 
 (defun line-emptyp ()
   (= (line-beginning-position) (line-end-position)))
@@ -422,6 +424,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (put 'upcase-region 'disabled nil)
 (global-set-key (kbd "M-u") 'undo)
+(global-set-key (kbd "C-z") 'undo)
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
