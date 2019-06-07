@@ -1,0 +1,5 @@
+In Windows 10
+
+Copy AeroLite.theme to C:\Windows\Resources\Themes
+
+Right-click on desktop to "Personalize" and choose "Themes"
