@@ -58,6 +58,17 @@
 
 (global-set-key (kbd "M-)") 'close-all-parentheses)
 
+(defun my-scheme-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'scheme-send-region)
+  (end-of-buffer))
+
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [S-return] 'scheme-send-last-sexp)))
+
 
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
