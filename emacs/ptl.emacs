@@ -1,14 +1,63 @@
 ;; dot emacs
 
+;; Lisp
+(setq inferior-lisp-program "D:/sbcl/sbcl.exe")
+
 (setq inhibit-startup-message t)
 (setq default-directory "C:/Users/Heitor/Desktop/code/")
 
+;; window position
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 82)))
+
+;; MELPA
+;; https://melpa.org/#/getting-started
+
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+
+  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  (when (< emacs-major-version 24)
+    ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+(package-initialize)
+
 ;; Inferior Python and testing
 ;; https://github.com/heitorchang/code-practice/tree/master/codefights
-(setq python-shell-interpreter "C:/Users/Heitor/AppData/Local/Programs/Python/Python36-32/python.exe")
+(setq python-shell-interpreter "C:/Users/Heitor/AppData/Local/Programs/Python/Python37-32/python.exe")
 
-(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/")
+(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/;C:/users/heitor/desktop/code/reading-list/interactive-py/oct2018/")
+(setenv "PYTHONIOENCODING" "utf8")
 (setenv "PYTHONSTARTUP" "C:/Users/Heitor/Desktop/code/shared/python/mystartup.py")
+
+
+;; Scheme
+
+(setq scheme-program-name "C:/Progra~1/Gambit/v4.9.3/bin/gsi.exe -:d-")
+
+;; https://acidwords.com/posts/2017-10-19-closing-all-parentheses-at-once.html
+(require 'cl)
+
+(defun close-all-parentheses ()
+  (interactive "*")
+  (let ((closing nil))
+    (save-excursion
+      (while (condition-case nil
+         (progn
+           (backward-up-list)
+           (let ((syntax (syntax-after (point))))
+             (case (car syntax)
+               ((4) (setq closing (cons (cdr syntax) closing)))
+               ((7 8) (setq closing (cons (char-after (point)) closing)))))
+           t)
+           ((scan-error) nil))))
+    (apply #'insert (nreverse closing))))
+
+(global-set-key (kbd "M-)") 'close-all-parentheses)
+
 
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
@@ -63,12 +112,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (setq-default frame-title-format "%f")
 
-; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp")
-; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
-                                        ; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
-
-(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-25.3/site-lisp/popup-el-master/")
-(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-25.3/site-lisp/auto-complete-master/")
 (set-language-environment "UTF-8")
 (defun my-previous-window ()
   (interactive)
@@ -113,6 +156,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "M-e") 'kill-ring-save)
 (global-set-key (kbd "M-w") 'kill-ring-save)
+(global-set-key (kbd "M-u") 'undo)
+(global-set-key (kbd "C-z") 'undo)
+
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; WASD cursor movement
 ;; (global-set-key (kbd "M-w") 'previous-line)
@@ -120,7 +167,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; (global-set-key (kbd "M-s") 'next-line)
 ;; (global-set-key (kbd "M-d") 'forward-char)
 
-(global-set-key (kbd "C-p") 'scroll-down-command)
+;; (global-set-key (kbd "C-p") 'scroll-down-command)
 
 ;(color-theme-emacs-nw)
 (setq backup-inhibited t)
@@ -142,69 +189,22 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'python-mode-hook
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
-;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 74) (height . 82)))
-
 ;; custom functions
 ;; general
-(defun kill-all-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (buffer-list)))
 
-(defun add-letters (letters)
-  (interactive "sEnter letters:")
-  (move-end-of-line nil)
-  (newline-and-indent)
-  (previous-line)
-  (move-beginning-of-line nil)
-  (kill-line 1)
-  (let ((letterlist (string-to-list letters)))
-    (dolist (element letterlist)
-      (yank)
-      (left-char 1)
-      (insert (char-to-string element))
-      (next-line)))
-  (delete-forward-char 1))
+;; (defun hide-eol ()
+;;   (interactive)
+;;   (setq buffer-display-table (make-display-table))
+;;   (aset buffer-display-table ?\^M []))
 
-(defun add-nums-in-brackets ()
-  "add all values stored inside [brackets], first only per line"
+(defun copy-line ()
   (interactive)
-  (setq total 0)
-  (save-excursion
-    (end-of-buffer)
-    (beginning-of-line)
-    (setq num-lines (count-lines 1 (point)))
-    (dotimes (j (+ 1 num-lines))
-      (beginning-of-line)
-      (setq curline (thing-at-point 'line))
-      (message curline)
-      (when (string-match "\\[\\([0-9]+\\)\\]" curline)
-        (setq total (+ total (string-to-number (match-string 1 curline)))))
-      (when (< j num-lines)
-        (previous-line)))
-    (end-of-buffer))
-  (message "total %s" total))
+  (beginning-of-line)
+  (kill-line)
+  (yank))
 
-;; Lisp
-; (setq inferior-lisp-program "C:/sbcl/1.2.1/sbcl.exe")
-(defun hide-eol ()
-  (interactive)
-  (setq buffer-display-table (make-display-table))
-  (aset buffer-display-table ?\^M []))
+(global-set-key (kbd "C-x x") 'copy-line)
 
-(defun my-lisp-send-buffer ()
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'lisp-eval-region)
-  (end-of-buffer))
-
-;; Scheme
-(setq scheme-program-name "C:/chicken/bin/csi.exe -:c")
-(defun my-scheme-send-buffer ()
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'scheme-send-region)
-  (end-of-buffer))
 
 ;; Python
 (setenv "PYTHONUNBUFFERED" "x")
@@ -236,13 +236,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
-
-;; (defun my-python-send-buffer ()
-;;  (interactive)
-;;  (mark-whole-buffer)
-;;  (call-interactively 'python-shell-send-region)
-;;  (python-shell-send-string "\n")
-;;  (end-of-buffer))
 
 ;; javascript
 ;; (require 'js-comint)
@@ -284,7 +277,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; auto-complete-mode
 (require 'auto-complete-config)
-;; (add-to-list 'ac-dictionary-directories "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/dict")
 (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
 (setq ac-disable-faces nil)
 
@@ -292,44 +284,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ac-ignore-case nil)
 (define-key ac-completing-map "\r" nil)  ; remove completion with RET
 (setq ac-auto-start 1)
+
 ;; prevent pop-up on arrow keys
 (define-key ac-completing-map (kbd "<down>") nil)
 (define-key ac-completing-map (kbd "<up>") nil)
 (setq ac-delay 0.0001)
 (setq ac-disable-faces nil)
 (setq ac-auto-show-menu 0.0001)
-
-;; settings for not immediately completing
-;(global-auto-complete-mode t)
-;(setq ac-auto-start 2)
-;(setq ac-ignore-case nil)
-;(setq ac-delay 1)
-;(ac-set-trigger-key "TAB")
-
-;; set keys
-(global-set-key (kbd "RET") 'newline-and-indent)
-
-;; custom functions
-;; (global-set-key "\M-n" 'add-letters)
-;; (global-set-key "\M-p" 'add-nums-in-brackets)
-
-(add-hook 'lisp-mode-hook
-          (lambda ()
-            ;; (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            ;; (local-set-key [return] 'newline-and-indent)))
-            (local-set-key [S-return] 'lisp-eval-last-sexp)
-            (local-set-key [C-return] 'my-lisp-send-buffer)))
-
-(add-hook 'clojure-mode-hook
-          (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [S-return] 'slime-eval-last-expression)
-            (local-set-key [return] 'newline-and-indent)))
-
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (local-set-key [C-return] 'my-scheme-send-buffer)
-            (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
@@ -348,19 +309,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             (local-set-key [C-return] 'my-js-send-block)
             (call-interactively 'node-suppress-undefined)))
 
-(add-hook 'sql-mode-hook
-          (lambda ()
-            (call-interactively 'auto-complete-mode)))
-
 (add-hook 'inferior-python-mode-hook
           (lambda ()
             (auto-complete-mode 1)))
-
-;; Kivy customization
-(add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
-
-;; load java-mode for php
-(add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
 
 ;; text mode
 (defun my-text-tabify ()
@@ -379,11 +330,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
-
-
-;; isend-mode
-;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
-;; (require 'isend)
 
 (defun my-isend-send-line ()
   (interactive)
@@ -421,16 +367,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             (local-set-key [M-return] 'my-isend-send-buffer)))
 
 (put 'upcase-region 'disabled nil)
-(global-set-key (kbd "M-u") 'undo)
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
-
-(defun copy-line ()
-  (interactive)
-  (beginning-of-line)
-  (kill-line)
-  (yank))
-
-(global-set-key (kbd "C-x x") 'copy-line)
-
