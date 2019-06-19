@@ -1,15 +1,41 @@
 ;; dot emacs
 
 (setq inhibit-startup-message t)
-(setq default-directory "C:/Users/Heitor/Desktop/code/")
+(setq default-directory "C:/Users/pontu/Desktop/code/")
+
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (when no-ssl
+    (warn "\
+Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
+  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  (when (< emacs-major-version 24)
+    ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+(package-initialize)
+
+
+;; MELPA
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+
 
 ;; Inferior Python and testing
-;; https://github.com/heitorchang/code-practice/tree/master/codefights
+;; https://github.com/Pontuchang/code-practice/tree/master/codefights
 ;; (setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
-(setq python-shell-interpreter "c:/Users/Heitor/AppData/Local/Programs/Python/Python37-32/python.exe")
+(setq python-shell-interpreter "c:/Users/Pontu/AppData/Local/Programs/Python/Python37-32/python.exe")
 
-(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/;C:/Users/Heitor/Desktop/code/reading-list/interactive-python-ds/oct2018/")
-(setenv "PYTHONSTARTUP" "C:/Users/Heitor/Desktop/code/shared/python/mystartup.py")
+(setenv "PYTHONPATH" "C:/Users/Pontu/Desktop/code/shared/python/my-modules/;C:/Users/Pontu/Desktop/code/reading-list/interactive-python-ds/oct2018/")
+(setenv "PYTHONSTARTUP" "C:/Users/Pontu/Desktop/code/shared/python/mystartup.py")
 
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
@@ -32,15 +58,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; Custom
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
 (custom-set-variables
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
- '(js-indent-level 2)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
@@ -50,26 +74,62 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
+ '(js-indent-level 2)
+ '(package-selected-packages (quote (auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
  '(tool-bar-mode nil)
- '(yas/prompt-functions (quote (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
+ '(yas/prompt-functions
+   (quote
+    (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+
+
+;; auto-complete-mode
+(require 'auto-complete-config)
+
+;; (add-to-list 'ac-dictionary-directories "c:/Users/Pontu/Desktop/LispCabinetHome/.emacs.d/dict")
+(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(setq ac-disable-faces nil)
+
+(global-auto-complete-mode t)
+(setq ac-ignore-case nil)
+(define-key ac-completing-map "\r" nil)  ; remove completion with RET
+(setq ac-auto-start 1)
+;; prevent pop-up on arrow keys
+(define-key ac-completing-map (kbd "<down>") nil)
+(define-key ac-completing-map (kbd "<up>") nil)
+(setq ac-delay 0.0001)
+(setq ac-disable-faces nil)
+(setq ac-auto-show-menu 0.0001)
+
+;; settings for not immediately completing
+;(global-auto-complete-mode t)
+;(setq ac-auto-start 2)
+;(setq ac-ignore-case nil)
+;(setq ac-delay 1)
+;(ac-set-trigger-key "TAB")
+
 
 ;; globals
 (setq ring-bell-function 'ignore)
 
 (setq-default frame-title-format "%f")
 
-; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp")
-; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
-                                        ; (add-to-list 'load-path "c:/Users/Heitor/Desktop/emacs-24.3/site-lisp/js-comint")
+; (add-to-list 'load-path "c:/Users/Pontu/Desktop/emacs-24.3/site-lisp")
+; (add-to-list 'load-path "c:/Users/Pontu/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
+                                        ; (add-to-list 'load-path "c:/Users/Pontu/Desktop/emacs-24.3/site-lisp/js-comint")
 
-(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-25.3/site-lisp/popup-el-master/")
-(add-to-list 'load-path "C:/Users/Heitor/Desktop/emacs-25.3/site-lisp/auto-complete-master/")
+;; (add-to-list 'load-path "C:/Users/Pontu/Desktop/emacs-25.3/site-lisp/popup-el-master/")
+;; (add-to-list 'load-path "C:/Users/Pontu/Desktop/emacs-25.3/site-lisp/auto-complete-master/")
+
 (set-language-environment "UTF-8")
 (defun my-previous-window ()
   (interactive)
@@ -248,7 +308,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; javascript
 ;; (require 'js-comint)
-;;;(setq inferior-js-program-command "java -jar c:/Users/heitor/Desktop/programming/js/rhino1_7R4/js.jar")
+;;;(setq inferior-js-program-command "java -jar c:/Users/Pontu/Desktop/programming/js/rhino1_7R4/js.jar")
 (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
@@ -284,29 +344,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-c j") 'javascript-mode)
 (global-set-key (kbd "C-c h") 'html-mode)
 
-;; auto-complete-mode
-(require 'auto-complete-config)
-;; (add-to-list 'ac-dictionary-directories "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/dict")
-(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
-(setq ac-disable-faces nil)
-
-(global-auto-complete-mode t)
-(setq ac-ignore-case nil)
-(define-key ac-completing-map "\r" nil)  ; remove completion with RET
-(setq ac-auto-start 1)
-;; prevent pop-up on arrow keys
-(define-key ac-completing-map (kbd "<down>") nil)
-(define-key ac-completing-map (kbd "<up>") nil)
-(setq ac-delay 0.0001)
-(setq ac-disable-faces nil)
-(setq ac-auto-show-menu 0.0001)
-
-;; settings for not immediately completing
-;(global-auto-complete-mode t)
-;(setq ac-auto-start 2)
-;(setq ac-ignore-case nil)
-;(setq ac-delay 1)
-;(ac-set-trigger-key "TAB")
 
 ;; set keys
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -380,7 +417,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 
 ;; isend-mode
-;; (add-to-list 'load-path "c:/Users/Heitor/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
+;; (add-to-list 'load-path "c:/Users/Pontu/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
 ;; (require 'isend)
 
 (defun my-isend-send-line ()
@@ -436,3 +473,21 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (yank))
 
 (global-set-key (kbd "C-x x") 'copy-line)
+
+;; greek
+(setq default-input-method "greek")
+
+(defun get-greek-entry ()
+  (interactive)
+
+  (activate-input-method "portuguese-prefix")
+  (insert 
+   (read-string "Português: " nil nil nil t))
+
+  (insert "\n")
+  (activate-input-method "greek")
+  (insert 
+   (read-string "Ελληνικά: " nil nil nil t))
+
+  (insert "\n\n")
+  (get-greek-entry))
