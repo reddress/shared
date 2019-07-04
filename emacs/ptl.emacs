@@ -9,14 +9,18 @@
 ;; window position
 (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 82)))
 
-;; MELPA
-;; https://melpa.org/#/getting-started
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
-
+  (when no-ssl
+    (warn "\
+Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
@@ -24,6 +28,12 @@
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
+
+
+;; MELPA
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 
 ;; Inferior Python and testing
 ;; https://github.com/heitorchang/code-practice/tree/master/codefights
@@ -98,8 +108,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (package-initialize)
 
 (custom-set-variables
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
- '(js-indent-level 2)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
@@ -109,13 +123,21 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
+ '(js-indent-level 2)
+ '(package-selected-packages (quote (rjsx-mode centered-cursor-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
  '(tool-bar-mode nil)
- '(yas/prompt-functions (quote (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
+ '(yas/prompt-functions
+   (quote
+    (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 ;; globals
@@ -145,6 +167,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
+(global-set-key (kbd "<f4>") 'run-scheme)
 (global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
@@ -381,3 +404,22 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
+
+
+;; Greek
+(setq default-input-method "greek")
+
+(defun get-greek-entry ()
+  (interactive)
+
+  (activate-input-method "portuguese-prefix")
+  (insert 
+   (read-string "Portuguese: " nil nil nil t))
+
+  (insert "\n")
+  (activate-input-method "greek")
+  (insert 
+   (read-string "Greek: " nil nil nil t))
+
+  (insert "\n\n")
+  (get-greek-entry))
