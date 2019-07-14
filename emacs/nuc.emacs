@@ -1,7 +1,7 @@
 ;; dot emacs
 
 (setq inhibit-startup-message t)
-(setq default-directory "C:/Users/pontu/Desktop/code/")
+(setq default-directory "C:/Users/neo/Desktop/code/")
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -30,12 +30,11 @@ There are two things you can do about this warning:
 
 
 ;; Inferior Python and testing
-;; https://github.com/Pontuchang/code-practice/tree/master/codefights
-;; (setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
-(setq python-shell-interpreter "c:/Users/Pontu/AppData/Local/Programs/Python/Python37-32/python.exe")
+;; https://github.com/Neochang/code-practice/tree/master/codefights
+(setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
 
-(setenv "PYTHONPATH" "C:/Users/Pontu/Desktop/code/shared/python/my-modules/;C:/Users/Pontu/Desktop/code/reading-list/interactive-python-ds/oct2018/")
-(setenv "PYTHONSTARTUP" "C:/Users/Pontu/Desktop/code/shared/python/mystartup.py")
+(setenv "PYTHONPATH" "C:/Users/Neo/Desktop/code/shared/python/my-modules/")
+(setenv "PYTHONSTARTUP" "C:/Users/Neo/Desktop/code/shared/python/mystartup.py")
 
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
@@ -75,7 +74,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
  '(js-indent-level 2)
- '(package-selected-packages (quote (auto-complete)))
+ '(package-selected-packages (quote (rjsx-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
@@ -95,7 +94,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; auto-complete-mode
 (require 'auto-complete-config)
 
-;; (add-to-list 'ac-dictionary-directories "c:/Users/Pontu/Desktop/LispCabinetHome/.emacs.d/dict")
+;; (add-to-list 'ac-dictionary-directories "c:/Users/Neo/Desktop/LispCabinetHome/.emacs.d/dict")
 (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
 (setq ac-disable-faces nil)
 
@@ -123,12 +122,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (setq-default frame-title-format "%f")
 
-; (add-to-list 'load-path "c:/Users/Pontu/Desktop/emacs-24.3/site-lisp")
-; (add-to-list 'load-path "c:/Users/Pontu/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
-                                        ; (add-to-list 'load-path "c:/Users/Pontu/Desktop/emacs-24.3/site-lisp/js-comint")
+; (add-to-list 'load-path "c:/Users/Neo/Desktop/emacs-24.3/site-lisp")
+; (add-to-list 'load-path "c:/Users/Neo/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
+                                        ; (add-to-list 'load-path "c:/Users/Neo/Desktop/emacs-24.3/site-lisp/js-comint")
 
-;; (add-to-list 'load-path "C:/Users/Pontu/Desktop/emacs-25.3/site-lisp/popup-el-master/")
-;; (add-to-list 'load-path "C:/Users/Pontu/Desktop/emacs-25.3/site-lisp/auto-complete-master/")
+;; (add-to-list 'load-path "C:/Users/Neo/Desktop/emacs-25.3/site-lisp/popup-el-master/")
+;; (add-to-list 'load-path "C:/Users/Neo/Desktop/emacs-25.3/site-lisp/auto-complete-master/")
 
 (set-language-environment "UTF-8")
 (defun my-previous-window ()
@@ -308,7 +307,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; javascript
 ;; (require 'js-comint)
-;;;(setq inferior-js-program-command "java -jar c:/Users/Pontu/Desktop/programming/js/rhino1_7R4/js.jar")
+;;;(setq inferior-js-program-command "java -jar c:/Users/Neo/Desktop/programming/js/rhino1_7R4/js.jar")
 (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
@@ -417,7 +416,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 
 ;; isend-mode
-;; (add-to-list 'load-path "c:/Users/Pontu/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
+;; (add-to-list 'load-path "c:/Users/Neo/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
 ;; (require 'isend)
 
 (defun my-isend-send-line ()
@@ -491,3 +490,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
   (insert "\n\n")
   (get-greek-entry))
+
+;; swap input methods in buffer
+(defun my-greek-swap-input-methods ()
+  (interactive)
+  (if (equal current-input-method "greek")
+      (activate-input-method "portuguese-prefix")
+    (activate-input-method "greek")))
+
+(global-set-key (kbd "M-p") 'my-greek-swap-input-methods)
