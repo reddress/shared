@@ -31,7 +31,7 @@ There are two things you can do about this warning:
 
 ;; Inferior Python and testing
 ;; https://github.com/Neochang/code-practice/tree/master/codefights
-(setq python-shell-interpreter "C:/Progra~1/Python36/python.exe")
+(setq python-shell-interpreter "C:/Users/neo/AppData/Local/Programs/Python/Python37/python.exe")
 
 (setenv "PYTHONPATH" "C:/Users/Neo/Desktop/code/shared/python/my-modules/")
 (setenv "PYTHONSTARTUP" "C:/Users/Neo/Desktop/code/shared/python/mystartup.py")
@@ -74,7 +74,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
  '(js-indent-level 2)
- '(package-selected-packages (quote (rjsx-mode auto-complete)))
+ '(package-selected-packages (quote (pyvenv rjsx-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
@@ -499,3 +499,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (activate-input-method "greek")))
 
 (global-set-key (kbd "M-p") 'my-greek-swap-input-methods)
+
+;; set font for Greek
+(set-fontset-font "fontset-default" 'iso-8859-7
+                  (font-spec :family "GFS Neohellenic" :size 20))
