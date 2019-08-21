@@ -481,15 +481,33 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
   (activate-input-method "portuguese-prefix")
   (insert 
-   (read-string "Português: " nil nil nil t))
+   (read-string "Portugues: " nil nil nil t))
 
   (insert "\n")
   (activate-input-method "greek")
   (insert 
-   (read-string "Ελληνικά: " nil nil nil t))
+   (read-string "ELLINIKA: " nil nil nil t))
 
   (insert "\n\n")
   (get-greek-entry))
+
+
+(defun get-port-greek-entry ()
+  (interactive)
+
+  (activate-input-method "greek")
+  (insert 
+   (read-string "ELLINIKA: " nil nil nil t))
+
+  (insert "\n")
+
+  (activate-input-method "portuguese-prefix")
+  (insert 
+   (read-string "Portugues: " nil nil nil t))
+
+  (insert "\n\n")
+  (get-port-greek-entry))
+
 
 ;; swap input methods in buffer
 (defun my-greek-swap-input-methods ()
