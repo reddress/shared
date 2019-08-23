@@ -423,3 +423,49 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
   (insert "\n\n")
   (get-greek-entry))
+
+;; Word Shuffle
+(defun ws-pt-gr ()
+  (interactive)
+
+  (activate-input-method "portuguese-prefix")
+  (insert 
+   (read-string "Portuguese: " nil nil nil t))
+
+  (insert "*")
+  (activate-input-method "greek")
+  (insert 
+   (read-string "Greek: " nil nil nil t))
+
+  (insert "\n")
+  (ws-pt-gr))
+
+
+(defun ws-gr-pt ()
+  (interactive)
+
+  (activate-input-method "greek")
+  (insert 
+   (read-string "Greek: " nil nil nil t))
+
+  (insert "*")
+
+  (activate-input-method "portuguese-prefix")
+  (insert 
+   (read-string "Portuguese: " nil nil nil t))
+
+  (insert "\n")
+  (ws-gr-pt))
+
+;; swap input methods in buffer
+(defun my-greek-swap-input-methods ()
+  (interactive)
+  (if (equal current-input-method "greek")
+      (activate-input-method "portuguese-prefix")
+    (activate-input-method "greek")))
+
+(global-set-key (kbd "M-p") 'my-greek-swap-input-methods)
+
+;; set font for Greek
+(set-fontset-font "fontset-default" 'iso-8859-7
+                  (font-spec :family "GFS Neohellenic" :size 20))
