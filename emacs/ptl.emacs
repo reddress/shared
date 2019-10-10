@@ -124,7 +124,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
  '(js-indent-level 2)
- '(package-selected-packages (quote (rjsx-mode centered-cursor-mode auto-complete)))
+ '(package-selected-packages
+   (quote
+    (web-mode rjsx-mode centered-cursor-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
@@ -139,6 +141,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(setq web-mode-markup-indent-offset 4)
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-enable-auto-quoting nil)
 
 ;; globals
 (setq ring-bell-function 'ignore)
