@@ -4,7 +4,7 @@
 (setq default-directory "c:/Users/Déa/Desktop/heitor/")
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 42)))
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -35,10 +35,7 @@ There are two things you can do about this warning:
 ;; https://github.com/heitorchang/code-practice/tree/master/codefights
 (setq python-shell-interpreter "c:/Users/Déa/AppData/Local/Programs/Python/Python38-32/python.exe")
 
-(setenv "PYTHONPATH" "C:/Users/Heitor/Desktop/code/shared/python/my-modules/;C:/users/heitor/desktop/code/reading-list/interactive-py/oct2018/")
 (setenv "PYTHONIOENCODING" "utf8")
-(setenv "PYTHONSTARTUP" "C:/Users/Heitor/Desktop/code/shared/python/mystartup.py")
-
 
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
