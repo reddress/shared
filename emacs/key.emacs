@@ -1,10 +1,10 @@
 ;; dot emacs
 
 (setq inhibit-startup-message t)
-(setq default-directory "c:/Users/Déa/Desktop/heitor/")
+(setq default-directory "c:/Users/heitor/Desktop/code/")
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 42)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 69) (height . 42)))
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -33,7 +33,7 @@ There are two things you can do about this warning:
 
 ;; Inferior Python and testing
 ;; https://github.com/heitorchang/code-practice/tree/master/codefights
-(setq python-shell-interpreter "c:/Users/Déa/AppData/Local/Programs/Python/Python38-32/python.exe")
+(setq python-shell-interpreter "c:/Users/heitor/AppData/Local/Programs/Python/Python38-32/python.exe")
 
 (setenv "PYTHONIOENCODING" "utf8")
 
@@ -236,6 +236,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (next-line))
     (end-of-line)))
 
+;; Scheme
+(setq scheme-program-name "C:/tools/chicken/bin/csi.exe -:c")
+(defun my-scheme-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'scheme-send-region)
+  (end-of-buffer))
+
 ;; javascript
 ;; (require 'js-comint)
 ;;;(setq inferior-js-program-command "java -jar c:/Users/heitor/Desktop/programming/js/rhino1_7R4/js.jar")
@@ -290,6 +298,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ac-delay 0.0001)
 (setq ac-disable-faces nil)
 (setq ac-auto-show-menu 0.0001)
+
+
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (local-set-key [C-return] 'my-scheme-send-buffer)
+            (local-set-key [S-return] 'scheme-send-last-sexp)))
 
 (add-hook 'python-mode-hook
           (lambda ()
