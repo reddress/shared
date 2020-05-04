@@ -74,7 +74,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
  '(js-indent-level 2)
- '(package-selected-packages (quote (pyvenv rjsx-mode auto-complete)))
+;; '(package-selected-packages (quote (web-mode pyvenv rjsx-mode auto-complete)))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
@@ -110,7 +110,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ac-auto-show-menu 0.0001)
 
 ;; settings for not immediately completing
-;(global-auto-complete-mode t)
 ;(setq ac-auto-start 2)
 ;(setq ac-ignore-case nil)
 ;(setq ac-delay 1)
@@ -121,13 +120,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ring-bell-function 'ignore)
 
 (setq-default frame-title-format "%f")
-
-; (add-to-list 'load-path "c:/Users/Neo/Desktop/emacs-24.3/site-lisp")
-; (add-to-list 'load-path "c:/Users/Neo/Desktop/emacs-24.3/site-lisp/auto-complete-1.3.1")
-                                        ; (add-to-list 'load-path "c:/Users/Neo/Desktop/emacs-24.3/site-lisp/js-comint")
-
-;; (add-to-list 'load-path "C:/Users/Neo/Desktop/emacs-25.3/site-lisp/popup-el-master/")
-;; (add-to-list 'load-path "C:/Users/Neo/Desktop/emacs-25.3/site-lisp/auto-complete-master/")
 
 (set-language-environment "UTF-8")
 (defun my-previous-window ()
@@ -148,6 +140,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
 (global-set-key (kbd "C-'") 'switch-to-buffer)
+
+(global-set-key (kbd "C-c C-a") 'auto-complete-mode)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
@@ -306,9 +300,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;;  (end-of-buffer))
 
 ;; javascript
-;; (require 'js-comint)
-;;;(setq inferior-js-program-command "java -jar c:/Users/Neo/Desktop/programming/js/rhino1_7R4/js.jar")
-(setq inferior-js-program-command "node.exe -i")
+;; (setq inferior-js-program-command "node.exe -i")
 
 (defun my-js-send-block ()
   (interactive)
@@ -336,12 +328,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
   ;; (js-send-last-sexp))
 
-(defun node-suppress-undefined ()
-  (interactive)
-  (comint-send-string inferior-js-buffer "module.exports.repl.ignoreUndefined = true;"))
-
-(global-set-key (kbd "C-c j") 'javascript-mode)
-(global-set-key (kbd "C-c h") 'html-mode)
+;; (global-set-key (kbd "C-c j") 'javascript-mode)
+;; (global-set-key (kbd "C-c h") 'html-mode)
 
 
 ;; set keys
@@ -381,20 +369,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'js-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c c") 'js-send-buffer)
-            (local-set-key (kbd "C-c n") 'node-suppress-undefined)
             (local-set-key [S-return] 'my-js-send-line)
-            (local-set-key [C-return] 'my-js-send-block)
-            (call-interactively 'node-suppress-undefined)))
+            (local-set-key [C-return] 'my-js-send-block)))
 
-(add-hook 'sql-mode-hook
-          (lambda ()
-            (call-interactively 'auto-complete-mode)))
 
 ;; Kivy customization
-(add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
+;; (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
 
 ;; load java-mode for php
 (add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
+
+;; load java-mode for php
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 
 ;; text mode
 (defun my-text-tabify ()
@@ -408,8 +395,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'text-mode-hook
           (lambda ()
             (setq indent-tabs-mode t)
-            ;; (local-set-key [return] 'my-text-tabify)
-            (call-interactively 'auto-complete-mode)))
+            (auto-complete-mode 1)))
+
+(add-hook 'text-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (auto-complete-mode 1)))
 
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
@@ -458,6 +449,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda ()
             (auto-complete-mode 1)))
 
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
 (put 'upcase-region 'disabled nil)
 (global-set-key (kbd "M-u") 'undo)
 (global-set-key (kbd "C-z") 'undo)
@@ -473,8 +468,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "C-x x") 'copy-line)
 
-;; greek
-(setq default-input-method "greek")
+(setq default-input-method "portuguese-prefix")
 
 (defun get-greek-entry ()
   (interactive)
