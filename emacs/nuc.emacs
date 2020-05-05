@@ -3,6 +3,10 @@
 (setq inhibit-startup-message t)
 (setq default-directory "C:/Users/neo/Desktop/code/")
 
+;; custom italian input method
+(add-to-list 'load-path "c:/Users/neo/Desktop/emacs27/lisp/")
+(require 'italian)
+
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
@@ -26,8 +30,6 @@ There are two things you can do about this warning:
 ;; MELPA
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-
 
 ;; Inferior Python and testing
 ;; https://github.com/Neochang/code-practice/tree/master/codefights
@@ -74,14 +76,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
  '(iswitchb-mode t)
  '(js-indent-level 2)
-;; '(package-selected-packages (quote (web-mode pyvenv rjsx-mode auto-complete)))
+ '(package-selected-packages
+   '(isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode rjsx-mode pyvenv mmm-mode edit-indirect auto-complete))
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
  '(tool-bar-mode nil)
  '(yas/prompt-functions
-   (quote
-    (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
+   '(yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -136,6 +138,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (interactive)
   (insert "console.log("))
 
+;; set keys
+(global-set-key (kbd "RET") 'newline-and-indent)
+
 (global-set-key (kbd "C-x p") 'my-previous-window)
 (global-set-key (kbd "C-<") 'previous-buffer)
 (global-set-key (kbd "C->") 'next-buffer)
@@ -144,7 +149,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-c C-a") 'auto-complete-mode)
 
 (global-set-key (kbd "<f3>") 'isearch-forward)
+
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
+
 (global-set-key (kbd "<f5>") 'run-python)
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
@@ -168,15 +175,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "M-w") 'kill-ring-save)
 (global-set-key (kbd "M-c") 'kill-ring-save)
 
-;; WASD cursor movement
-;;(global-set-key (kbd "M-w") 'previous-line)
-;;(global-set-key (kbd "M-a") 'backward-char)
-;;(global-set-key (kbd "M-s") 'next-line)
-;;(global-set-key (kbd "M-d") 'forward-char)
-
 (global-set-key (kbd "C-p") 'scroll-down-command)
+(global-set-key (kbd "M-u") 'undo)
+(global-set-key (kbd "C-z") 'undo)
 
-;(color-theme-emacs-nw)
+(global-set-key (kbd "C-x x") 'copy-line)
+
+
 (setq backup-inhibited t)
 (delete-selection-mode t)
 (menu-bar-mode -1)
@@ -204,40 +209,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun kill-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
-
-(defun add-letters (letters)
-  (interactive "sEnter letters:")
-  (move-end-of-line nil)
-  (newline-and-indent)
-  (previous-line)
-  (move-beginning-of-line nil)
-  (kill-line 1)
-  (let ((letterlist (string-to-list letters)))
-    (dolist (element letterlist)
-      (yank)
-      (left-char 1)
-      (insert (char-to-string element))
-      (next-line)))
-  (delete-forward-char 1))
-
-(defun add-nums-in-brackets ()
-  "add all values stored inside [brackets], first only per line"
-  (interactive)
-  (setq total 0)
-  (save-excursion
-    (end-of-buffer)
-    (beginning-of-line)
-    (setq num-lines (count-lines 1 (point)))
-    (dotimes (j (+ 1 num-lines))
-      (beginning-of-line)
-      (setq curline (thing-at-point 'line))
-      (message curline)
-      (when (string-match "\\[\\([0-9]+\\)\\]" curline)
-        (setq total (+ total (string-to-number (match-string 1 curline)))))
-      (when (< j num-lines)
-        (previous-line)))
-    (end-of-buffer))
-  (message "total %s" total))
 
 ;; Lisp
 (setq inferior-lisp-program "c:/Progra~1/SteelB~1/1.4.2/sbcl.exe")
@@ -326,18 +297,49 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (call-interactively 'js-send-region)
   (end-of-line))
 
-  ;; (js-send-last-sexp))
+;; isend-mode
 
-;; (global-set-key (kbd "C-c j") 'javascript-mode)
-;; (global-set-key (kbd "C-c h") 'html-mode)
+(defun my-isend-send-sexp ()
+  (interactive)
+  (save-excursion
+    (backward-sexp)
+    (mark-sexp)
+    (call-interactively 'isend-send)))
 
+(defun my-isend-send-line ()
+  (interactive)
+  (set-mark (line-end-position))
+  (beginning-of-line)
+  (call-interactively 'isend-send)
+  ;; (previous-line)
+  (end-of-line))
 
-;; set keys
-(global-set-key (kbd "RET") 'newline-and-indent)
+(defun my-isend-send-block ()
+  (interactive)
+  (set-mark (line-end-position))
+  ; (previous-line)
+  (let ((lines-of-block 0))
+    (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
+      (previous-line)
+      (beginning-of-line)
+      (set 'lines-of-block (+ 1 lines-of-block)))
+    (beginning-of-line)
+    (call-interactively 'isend-send)
+    ;;(dotimes (i lines-of-block)
+    ;;  (next-line))
+    (end-of-line)))
 
-;; custom functions
-;; (global-set-key "\M-n" 'add-letters)
-;; (global-set-key "\M-p" 'add-nums-in-brackets)
+(defun my-isend-send-buffer ()
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'isend-send)
+  (end-of-buffer))
+
+(add-hook 'isend-mode-hook
+          (lambda ()
+            (local-set-key [S-return] 'my-isend-send-line)
+            (local-set-key [C-return] 'my-isend-send-block)
+            (local-set-key [M-return] 'my-isend-send-buffer)))
 
 (add-hook 'lisp-mode-hook
           (lambda ()
@@ -348,9 +350,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'clojure-mode-hook
           (lambda ()
-            (local-set-key [tab] 'slime-indent-and-complete-symbol)
-            (local-set-key [S-return] 'slime-eval-last-expression)
-            (local-set-key [return] 'newline-and-indent)))
+            (isend-associate "*shell*")
+            
+            (local-set-key [M-left] 'backward-sexp)
+            (local-set-key [M-right] 'forward-sexp)
+
+            (local-set-key [S-return] 'my-isend-send-sexp)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
@@ -405,46 +410,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
 
-
-;; isend-mode
-;; (add-to-list 'load-path "c:/Users/Neo/Desktop/LispCabinetHome/.emacs.d/isend-mode/")
-;; (require 'isend)
-
-(defun my-isend-send-line ()
-  (interactive)
-  (set-mark (line-end-position))
-  (beginning-of-line)
-  (call-interactively 'isend-send)
-  ;; (previous-line)
-  (end-of-line))
-
-(defun my-isend-send-block ()
-  (interactive)
-  (set-mark (line-end-position))
-  ; (previous-line)
-  (let ((lines-of-block 0))
-    (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
-      (previous-line)
-      (beginning-of-line)
-      (set 'lines-of-block (+ 1 lines-of-block)))
-    (beginning-of-line)
-    (call-interactively 'isend-send)
-    ;;(dotimes (i lines-of-block)
-    ;;  (next-line))
-    (end-of-line)))
-
-(defun my-isend-send-buffer ()
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'isend-send)
-  (end-of-buffer))
-
-(add-hook 'isend-mode-hook
-          (lambda ()
-            (local-set-key [S-return] 'my-isend-send-line)
-            (local-set-key [C-return] 'my-isend-send-block)
-            (local-set-key [M-return] 'my-isend-send-buffer)))
-
 (add-hook 'inferior-python-mode-hook
           (lambda ()
             (auto-complete-mode 1)))
@@ -454,8 +419,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             (auto-complete-mode 1)))
 
 (put 'upcase-region 'disabled nil)
-(global-set-key (kbd "M-u") 'undo)
-(global-set-key (kbd "C-z") 'undo)
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
@@ -466,9 +429,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (kill-line)
   (yank))
 
-(global-set-key (kbd "C-x x") 'copy-line)
-
-(setq default-input-method "portuguese-prefix")
+(setq default-input-method "italian-prefix")
 
 (defun get-greek-entry ()
   (interactive)
@@ -509,8 +470,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (if (equal current-input-method "greek")
       (activate-input-method "portuguese-prefix")
     (activate-input-method "greek")))
-
-(global-set-key (kbd "M-p") 'my-greek-swap-input-methods)
 
 ;; set font for Greek
 (set-fontset-font "fontset-default" 'iso-8859-7
