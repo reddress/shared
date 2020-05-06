@@ -112,10 +112,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ac-auto-show-menu 0.0001)
 
 ;; settings for not immediately completing
-;(setq ac-auto-start 2)
-;(setq ac-ignore-case nil)
-;(setq ac-delay 1)
-;(ac-set-trigger-key "TAB")
+                                        ;(setq ac-auto-start 2)
+                                        ;(setq ac-ignore-case nil)
+                                        ;(setq ac-delay 1)
+                                        ;(ac-set-trigger-key "TAB")
 
 
 ;; globals
@@ -180,6 +180,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-z") 'undo)
 
 (global-set-key (kbd "C-x x") 'copy-line)
+
 
 
 (setq backup-inhibited t)
@@ -249,7 +250,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (interactive)
   ;; (local-set-key [C-return] 'my-python-send-block)
   (set-mark (line-end-position))
-  ; (previous-line)
+                                        ; (previous-line)
   (let ((lines-of-block 0))
     (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
       (previous-line)
@@ -258,7 +259,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (beginning-of-line)
     (call-interactively 'python-shell-send-region)
     (python-shell-send-string "\n")
-;;    (python-shell-send-string "; print(end=\"\")")
+    ;;    (python-shell-send-string "; print(end=\"\")")
     (dotimes (i lines-of-block)
       (next-line))
     (end-of-line)))
@@ -276,7 +277,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-js-send-block ()
   (interactive)
   (set-mark (line-end-position))
-  ; (previous-line)
+                                        ; (previous-line)
   (let ((lines-of-block 0))
     (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
       (previous-line)
@@ -304,7 +305,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (save-excursion
     (backward-sexp)
     (mark-sexp)
-    (call-interactively 'isend-send)))
+    ;; (kill-ring-save)
+    (call-interactively 'isend-send-buffer)))
+
+
 
 (defun my-isend-send-line ()
   (interactive)
@@ -317,7 +321,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun my-isend-send-block ()
   (interactive)
   (set-mark (line-end-position))
-  ; (previous-line)
+                                        ; (previous-line)
   (let ((lines-of-block 0))
     (while (or (equal (line-beginning-position) 0) (not (line-emptyp)))
       (previous-line)
@@ -329,17 +333,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     ;;  (next-line))
     (end-of-line)))
 
-(defun my-isend-send-buffer ()
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'isend-send)
-  (end-of-buffer))
 
-(add-hook 'isend-mode-hook
-          (lambda ()
-            (local-set-key [S-return] 'my-isend-send-line)
-            (local-set-key [C-return] 'my-isend-send-block)
-            (local-set-key [M-return] 'my-isend-send-buffer)))
+(defun my-cider-save-and-compile-buffer ()
+  (interactive)
+  (call-interactively 'save-buffer)
+  (call-interactively 'cider-load-buffer))
 
 (add-hook 'lisp-mode-hook
           (lambda ()
@@ -348,19 +346,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             (local-set-key [S-return] 'lisp-eval-last-sexp)
             (local-set-key [C-return] 'my-lisp-send-buffer)))
 
-(add-hook 'clojure-mode-hook
-          (lambda ()
-            (isend-associate "*shell*")
-            
-            (local-set-key [M-left] 'backward-sexp)
-            (local-set-key [M-right] 'forward-sexp)
-
-            (local-set-key [S-return] 'my-isend-send-sexp)))
-
 (add-hook 'scheme-mode-hook
           (lambda ()
             (local-set-key [C-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
+
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (define-key clojure-mode-map (kbd "<M-left>") 'backward-sexp)
+            (define-key clojure-mode-map (kbd "<M-right>") 'forward-sexp)
+            (define-key clojure-mode-map (kbd "<C-return>") 'my-cider-save-and-compile-buffer)
+            (local-set-key (kbd "<S-return>") 'cider-eval-last-sexp)))
+
 
 (add-hook 'python-mode-hook
           (lambda ()
@@ -410,7 +408,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
 
+
 (add-hook 'inferior-python-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
+(add-hook 'cider-mode-hook
           (lambda ()
             (auto-complete-mode 1)))
 
@@ -474,3 +477,4 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; set font for Greek
 (set-fontset-font "fontset-default" 'iso-8859-7
                   (font-spec :family "GFS Neohellenic" :size 20))
+
