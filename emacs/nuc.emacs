@@ -413,7 +413,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda ()
             (auto-complete-mode 1)))
 
-(add-hook 'cider-mode-hook
+(add-hook 'cider-repl-mode-hook
           (lambda ()
             (auto-complete-mode 1)))
 
