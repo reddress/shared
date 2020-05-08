@@ -351,6 +351,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             (local-set-key [C-return] 'my-scheme-send-buffer)
             (local-set-key [S-return] 'scheme-send-last-sexp)))
 
+(add-hook 'mhtml-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (define-key mhtml-mode-map (kbd "C-/") 'sgml-close-tag)))
+
+            
 (add-hook 'clojure-mode-hook
           (lambda ()
             (auto-complete-mode 1)
