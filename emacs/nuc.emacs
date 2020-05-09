@@ -94,7 +94,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; custom font
  ;; '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
-  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "outline" :family "Fira Code")))))
+  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "outline" :family "Fira Code")))))
 
 
 ;; auto-complete-mode
@@ -207,7 +207,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 33)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 31)))
 
 ;; custom functions
 ;; general
