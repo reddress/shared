@@ -33,7 +33,7 @@ There are two things you can do about this warning:
 
 ;; Inferior Python and testing
 ;; https://github.com/Neochang/code-practice/tree/master/codefights
-(setq python-shell-interpreter "C:/Users/neo/AppData/Local/Programs/Python/Python37/python.exe")
+(setq python-shell-interpreter "C:/Users/neo/AppData/Local/Programs/Python/Python38-32/python.exe")
 
 (setenv "PYTHONPATH" "C:/Users/Neo/Desktop/code/shared/python/my-modules/")
 (setenv "PYTHONSTARTUP" "C:/Users/Neo/Desktop/code/shared/python/mystartup.py")
@@ -90,7 +90,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+
+ ;; custom font
+ ;; '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+
+  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "outline" :family "Fira Code")))))
 
 
 ;; auto-complete-mode
@@ -196,14 +200,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun disable-bold ()
   (interactive)
   (mapc (lambda (face) (set-face-attribute face nil :weight 'normal :underline nil)) (face-list)))
-(call-interactively 'disable-bold)
+;; (call-interactively 'disable-bold)
 
 (electric-indent-mode t)
 (add-hook 'python-mode-hook
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 66)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 33)))
 
 ;; custom functions
 ;; general
