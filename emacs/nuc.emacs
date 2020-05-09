@@ -484,3 +484,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (set-fontset-font "fontset-default" 'iso-8859-7
                   (font-spec :family "GFS Neohellenic" :size 20))
 
+
+;; old value is "c:/Users/neo/AppData/Roaming/"
+(setenv "HOME" "c:/Users/neo/")
