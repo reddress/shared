@@ -1,7 +1,7 @@
 ;; dot emacs
 
 (setq inhibit-startup-message t)
-(setq default-directory "C:/Users/neo/Desktop/code/")
+(setq default-directory "C:/Users/neo/")
 
 ;; custom italian input method
 (add-to-list 'load-path "c:/Users/neo/Desktop/emacs27/lisp/")
