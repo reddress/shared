@@ -1,7 +1,8 @@
 ;; dot emacs
+;; location: c:/Users/neo/AppData/Roaming/
 
 (setq inhibit-startup-message t)
-(setq default-directory "C:/Users/neo/")
+(setq default-directory "C:/Users/neo/Desktop/code/")
 
 ;; custom italian input method
 (add-to-list 'load-path "c:/Users/neo/Desktop/emacs27/lisp/")
@@ -82,6 +83,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
  '(tool-bar-mode nil)
+ '(web-mode-auto-close-style 1)
+ '(web-mode-auto-quote-style 1)
+ '(web-mode-enable-auto-closing t)
+ '(web-mode-enable-auto-opening nil)
+ '(web-mode-enable-auto-pairing nil)
+ '(web-mode-enable-auto-quoting nil)
  '(yas/prompt-functions
    '(yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt)))
 
@@ -355,7 +362,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda ()
             (auto-complete-mode 1)
             (define-key mhtml-mode-map (kbd "C-/") 'sgml-close-tag)))
-
             
 (add-hook 'clojure-mode-hook
           (lambda ()
@@ -386,7 +392,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; (add-to-list 'auto-mode-alist '("\\.kv\\'" . text-mode))
 
 ;; load java-mode for php
-(add-to-list 'auto-mode-alist '("\\.php\\'" . java-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 
 ;; load java-mode for php
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
@@ -438,7 +444,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (kill-line)
   (yank))
 
-(setq default-input-method "italian-prefix")
+(setq default-input-method "portuguese-prefix")
 
 (defun get-greek-entry ()
   (interactive)
