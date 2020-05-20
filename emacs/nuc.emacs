@@ -342,7 +342,6 @@ they line up with the line containing the corresponding opening bracket."
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (call-interactively 'display-line-numbers-mode)
             (local-set-key (kbd "C-c c") 'comment-region)
             (local-set-key (kbd "C-c u") 'uncomment-region)
             (local-set-key (kbd "RET") 'newline-and-indent)
