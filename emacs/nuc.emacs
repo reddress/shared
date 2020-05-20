@@ -64,6 +64,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(js-indent-level 2)
  '(package-selected-packages
    '(isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode rjsx-mode pyvenv mmm-mode edit-indirect auto-complete))
+ '(py-closing-list-dedents-bos t)
+ '(py-closing-list-keeps-space t)
+ '(py-closing-list-space -4)
+ '(py-install-directory "C:/Users/neo/Desktop/code/")
+ '(py-separator-char "/")
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
@@ -82,10 +87,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
- ;; Proggy font
- ;; '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
-
  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "outline" :family "Liberation Mono")))))
 
 
@@ -201,6 +202,27 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; suppress Python shell warning
 (setq python-shell-completion-native-disabled-interpreters '("python"))
+
+;; closing bracket after multi-line definition should line up with original
+;; https://stackoverflow.com/questions/4293074/in-emacs-python-mode-customize-multi-line-statement-indentation
+
+(defadvice python-calculate-indentation (around outdent-closing-brackets)
+  "Handle lines beginning with a closing bracket and indent them so that
+they line up with the line containing the corresponding opening bracket."
+  (save-excursion
+    (beginning-of-line)
+    (let ((syntax (syntax-ppss)))
+      (if (and (not (eq 'string (syntax-ppss-context syntax)))
+               (python-continuation-line-p)
+               (cadr syntax)
+               (skip-syntax-forward "-")
+               (looking-at "\\s)"))
+          (progn
+            (forward-char 1)
+            (ignore-errors (backward-sexp))
+            (setq ad-return-value (current-indentation)))
+        ad-do-it))))
+(ad-activate 'python-calculate-indentation)
 
 (defun my-python-send-buffer ()
   (interactive)
@@ -320,8 +342,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'python-mode-hook
           (lambda ()
+            (call-interactively 'display-line-numbers-mode)
             (local-set-key (kbd "C-c c") 'comment-region)
             (local-set-key (kbd "C-c u") 'uncomment-region)
+            (local-set-key (kbd "RET") 'newline-and-indent)
             
             (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [C-return] 'my-python-send-buffer)))
