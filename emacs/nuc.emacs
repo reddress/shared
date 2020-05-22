@@ -1,6 +1,14 @@
 ;; dot emacs
 ;; location: c:/Users/neo/AppData/Roaming/
 
+;; window position
+
+;; for large fonts
+;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
+
+;; for Proggy Font
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 65)))
+
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
 (setq ring-bell-function 'ignore)
@@ -13,9 +21,6 @@
 (setenv "HOME" "c:/Users/neo/")
 
 (setq default-input-method "portuguese-prefix")
-
-;; window position
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
 
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -65,8 +70,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(package-selected-packages
    '(isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode rjsx-mode pyvenv mmm-mode edit-indirect auto-complete))
  '(py-closing-list-dedents-bos t)
- '(py-closing-list-keeps-space t)
- '(py-closing-list-space -4)
+ '(py-indent-list-style 'line-up-with-first-element)
  '(py-install-directory "C:/Users/neo/Desktop/code/")
  '(py-separator-char "/")
  '(scroll-conservatively 100)
@@ -87,7 +91,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "outline" :family "Liberation Mono")))))
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+
+
+;; Fonts
+
+;; larger display font
+;; '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "outline" :family "Liberation Mono")))))
 
 
 ;; auto-complete-mode
