@@ -419,3 +419,9 @@ they line up with the line containing the corresponding opening bracket."
 ;; set font for Greek
 (set-fontset-font "fontset-default" 'iso-8859-7
                   (font-spec :family "GFS Neohellenic" :size 20))
+
+
+;; Custom insert strings
+(defun insert-my-custom-string ()
+  (interactive)
+  (insert "My custom string"))
