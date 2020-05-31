@@ -186,7 +186,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (yank))
 
 ;; Lisp
-(setq inferior-lisp-program "c:/Progra~1/SteelB~1/1.4.2/sbcl.exe")
+;; (setq inferior-lisp-program "c:/Progra~1/SteelB~1/1.4.2/sbcl.exe")
+(setq inferior-lisp-program "c:/Users/neo/Desktop/code/resources/newlisp.exe")
 (defun my-lisp-send-buffer ()
   (interactive)
   (mark-whole-buffer)
@@ -367,6 +368,7 @@ they line up with the line containing the corresponding opening bracket."
 
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 
 ;; text mode
