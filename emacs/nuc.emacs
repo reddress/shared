@@ -127,6 +127,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; set keys
 (global-set-key (kbd "C-t") 'yank)
+(global-set-key (kbd "M-t") 'yank-pop)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 
