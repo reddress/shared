@@ -126,6 +126,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (call-interactively 'indent-region)))
 
 ;; set keys
+(global-set-key (kbd "C-t") 'yank)
+
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 (global-set-key (kbd "C-<") 'previous-buffer)
@@ -205,6 +207,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; Python
 ;; Inferior Python and testing
 (setq python-shell-interpreter "C:/Users/neo/AppData/Local/Programs/Python/Python38-32/python.exe")
+
 
 (setenv "PYTHONPATH" "C:/Users/Neo/Desktop/code/shared/python/my-modules/")
 (setenv "PYTHONSTARTUP" "C:/Users/Neo/Desktop/code/shared/python/mystartup.py")
