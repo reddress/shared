@@ -11,11 +11,15 @@
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq create-lockfiles nil)
 (setq ring-bell-function 'ignore)
 (set-language-environment "UTF-8")
 (setq-default frame-title-format "%f")
 (delete-selection-mode t)
 (menu-bar-mode -1)
+(setq python-indent-offset 2)
 
 (setq default-directory "C:/Users/neo/Desktop/code/")
 (setenv "HOME" "c:/Users/neo/")
@@ -373,7 +377,7 @@ they line up with the line containing the corresponding opening bracket."
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 
 ;; text mode
 (add-hook 'text-mode-hook
