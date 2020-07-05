@@ -71,14 +71,16 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(iswitchb-mode t)
  '(js-indent-level 2)
  '(package-selected-packages
-   '(isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete))
+   (quote
+    (isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
  '(py-closing-list-dedents-bos t)
- '(py-indent-list-style 'line-up-with-first-element)
+ '(py-indent-list-style (quote line-up-with-first-element))
  '(py-install-directory "C:/Users/Tok/Desktop/code/")
  '(py-separator-char "/")
  '(scroll-conservatively 100)
  '(scroll-preserve-screen-position t)
  '(scroll-step 1)
+ '(sql-db2-login-params nil)
  '(tool-bar-mode nil)
  '(web-mode-auto-close-style 1)
  '(web-mode-auto-quote-style 1)
@@ -87,7 +89,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(web-mode-enable-auto-pairing nil)
  '(web-mode-enable-auto-quoting nil)
  '(yas/prompt-functions
-   '(yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt)))
+   (quote
+    (yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -132,7 +135,15 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (interactive)
   (find-file "c:/Users/Tok/Desktop/code/tok-general/diary.txt"))
 
+
+;; C-<backspace> does not add to kill ring
+(defun backward-delete-word (arg)
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
 ;; set keys
+(global-set-key (kbd "C-<backspace>") 'backward-delete-word) 
+
 (global-set-key (kbd "C-t") 'yank)
 (global-set-key (kbd "M-t") 'yank-pop)
 
