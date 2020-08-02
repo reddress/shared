@@ -155,6 +155,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "C-c C-a") 'auto-complete-mode)
 
+(global-set-key (kbd "<f2>") 'run-scheme)
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
 
@@ -334,6 +335,8 @@ they line up with the line containing the corresponding opening bracket."
   (call-interactively 'save-buffer)
   (call-interactively 'cider-load-buffer))
 
+(setq scheme-program-name "/usr/local/bin/mit-scheme --load /home/heitor/code/scm/heitor.scm")
+
 (defun my-scheme-send-buffer ()
   (interactive)
   (mark-whole-buffer)
@@ -393,6 +396,10 @@ they line up with the line containing the corresponding opening bracket."
 
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
+
+(add-hook 'inferior-scheme-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
 
 (add-hook 'inferior-python-mode-hook
           (lambda ()
