@@ -84,6 +84,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(tool-bar-mode nil)
  '(web-mode-auto-close-style 1)
  '(web-mode-auto-quote-style 1)
+ '(web-mode-code-indent-offset 2)
  '(web-mode-enable-auto-closing t)
  '(web-mode-enable-auto-opening nil)
  '(web-mode-enable-auto-pairing nil)
@@ -133,7 +134,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (defun load-diary ()
   (interactive)
-  (find-file "/home/heitor/code/tok-general/diary.txt"))
+  (find-file "/home/heitor/code/tok/tok-general/diary.txt"))
 
 
 ;; C-<backspace> does not add to kill ring

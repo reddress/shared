@@ -124,4 +124,10 @@ alias cp='cp -i'
 # Git
 source ~/.bash/git-prompt.sh
 export GIT_PS1_SHOWCOLORHINTS=true
-export PROMPT_COMMAND='__git_ps1 "\w" "$ "'
+export PROMPT_COMMAND='__git_ps1 "\w" " [`basename .$VIRTUAL_ENV`] $ "'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/heitor/build/google-cloud-sdk/path.bash.inc' ]; then . '/home/heitor/build/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/heitor/build/google-cloud-sdk/completion.bash.inc' ]; then . '/home/heitor/build/google-cloud-sdk/completion.bash.inc'; fi
