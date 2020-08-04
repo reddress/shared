@@ -121,10 +121,14 @@ export PATH="/home/heitor/bin:/home/heitor/.local/bin:$PATH"
 alias rm='rm -i'
 alias cp='cp -i'
 
+alias act2='source /home/heitor/code/venvs/venvpy27/bin/activate'
+alias act3='source /home/heitor/code/venvs/venvpy37/bin/activate'
+
 # Git
 source ~/.bash/git-prompt.sh
 export GIT_PS1_SHOWCOLORHINTS=true
-export PROMPT_COMMAND='__git_ps1 "\w" " [`basename .$VIRTUAL_ENV`] $ "'
+
+export PROMPT_COMMAND='__git_ps1 "[`basename .$VIRTUAL_ENV`] \w" " $ "'
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/heitor/build/google-cloud-sdk/path.bash.inc' ]; then . '/home/heitor/build/google-cloud-sdk/path.bash.inc'; fi
