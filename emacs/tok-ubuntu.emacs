@@ -134,7 +134,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (defun load-diary ()
   (interactive)
-  (find-file "/home/heitor/code/tok/tok-general/diary.txt"))
+  (find-file "/home/heitor/code/tok-general/diary.txt"))
 
 
 ;; C-<backspace> does not add to kill ring
@@ -185,9 +185,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-x x") 'copy-line)
 
 ;; cursor
-(blink-cursor-mode -1)
+;; (blink-cursor-mode -1)
+;; (set-default 'cursor-type 'bar)
+(blink-cursor-mode 1)
 (set-default 'cursor-type 'bar)
-(set-cursor-color "#53A960")
+(set-cursor-color "#209933")
 
 ;; force regular font 
 (defun disable-bold ()
