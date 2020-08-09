@@ -7,7 +7,7 @@
 ;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
 
 ;; for Proggy Font
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 65)))
+(setq initial-frame-alist '((top . 10) (left . 1332) (width . 90) (height . 90)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
@@ -63,6 +63,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (tango)))
  '(default-tab-width 2 t)
  '(fill-column 72)
  '(global-visual-line-mode nil)
@@ -210,7 +211,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; Python
 ;; Inferior Python and testing
-(setq python-shell-interpreter "C:/Users/Tok/AppData/Local/Programs/Python/Python37/python.exe")
+(setq python-shell-interpreter "c:/Python38/python.exe")
 
 (setenv "PYTHONPATH" "C:/Users/Tok/Desktop/code/shared/python/my-modules/")
 (setenv "PYTHONSTARTUP" "C:/Users/Tok/Desktop/code/shared/python/mystartup.py")
