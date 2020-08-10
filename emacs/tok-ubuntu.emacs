@@ -214,10 +214,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; Python
 ;; Inferior Python and testing
-(setq python-shell-interpreter "/usr/bin/python")
+(setq python-shell-interpreter "/usr/bin/python3")
 
-(setenv "PYTHONPATH" "C:/Users/Tok/Desktop/code/shared/python/my-modules/")
-(setenv "PYTHONSTARTUP" "C:/Users/Tok/Desktop/code/shared/python/mystartup.py")
+(setenv "PYTHONPATH" "/home/heitor/code/shared/python/my-modules/")
+(setenv "PYTHONSTARTUP" "/home/heitor/code/shared/python/mystartup.py")
 (setenv "PYTHONUNBUFFERED" "x")
 (setenv "PYTHONIOENCODING" "utf8")
 
