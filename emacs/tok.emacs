@@ -335,6 +335,18 @@ they line up with the line containing the corresponding opening bracket."
   (call-interactively 'save-buffer)
   (call-interactively 'cider-load-buffer))
 
+
+;; Common LISP
+(setq inferior-lisp-program "c:/sbcl2/sbcl.exe")
+
+(defun my-lisp-send-buffer ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'lisp-eval-region)
+    (deactivate-mark)
+    (end-of-buffer)))
+
 (add-hook 'lisp-mode-hook
           (lambda ()
             (local-set-key [S-return] 'lisp-eval-last-sexp)
