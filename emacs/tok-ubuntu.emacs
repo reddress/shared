@@ -191,8 +191,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (define-key my-mode-map (kbd "C-k") #'next-line)
 (define-key my-mode-map (kbd "C-l") #'right-char)
 (define-key my-mode-map (kbd "C-i") #'previous-line)
-(define-key my-mode-map (kbd "C-o") #'kill-line)
-(define-key my-mode-map (kbd "C-p") #'recenter-top-bottom)
+(define-key my-mode-map (kbd "C-u") #'kill-line)
+(define-key my-mode-map (kbd "C-o") #'recenter-top-bottom)
+(define-key my-mode-map (kbd "<tab>") #'indent-for-tab-command)
+(define-key my-mode-map (kbd "<C-tab>") #'indent-for-tab-command)
 
 (define-key my-mode-map (kbd "M-j") #'left-word)
 (define-key my-mode-map (kbd "M-k") #'forward-paragraph)
