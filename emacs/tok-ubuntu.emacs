@@ -156,7 +156,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "C-c C-a") 'auto-complete-mode)
 
-(global-set-key (kbd "<f2>") 'run-scheme)
+(global-set-key (kbd "<f2>") 'run-lisp)
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
 
@@ -174,7 +174,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
 
-(global-set-key (kbd "M-p") 'other-window)
+(global-set-key (kbd "C--") 'other-window)
+
+(global-set-key (kbd "M-p") 'backward-paragraph)
+(global-set-key (kbd "M-n") 'forward-paragraph)
 
 (global-set-key (kbd "C-c C-e") 'electric-indent-mode)
 (global-set-key (kbd "C-c i") 'my-indent-whole-buffer)
@@ -348,6 +351,16 @@ they line up with the line containing the corresponding opening bracket."
   (deactivate-mark))
 
 
+(setq inferior-lisp-program "/usr/bin/clisp -v")
+
+(defun my-lisp-send-buffer ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'lisp-eval-region)
+    (deactivate-mark)
+    (end-of-buffer)))
+
 (add-hook 'lisp-mode-hook
           (lambda ()
             (local-set-key [S-return] 'lisp-eval-last-sexp)
@@ -401,6 +414,10 @@ they line up with the line containing the corresponding opening bracket."
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
 
 (add-hook 'inferior-scheme-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
+(add-hook 'inferior-lisp-mode-hook
           (lambda ()
             (auto-complete-mode 1)))
 
