@@ -134,7 +134,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (defun load-diary ()
   (interactive)
-  (find-file "/home/heitor/code/tok-general/diary.txt"))
+  (find-file "/home/heitor/tok-general/diary.txt"))
 
 
 ;; C-<backspace> does not add to kill ring
@@ -411,7 +411,7 @@ they line up with the line containing the corresponding opening bracket."
   (deactivate-mark))
 
 
-(setq inferior-lisp-program "/usr/bin/clisp -v")
+(setq inferior-lisp-program "/usr/bin/sbcl")
 
 (defun my-lisp-send-buffer ()
   (interactive)
