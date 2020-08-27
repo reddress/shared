@@ -145,6 +145,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; set keys
 
 ;; https://emacs.stackexchange.com/questions/352/how-to-override-major-mode-bindings/358#358
+;; my-mode
+
 
 (defvar my-mode-map (make-sparse-keymap)
   "Keymap for `my-mode'.")
@@ -173,7 +175,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (my-mode -1))
 (add-hook 'minibuffer-setup-hook #'turn-off-my-mode)
 
-(provide 'my-mode)
+;; (provide 'my-mode)
 
 
 ;; C-j, k, l, i
@@ -187,19 +189,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; left-word right-word
 ;; backward-paragraph forward-paragraph
 
-(define-key my-mode-map (kbd "C-j") #'left-char)
-(define-key my-mode-map (kbd "C-k") #'next-line)
-(define-key my-mode-map (kbd "C-l") #'right-char)
-(define-key my-mode-map (kbd "C-i") #'previous-line)
-(define-key my-mode-map (kbd "C-u") #'kill-line)
-(define-key my-mode-map (kbd "C-o") #'recenter-top-bottom)
-(define-key my-mode-map (kbd "<tab>") #'indent-for-tab-command)
-(define-key my-mode-map (kbd "<C-tab>") #'indent-for-tab-command)
+;; (define-key my-mode-map (kbd "C-j") #'left-char)
+;; (define-key my-mode-map (kbd "C-k") #'next-line)
+;; (define-key my-mode-map (kbd "C-l") #'right-char)
+;; (define-key my-mode-map (kbd "C-i") #'previous-line)
+;; (define-key my-mode-map (kbd "C-u") #'kill-line)
+;; (define-key my-mode-map (kbd "C-o") #'recenter-top-bottom)
+;; (define-key my-mode-map (kbd "<tab>") #'indent-for-tab-command)
+;; (define-key my-mode-map (kbd "<C-tab>") #'indent-for-tab-command)
 
-(define-key my-mode-map (kbd "M-j") #'left-word)
-(define-key my-mode-map (kbd "M-k") #'forward-paragraph)
-(define-key my-mode-map (kbd "M-l") #'right-word)
-(define-key my-mode-map (kbd "M-i") #'backward-paragraph)
+;; (define-key my-mode-map (kbd "M-j") #'left-word)
+;; (define-key my-mode-map (kbd "M-k") #'forward-paragraph)
+;; (define-key my-mode-map (kbd "M-l") #'right-word)
+;; (define-key my-mode-map (kbd "M-i") #'backward-paragraph)
 
 
 (global-set-key (kbd "C-<backspace>") 'backward-delete-word) 
@@ -232,8 +234,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "<M-up>") 'other-window)
 (global-set-key (kbd "<M-down>") 'other-window)
-
-(global-set-key (kbd "C--") 'other-window)
+(global-set-key (kbd "M-o") 'other-window)
 
 (global-set-key (kbd "M-p") 'backward-paragraph)
 (global-set-key (kbd "M-n") 'forward-paragraph)
