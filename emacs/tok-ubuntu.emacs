@@ -1,6 +1,10 @@
 ;; dot emacs
 ;; location: /home/heitor/.emacs
 
+;; for debugging in SBCL, save in ~/.sbclrc
+;; (declaim (optimize (debug 3)))
+;; (format t "Debug optimized to 3")
+
 ;; window position
 
 ;; for large fonts
@@ -72,7 +76,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (use-package isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
+    (slime use-package isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
  '(py-closing-list-dedents-bos t)
  '(py-indent-list-style (quote line-up-with-first-element))
  '(py-install-directory "C:/Users/Tok/Desktop/code/")
@@ -423,8 +427,10 @@ they line up with the line containing the corresponding opening bracket."
 
 (add-hook 'lisp-mode-hook
           (lambda ()
-            (local-set-key [S-return] 'lisp-eval-last-sexp)
-            (local-set-key [C-return] 'my-lisp-send-buffer)))
+            ;; (local-set-key [S-return] 'lisp-eval-last-sexp)
+            ;; (local-set-key [C-return] 'my-lisp-send-buffer)))
+            (local-set-key [S-return] 'slime-eval-last-expression)
+            (local-set-key [C-return] 'slime-eval-buffer)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
