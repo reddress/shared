@@ -76,7 +76,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (slime use-package isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
+    (js2-mode slime use-package isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
  '(py-closing-list-dedents-bos t)
  '(py-indent-list-style (quote line-up-with-first-element))
  '(py-install-directory "C:/Users/Tok/Desktop/code/")
@@ -171,6 +171,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
 (global-set-key (kbd "<f9>") 'find-file)
+(global-set-key (kbd "<C-f9>") 'find-file-read-only)
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
 (global-set-key (kbd "<f12>") 'split-window-below)
@@ -368,8 +369,8 @@ they line up with the line containing the corresponding opening bracket."
           (lambda ()
             ;; (local-set-key [S-return] 'lisp-eval-last-sexp)
             ;; (local-set-key [C-return] 'my-lisp-send-buffer)))
-            (local-set-key [S-return] 'slime-eval-last-expression)
-            (local-set-key [C-return] 'slime-eval-buffer)))
+            ;; (local-set-key [C-return] 'slime-eval-buffer)
+            (local-set-key [S-return] 'slime-eval-last-expression)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
