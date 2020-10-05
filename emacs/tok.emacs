@@ -73,7 +73,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
+    (racket-mode isend-mode cider clojure-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete)))
  '(py-closing-list-dedents-bos t)
  '(py-indent-list-style (quote line-up-with-first-element))
  '(py-install-directory "C:/Users/Tok/Desktop/code/")
@@ -156,6 +156,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "C-c C-a") 'auto-complete-mode)
 
+(global-set-key (kbd "<f2>") 'run-lisp)
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
 
@@ -336,14 +337,26 @@ they line up with the line containing the corresponding opening bracket."
   (call-interactively 'cider-load-buffer))
 
 
+;; Racket
+(setq scheme-program-name "C:/Progra~1/Racket/racket.exe")
+
 ;; Common LISP
 (setq inferior-lisp-program "c:/sbcl2/sbcl.exe")
+;; (setq inferior-lisp-program "c:/clisp/clisp.exe")
 
 (defun my-lisp-send-buffer ()
   (interactive)
   (save-excursion
     (mark-whole-buffer)
     (call-interactively 'lisp-eval-region)
+    (deactivate-mark)
+    (end-of-buffer)))
+
+(defun my-scheme-send-buffer ()
+  (interactive)
+  (save-excursion
+    (mark-whole-buffer)
+    (call-interactively 'scheme-send-region)
     (deactivate-mark)
     (end-of-buffer)))
 
@@ -400,6 +413,10 @@ they line up with the line containing the corresponding opening bracket."
 (define-key text-mode-map [backtab] 'indent-for-tab-command)
 
 (add-hook 'inferior-python-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
+(add-hook 'inferior-scheme-mode-hook
           (lambda ()
             (auto-complete-mode 1)))
 
