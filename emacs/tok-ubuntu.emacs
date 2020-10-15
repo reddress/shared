@@ -10,8 +10,15 @@
 ;; for large fonts
 ;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
 
+;; quick access
+(defun quick-access ()
+  (interactive)
+  (find-file "/home/heitor/tokpy3/tokdb/stations.py"))
+
+(global-set-key (kbd "<C-f4>") 'quick-access)
+
 ;; for Proggy Font
-(setq initial-frame-alist '((top . 0) (left . 1410) (width . 79) (height . 92)))
+(setq initial-frame-alist '((top . 0) (left . 1400) (width . 149) (height . 92)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
@@ -54,21 +61,23 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; Custom
 
+;; '(ansi-color-faces-vector
+;;   [default default default italic underline success warning error])
+;; '(ansi-color-names-vector
+;;   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
+;; '(custom-enabled-themes (quote (tango)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
- '(custom-enabled-themes (quote (tango)))
  '(default-tab-width 2 t)
  '(fill-column 72)
+ '(custom-enabled-themes (quote (deeper-blue)))
  '(global-visual-line-mode nil)
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
@@ -102,7 +111,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+ '(default ((t (:inherit nil :stipple nil :background "gray14" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 
 ;; Fonts
