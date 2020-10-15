@@ -75,9 +75,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (deepblue-heitor)))
+ '(custom-safe-themes
+   (quote
+    ("de0c1390b6b19145c810f4282b4fb626bd746804d12fd5a799a59cb4500275ae" "abff6271c4de3fad97b537479e026e03b91ab62fa158af243f79458cffcd46e3" "0cf2d469cefaaf862fd1f4fdf01171370231dbdef9847d34614dffe89012bafc" "4b316d7049d680db18e86c4c035bf7b5a8e0dfc956a10fd709af140b6c7334df" default)))
  '(default-tab-width 2 t)
  '(fill-column 72)
- '(custom-enabled-themes (quote (deeper-blue)))
  '(global-visual-line-mode nil)
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
