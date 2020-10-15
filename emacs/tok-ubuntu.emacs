@@ -78,7 +78,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(custom-enabled-themes (quote (deepblue-heitor)))
  '(custom-safe-themes
    (quote
-    ("de0c1390b6b19145c810f4282b4fb626bd746804d12fd5a799a59cb4500275ae" "abff6271c4de3fad97b537479e026e03b91ab62fa158af243f79458cffcd46e3" "0cf2d469cefaaf862fd1f4fdf01171370231dbdef9847d34614dffe89012bafc" "4b316d7049d680db18e86c4c035bf7b5a8e0dfc956a10fd709af140b6c7334df" default)))
+    ("74b25bdb839414db513e11c2a5d4b513d8eb10fe33d0523b669b6881bf40db47" "8b011c54886198413e5cf448e75b98abb3d7043c88d6558ed0562680dc0743ff" "96d242aace3fbd046eae3bf05d320b9ae9081a1c55747506dbc03cc0558d538e" "3f64a900a21b26072f4c81d37745181f6c89a20e222e11da704738210ed89ade" "5b523ab854ec8f96cd4fa5fd78fe43d24d72a4a94aed67d94c7ee6244f2ef42e" "de0c1390b6b19145c810f4282b4fb626bd746804d12fd5a799a59cb4500275ae" "abff6271c4de3fad97b537479e026e03b91ab62fa158af243f79458cffcd46e3" "0cf2d469cefaaf862fd1f4fdf01171370231dbdef9847d34614dffe89012bafc" "4b316d7049d680db18e86c4c035bf7b5a8e0dfc956a10fd709af140b6c7334df" default)))
  '(default-tab-width 2 t)
  '(fill-column 72)
  '(global-visual-line-mode nil)
