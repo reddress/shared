@@ -61,24 +61,19 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 ;; Custom
 
-;; '(ansi-color-faces-vector
-;;   [default default default italic underline success warning error])
-;; '(ansi-color-names-vector
-;;   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
-;; '(custom-enabled-themes (quote (tango)))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red" "green" "yellow" "blue" "magenta" "cyan" "white"])
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
- '(custom-enabled-themes (quote (deepblue-heitor)))
- '(custom-safe-themes
-   (quote
-    ("d200688366ca5564fe94a26fb5995060fa5890615d13c9f1d35887bea56e02d3" "e6a080ec5bdb66ca9894a03344e301130b0e3dd42e0bbe2bf32d31ca44ca45c3" "2317a9212bd04584fe990e8fbf78cdac54a92f890735c565618e5fba91ab6c29" "7384867c2dc44e2dca667b26b16a3377355440c297130dde254d0b00a24b9405" "86f7188352ba28827a5de54bbacd97802918618192a50a74ba1d152b2c03dc1b" "57ac9977f96b6ae39016d317454ddc2b8374a9def74c7b2362eea24e66792458" "74b25bdb839414db513e11c2a5d4b513d8eb10fe33d0523b669b6881bf40db47" "8b011c54886198413e5cf448e75b98abb3d7043c88d6558ed0562680dc0743ff" "96d242aace3fbd046eae3bf05d320b9ae9081a1c55747506dbc03cc0558d538e" "3f64a900a21b26072f4c81d37745181f6c89a20e222e11da704738210ed89ade" "5b523ab854ec8f96cd4fa5fd78fe43d24d72a4a94aed67d94c7ee6244f2ef42e" "de0c1390b6b19145c810f4282b4fb626bd746804d12fd5a799a59cb4500275ae" "abff6271c4de3fad97b537479e026e03b91ab62fa158af243f79458cffcd46e3" "0cf2d469cefaaf862fd1f4fdf01171370231dbdef9847d34614dffe89012bafc" "4b316d7049d680db18e86c4c035bf7b5a8e0dfc956a10fd709af140b6c7334df" default)))
+ '(custom-enabled-themes (quote (tango)))
  '(default-tab-width 2 t)
  '(fill-column 72)
  '(global-visual-line-mode nil)
@@ -114,7 +109,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#08202A" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+ '(default ((t (:inherit nil :stipple nil :background "PapayaWhip" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 
 ;; Fonts
