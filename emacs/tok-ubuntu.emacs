@@ -18,7 +18,7 @@
 (global-set-key (kbd "<C-f4>") 'quick-access)
 
 ;; for Proggy Font
-(setq initial-frame-alist '((top . 130) (left . 785) (width . 176) (height . 82)))
+(setq initial-frame-alist '((top . 130) (left . 785) (width . 157) (height . 82)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
