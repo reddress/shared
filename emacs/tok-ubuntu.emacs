@@ -18,7 +18,7 @@
 (global-set-key (kbd "<C-f4>") 'quick-access)
 
 ;; for Proggy Font
-(setq initial-frame-alist '((top . 130) (left . 785) (width . 157) (height . 82)))
+(setq initial-frame-alist '((top . 130) (left . 855) (width . 157) (height . 82)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
@@ -154,7 +154,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (delete-region (point) (progn (backward-word arg) (point))))
 
 
+;; C-<delete> does not add to kill ring
+(defun forward-delete-word (arg)
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+
+
 (global-set-key (kbd "C-<backspace>") 'backward-delete-word) 
+(global-set-key (kbd "C-<delete>") 'forward-delete-word) 
 
 (global-set-key (kbd "C-t") 'yank)
 (global-set-key (kbd "M-t") 'yank-pop)
