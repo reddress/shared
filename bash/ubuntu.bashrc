@@ -3,7 +3,10 @@
 # for examples
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -28,19 +31,19 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-force_color_prompt=yes
+#force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -54,9 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    # Yellow?
-    #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;96m\]\u@\h\[\033[00m\]:\[\033[01;96m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -83,6 +84,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -104,26 +108,35 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+  fi
 fi
 
-### Added by the Heroku Toolbelt
-export PATH="/home/heitor/build/go/bin:/home/heitor/go/bin:/home/heitor/build/bin:/home/heitor/build/node-v8.9.2/bin:$PATH"
+export PATH="/home/heitor/.pyenv/bin:/home/heitor/bin:/home/heitor/.local/bin:$PATH"
 
-# Add PHP Composer to path
-export PATH="/home/heitor/.composer/vendor/bin:$PATH"
+alias rm='rm -i'
+alias cp='cp -i'
 
-# PHP local server
-alias phpserve="php7 -S 127.0.0.1:8901"
+alias act2='source /home/heitor/code/venvs/venvpy27/bin/activate'
+alias act3='source /home/heitor/code/venvs/venvpy37/bin/activate'
 
-# Python startup script
-# export PYTHONSTARTUP="/home/heitor/pygmalion/my_startup.py"
+# Git
+source ~/.bash/git-prompt.sh
+export GIT_PS1_SHOWCOLORHINTS=true
 
-export PYTHONPATH="/home/heitor/reading-list/foundations-of-cs:/home/heitor/holygrail/"
+export PROMPT_COMMAND='__git_ps1 "[`basename no_env$VIRTUAL_ENV`] \w" " $ "'
 
-export WORKON_HOME=~/envs
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/heitor/build/google-cloud-sdk/path.bash.inc' ]; then . '/home/heitor/build/google-cloud-sdk/path.bash.inc'; fi
 
-export GOROOT=/home/heitor/build/go
-export GOPATH=/home/heitor/go
-export GOBIN=/home/heitor/go/bin
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/heitor/build/google-cloud-sdk/completion.bash.inc' ]; then . '/home/heitor/build/google-cloud-sdk/completion.bash.inc'; fi
+
+export GOOGLE_APPLICATION_CREDENTIALS="/home/heitor/google_keys/tokwsv3.json"
+
+# allows C-s to forward-search after using C-r to search history
+stty -ixon
