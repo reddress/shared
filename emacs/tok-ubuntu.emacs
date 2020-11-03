@@ -13,7 +13,7 @@
 ;; quick access
 (defun quick-access ()
   (interactive)
-  (find-file "/home/heitor/tokpy3/tokdb/stations.py"))
+  (find-file "/home/heitor/tokws/main/static/src/script/site/ena_app.js"))
 
 (global-set-key (kbd "<C-f4>") 'quick-access)
 
@@ -184,8 +184,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
-(global-set-key (kbd "<f9>") 'find-file)
-(global-set-key (kbd "<C-f9>") 'find-file-read-only)
+(global-set-key (kbd "<C-f9>") 'find-file)
+(global-set-key (kbd "<f9>") 'find-file-read-only)
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
 (global-set-key (kbd "<f12>") 'split-window-below)
