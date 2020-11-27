@@ -119,6 +119,7 @@ fi
 export PATH="/home/heitor/.pyenv/bin:/home/heitor/bin:/home/heitor/.local/bin:$PATH"
 
 alias rm='rm -i'
+alias mv='mv -i'
 alias cp='cp -i'
 
 alias act2='source /home/heitor/code/venvs/venvpy27/bin/activate'
