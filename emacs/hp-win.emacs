@@ -7,7 +7,7 @@
 ;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
 
 ;; for Proggy Font
-(setq initial-frame-alist '((top . 10) (left . 40) (width . 90) (height . 68)))
+(setq initial-frame-alist '((top . 10) (left . 40) (width . 90) (height . 98)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
@@ -98,7 +98,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
+ '(default ((t (:inherit nil :stipple nil :background "FloralWhite" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ")))))
 
 
 ;; Fonts
@@ -167,7 +167,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "<f6>") 'eval-print-last-sexp)
 (global-set-key (kbd "<f7>") 'make-directory)
 (global-set-key (kbd "<f8>") 'kill-this-buffer)
-(global-set-key (kbd "<f9>") 'find-file)
+(global-set-key (kbd "<C-f9>") 'find-file)
+(global-set-key (kbd "<f9>") 'find-file-read-only)
 (global-set-key (kbd "<f10>") 'save-buffer)
 (global-set-key (kbd "<f11>") 'write-file)
 (global-set-key (kbd "<f12>") 'split-window-below)
