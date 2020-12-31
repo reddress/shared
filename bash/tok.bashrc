@@ -116,14 +116,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH="/home/heitor/bin:/home/heitor/.local/bin:$PATH"
+export PATH="/home/heitor/.pyenv/bin:/home/heitor/bin:/home/heitor/.local/bin:$PATH"
 
 alias rm='rm -i'
+alias mv='mv -i'
 alias cp='cp -i'
 
 alias act2='source /home/heitor/code/venvs/venvpy27/bin/activate'
 alias act3='source /home/heitor/code/venvs/venvpy37/bin/activate'
-
+alias actp='source /home/heitor/code/venvs/venvpersonal/bin/activate'
 # Git
 source ~/.bash/git-prompt.sh
 export GIT_PS1_SHOWCOLORHINTS=true
@@ -137,3 +138,13 @@ if [ -f '/home/heitor/build/google-cloud-sdk/path.bash.inc' ]; then . '/home/hei
 if [ -f '/home/heitor/build/google-cloud-sdk/completion.bash.inc' ]; then . '/home/heitor/build/google-cloud-sdk/completion.bash.inc'; fi
 
 export GOOGLE_APPLICATION_CREDENTIALS="/home/heitor/google_keys/tokwsv3.json"
+
+# allows C-s to forward-search after using C-r to search history
+stty -ixon
+
+# run tokpy3
+function tp3() {
+    source /home/heitor/code/venvs/venvpy37/bin/activate
+    cd /home/heitor/tokpy3
+    python main.py
+}
