@@ -7,18 +7,18 @@
 
 ;; window position
 
-;; for large fonts
-;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 79) (height . 38)))
-
 ;; quick access
 (defun quick-access ()
   (interactive)
-  (find-file "/home/heitor/tokws/main/static/src/script/site/ena_app.js"))
+  (find-file "/home/heitor/tokpy3/static/js/hidrica.js"))
+;;  (find-file "/home/heitor/tokws/main/static/src/script/site/meteograma.js"))
 
 (global-set-key (kbd "<C-f4>") 'quick-access)
 
 ;; for Proggy Font
-(setq initial-frame-alist '((top . 130) (left . 800) (width . 100) (height . 82)))
+;; middle of screen 
+;; (setq initial-frame-alist '((top . 5) (left . 628) (width . 98) (height . 91)))
+(setq initial-frame-alist '((top . 105) (left . 0) (width . 98) (height . 87)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
@@ -73,7 +73,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(c-basic-offset 4)
  '(c-default-style "linux")
  '(column-number-mode t)
- '(custom-enabled-themes (quote (tango)))
+ '(custom-enabled-themes (quote (my-tango)))
+ '(custom-safe-themes
+   (quote
+    ("942ab00348cd0d4a24144ecacd7a3d7b9991bfa53989fc6a78db8ce23bf7a164" default)))
  '(default-tab-width 2 t)
  '(fill-column 72)
  '(global-visual-line-mode nil)
@@ -165,6 +168,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "C-t") 'yank)
 (global-set-key (kbd "M-t") 'yank-pop)
+
+(global-set-key (kbd "M-k") 'my-delete-line)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 
@@ -359,7 +364,8 @@ they line up with the line containing the corresponding opening bracket."
   (call-interactively 'save-buffer)
   (call-interactively 'cider-load-buffer))
 
-(setq scheme-program-name "/usr/local/bin/mit-scheme --load /home/heitor/code/scm/heitor.scm")
+;; (setq scheme-program-name "/usr/local/bin/mit-scheme --load /home/heitor/code/scm/heitor.scm")
+(setq scheme-program-name "/home/heitor/bin/csi -:c")
 
 (defun my-scheme-send-buffer ()
   (interactive)
@@ -480,3 +486,11 @@ they line up with the line containing the corresponding opening bracket."
 (defun insert-my-custom-string ()
   (interactive)
   (insert "My custom string"))
+
+
+;; delete line without adding to kill-ring
+
+(defun my-delete-line ()
+  (interactive)
+  (kill-line 1)
+  (setq kill-ring (cdr kill-ring)))
