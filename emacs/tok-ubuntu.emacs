@@ -169,8 +169,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (global-set-key (kbd "C-t") 'yank)
 (global-set-key (kbd "M-t") 'yank-pop)
 
-(global-set-key (kbd "M-k") 'my-delete-line)
-
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 (global-set-key (kbd "C-<") 'previous-buffer)
@@ -487,10 +485,3 @@ they line up with the line containing the corresponding opening bracket."
   (interactive)
   (insert "My custom string"))
 
-
-;; delete line without adding to kill-ring
-
-(defun my-delete-line ()
-  (interactive)
-  (kill-line 1)
-  (setq kill-ring (cdr kill-ring)))
