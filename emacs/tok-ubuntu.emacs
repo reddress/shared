@@ -168,6 +168,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (global-set-key (kbd "C-t") 'yank)
 (global-set-key (kbd "M-t") 'yank-pop)
+(global-set-key (kbd "M-k") 'jpk/delete-line)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 
@@ -485,3 +486,16 @@ they line up with the line containing the corresponding opening bracket."
   (interactive)
   (insert "My custom string"))
 
+
+;; delete without adding to kill ring
+(defmacro jpk/delete-instead-of-kill (&rest body)
+  "Replaces `kill-region' with `delete-region' in BODY."
+  `(cl-letf (((symbol-function 'kill-region)
+              (lambda (beg end &optional yank-handler)
+                (delete-region beg end))))
+     ,@body))
+
+(defun jpk/delete-line (arg)
+  "Like `kill-line', but does not save to the `kill-ring'."
+  (interactive "*p")
+  (jpk/delete-instead-of-kill (kill-line arg)))
