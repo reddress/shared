@@ -148,3 +148,11 @@ function tp3() {
     cd /home/heitor/tokpy3
     python main.py
 }
+
+function c() {
+    cc $1 && ./a.out
+}
+
+padgrep() {
+    grep -Iior ".\{0,20\}$1.\{0,20\}" *
+}
