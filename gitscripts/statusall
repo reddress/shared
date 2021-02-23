@@ -9,4 +9,4 @@ for repo in GIT_REPOS:
     print()
     print("In repo", repo_dir)
     chdir(repo_dir)
-    call(["git", "status"])
+    call(["git", "status", "--short"])
