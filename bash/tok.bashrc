@@ -154,5 +154,5 @@ function c() {
 }
 
 padgrep() {
-    grep -Iior ".\{0,20\}$1.\{0,20\}" *
+    grep -Iior --exclude-dir=".git" ".\{0,25\}$1.\{0,25\}" *
 }
