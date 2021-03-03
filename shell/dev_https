@@ -1,0 +1,10 @@
+pid=
+
+cert = /home/heitor/mystunnel/stunnel.pem
+foreground = yes
+output = /home/heitor/tmp/stunnel.log
+
+[https]
+accept=3000
+connect=3001
+TIMEOUTclose=1
