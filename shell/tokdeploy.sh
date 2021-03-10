@@ -16,11 +16,16 @@ elif [ "$PWD" = '/home/heitor/toksitedjango' ]; then
     read checkproxy
     
     cp toksite/debug_setting_false.py toksite/deploy_debug_setting.py
+    cp toksite/dbsettingsproxy.py toksite/dbsettings.py
+
     rm static/CACHE/js/output.*.js
     rm static/CACHE/css/output.*.css
     python manage.py compress
     python manage.py collectstatic
-    python manage.py migrate --settings=toksite.settingsdbproduction
+    python manage.py migrate
+
+    # restore the deployment db settings
+    cp toksite/dbsettingsdeploy.py toksite/dbsettings.py
 
     if [ "$1" = 'dev' ]; then
         echo "\nDEPLOYING TO tokws-dev.\n"
